@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MED-Claim Assistant</title>
+  <link rel="icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" href="icon.png" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .step { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin: 12px 0; background: #fff; }
+    .hidden { display: none; }
+    .row { display: flex; gap: 8px; align-items: center; }
+    .btn { background: #2563eb; color: #fff; border: 0; padding: 10px 14px; border-radius: 6px; cursor: pointer; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .pill { display: inline-block; padding: 4px 8px; background: #eef2ff; color: #1e3a8a; border-radius: 9999px; margin: 2px; }
+    .box { border: 1px dashed #cbd5e1; padding: 8px; border-radius: 6px; background: #f8fafc; }
+    .section-title { font-weight: 700; margin-bottom: 8px; }
+    .list { display: grid; gap: 6px; }
+    .list-row { display: grid; grid-template-columns: 1fr auto; gap: 6px; }
+    .amount { width: 120px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand">
+      <img src="logo.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'" />
+      <div class="brand-text">
+        <h1>MED Claim Assistant</h1>
+      </div>
+    </div>
+
+
+    <div class="step" id="step-prescription">
+      <div class="section-title">Step 1: Upload Prescription</div>
+      <input type="file" id="prescriptionInput" accept="image/*" />
+      <label for="prescriptionInput" class="upload-label" style="margin-left:0;margin-top:8px;display:inline-block;">Choose Prescription Image</label>
+      <div style="margin-top:8px">
+        <button class="btn" id="analyzePrescription" disabled>Analyze Prescription</button>
+      </div>
+      <div id="prescriptionResults" class="box" style="margin-top:12px"></div>
+      <div id="prescriptionEditor" class="list" style="margin-top:8px"></div>
+      <button class="btn" id="addPrescription" style="margin-top:6px; background:#6b7280">Add Medicine</button>
+    </div>
+
+    <div class="step" id="step-bill">
+      <div class="section-title">Step 2: Upload Bill</div>
+      <input type="file" id="billInput" accept="image/*" />
+      <label for="billInput" class="upload-label" style="margin-left:0;margin-top:8px;display:inline-block;">Choose Bill Image</label>
+      <div style="margin-top:8px">
+        <button class="btn" id="analyzeBill" disabled>Analyze Bill</button>
+      </div>
+      <div id="billResults" class="box" style="margin-top:12px"></div>
+      <div id="billEditor" class="list" style="margin-top:8px"></div>
+      <button class="btn" id="addBillItem" style="margin-top:6px; background:#6b7280">Add Bill Item</button>
+    </div>
+
+    <div class="step" id="step-compare">
+      <div class="section-title">Step 3: Analyze & Compare</div>
+      <div class="row">
+        <button class="btn" id="compareBtn" disabled>Analyze and Compare</button>
+        <button class="btn" id="exportCsvBtn" disabled style="background:#16a34a">Export CSV</button>
+      </div>
+      <div id="compareResults" class="box" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
+
