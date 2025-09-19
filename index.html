@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MED-Claim Assistant</title>
+  <title>MED Claim Assistant</title>
   <link rel="icon" href="favicon.ico" />
-  <link rel="icon" type="image/png" href="icon.png" />
-  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    .step { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin: 12px 0; background: #fff; }
+    .step { border: 1px solid #6ee2e6; border-radius: 8px; padding: 16px; margin: 12px 0; background: #fff; }
     .hidden { display: none; }
     .row { display: flex; gap: 8px; align-items: center; }
-    .btn { background: #2563eb; color: #fff; border: 0; padding: 10px 14px; border-radius: 6px; cursor: pointer; }
+    .btn { background: #2563eb; color: #ffffff; border: 0; padding: 10px 14px; border-radius: 6px; cursor: pointer; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .pill { display: inline-block; padding: 4px 8px; background: #eef2ff; color: #1e3a8a; border-radius: 9999px; margin: 2px; }
     .box { border: 1px dashed #cbd5e1; padding: 8px; border-radius: 6px; background: #f8fafc; }
@@ -26,16 +26,30 @@
   <div class="container">
     <div class="brand">
       <img src="logo.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'" />
-      <div class="brand-text">
+      <div class="brand-text" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
         <h1>MED Claim Assistant</h1>
+        <button class="btn" id="newAnalysisBtn" style="background:#2382db;">New Analysis</button>
       </div>
     </div>
 
 
     <div class="step" id="step-prescription">
-      <div class="section-title">Step 1: Upload Prescription</div>
+      <div class="section-title">Step 1: Upload Prescription <span id="prescriptionCount" </span></div>
       <input type="file" id="prescriptionInput" accept="image/*" />
       <label for="prescriptionInput" class="upload-label" style="margin-left:0;margin-top:8px;display:inline-block;">Choose Prescription Image</label>
+      
+      <!-- File Upload Indicator -->
+      <div id="prescriptionFileInfo" class="file-info hidden">
+        <div class="file-details">
+          <span class="file-icon">📄</span>
+          <span class="file-name" id="prescriptionFileName"></span>
+          <span class="file-size" id="prescriptionFileSize"></span>
+        </div>
+        <button class="remove-file-btn" id="removePrescriptionFile">×</button>
+      </div>
+      
+      
+      
       <div style="margin-top:8px">
         <button class="btn" id="analyzePrescription" disabled>Analyze Prescription</button>
       </div>
@@ -45,9 +59,22 @@
     </div>
 
     <div class="step" id="step-bill">
-      <div class="section-title">Step 2: Upload Bill</div>
+      <div class="section-title">Step 2: Upload Bill <span id="billCount" </span></div>
       <input type="file" id="billInput" accept="image/*" />
       <label for="billInput" class="upload-label" style="margin-left:0;margin-top:8px;display:inline-block;">Choose Bill Image</label>
+      
+      <!-- File Upload Indicator -->
+      <div id="billFileInfo" class="file-info hidden">
+        <div class="file-details">
+          <span class="file-icon">🧾</span>
+          <span class="file-name" id="billFileName"></span>
+          <span class="file-size" id="billFileSize"></span>
+        </div>
+        <button class="remove-file-btn" id="removeBillFile">×</button>
+      </div>
+      
+      
+      
       <div style="margin-top:8px">
         <button class="btn" id="analyzeBill" disabled>Analyze Bill</button>
       </div>
@@ -56,13 +83,32 @@
       <button class="btn" id="addBillItem" style="margin-top:6px; background:#6b7280">Add Bill Item</button>
     </div>
 
+    
+
     <div class="step" id="step-compare">
       <div class="section-title">Step 3: Analyze & Compare</div>
-      <div class="row">
+      <div class="row" style="display:flex; justify-content:center; align-items:center;">
         <button class="btn" id="compareBtn" disabled>Analyze and Compare</button>
         <button class="btn" id="exportCsvBtn" disabled style="background:#16a34a">Export CSV</button>
       </div>
       <div id="compareResults" class="box" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- Custom Popup/Alert System -->
+  <div id="customPopup" class="popup-overlay hidden">
+    <div class="popup-container">
+      <div class="popup-header">
+        <div class="popup-icon" id="popupIcon">ℹ️</div>
+        <h3 class="popup-title" id="popupTitle">Information</h3>
+      </div>
+      <div class="popup-content">
+        <p id="popupMessage">This is a custom message.</p>
+      </div>
+      <div class="popup-actions">
+        <button class="btn popup-btn" id="popupConfirm">OK</button>
+        <button class="btn popup-btn popup-btn-secondary hidden" id="popupCancel">Cancel</button>
+      </div>
     </div>
   </div>
 
