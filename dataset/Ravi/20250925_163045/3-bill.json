@@ -1,0 +1,10 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "MUCAINE GEL SYP 200 ML",
+      "amount": 217.83
+    }
+  ]
+}

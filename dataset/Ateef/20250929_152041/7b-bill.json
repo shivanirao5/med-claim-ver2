@@ -1,0 +1,10 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "PROTOLUS CREAM (100M)",
+      "amount": 240.0
+    }
+  ]
+}

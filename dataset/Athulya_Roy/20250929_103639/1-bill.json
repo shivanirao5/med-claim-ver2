@@ -1,0 +1,26 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "HALICTUS JUNIOR SYP",
+      "amount": 105.0
+    },
+    {
+      "name": "ITHA 200MG 30ML",
+      "amount": 114.57
+    },
+    {
+      "name": "FADALNA D SUSP",
+      "amount": 288.0
+    },
+    {
+      "name": "ALNACER 250MG SYP",
+      "amount": 44.35
+    },
+    {
+      "name": "ROVIT SYP",
+      "amount": 148.0
+    }
+  ]
+}

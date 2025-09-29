@@ -1,0 +1,10 @@
+{
+  "type": "prescription",
+  "prescriptionNames": [
+    "CALPOL",
+    "DELCON",
+    "LEVOLIN",
+    "MEFTAL-P"
+  ],
+  "billItems": []
+}

@@ -1,0 +1,46 @@
+{
+  "employee": "Ravi Varma",
+  "createdAt": "2025-09-25T15:37:20.092674",
+  "files": [
+    {
+      "filename": "Screenshot_14-9-2025_22642_.jpeg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "billItems": [
+        {
+          "name": "PYNOMAX TX CREAM 30GM",
+          "amount": 609.6
+        },
+        {
+          "name": "DERMADEM ALOE PLUS CREAM 80GM",
+          "amount": 252.0
+        },
+        {
+          "name": "PHOTOSTABLE SUNSCREEN EMUGEL",
+          "amount": 827.0
+        }
+      ]
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [],
+    "bills": [
+      {
+        "items": [
+          {
+            "name": "PYNOMAX TX CREAM 30GM",
+            "amount": 609.6
+          },
+          {
+            "name": "DERMADEM ALOE PLUS CREAM 80GM",
+            "amount": 252.0
+          },
+          {
+            "name": "PHOTOSTABLE SUNSCREEN EMUGEL",
+            "amount": 827.0
+          }
+        ]
+      }
+    ]
+  }
+}

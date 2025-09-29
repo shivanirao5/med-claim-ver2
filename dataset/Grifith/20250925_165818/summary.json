@@ -1,0 +1,148 @@
+{
+  "employee": "Grifith",
+  "createdAt": "2025-09-25T16:58:18.138767",
+  "files": [
+    {
+      "filename": "1-bill.jpeg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "billItems": [
+        {
+          "name": "HALINCTUS JUNIOR SYP",
+          "amount": 105.0
+        },
+        {
+          "name": "ITHA 200MG 5ML",
+          "amount": 114.57
+        },
+        {
+          "name": "PARALKA D SUSP",
+          "amount": 288.0
+        },
+        {
+          "name": "ALANCER 250MG SYP",
+          "amount": 44.35
+        },
+        {
+          "name": "ROVIT SYP",
+          "amount": 148.0
+        }
+      ]
+    },
+    {
+      "filename": "1-pre.jpeg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "HH linctus Junior",
+        "ITHA",
+        "Pro Alna B",
+        "Almacen",
+        "Rdvit"
+      ],
+      "billItems": []
+    },
+    {
+      "filename": "2-bill.jpeg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "billItems": [
+        {
+          "name": "Consultation",
+          "amount": 400.0
+        }
+      ]
+    },
+    {
+      "filename": "3a-pre.jpeg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "MUCAINE GEL"
+      ],
+      "billItems": []
+    },
+    {
+      "filename": "3-bill.jpeg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "billItems": [
+        {
+          "name": "MECAIN GEL SYP 200 ML",
+          "amount": 243.0
+        }
+      ]
+    },
+    {
+      "filename": "3b-pre.jpeg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "MUCAINE GEL"
+      ],
+      "billItems": []
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [
+      {
+        "names": [
+          "HH linctus Junior",
+          "ITHA",
+          "Pro Alna B",
+          "Almacen",
+          "Rdvit"
+        ]
+      },
+      {
+        "names": [
+          "MUCAINE GEL"
+        ]
+      },
+      {
+        "names": [
+          "MUCAINE GEL"
+        ]
+      }
+    ],
+    "bills": [
+      {
+        "items": [
+          {
+            "name": "HALINCTUS JUNIOR SYP",
+            "amount": 105.0
+          },
+          {
+            "name": "ITHA 200MG 5ML",
+            "amount": 114.57
+          },
+          {
+            "name": "PARALKA D SUSP",
+            "amount": 288.0
+          },
+          {
+            "name": "ALANCER 250MG SYP",
+            "amount": 44.35
+          },
+          {
+            "name": "ROVIT SYP",
+            "amount": 148.0
+          }
+        ]
+      },
+      {
+        "items": [
+          {
+            "name": "Consultation",
+            "amount": 400.0
+          }
+        ]
+      },
+      {
+        "items": [
+          {
+            "name": "MECAIN GEL SYP 200 ML",
+            "amount": 243.0
+          }
+        ]
+      }
+    ]
+  }
+}

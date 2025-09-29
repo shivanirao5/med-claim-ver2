@@ -1,0 +1,58 @@
+{
+  "employee": "Ravi",
+  "createdAt": "2025-09-25T16:31:22.539149",
+  "files": [
+    {
+      "filename": "1-pre.jpeg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "HH linctus Junior",
+        "ITHA",
+        "Pro Alna B",
+        "Almacen",
+        "Rdvit"
+      ],
+      "billItems": []
+    },
+    {
+      "filename": "3a-pre.jpeg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "MUCAINE GEL"
+      ],
+      "billItems": []
+    },
+    {
+      "filename": "3b-pre.jpeg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "MUCAINE GEL"
+      ],
+      "billItems": []
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [
+      {
+        "names": [
+          "HH linctus Junior",
+          "ITHA",
+          "Pro Alna B",
+          "Almacen",
+          "Rdvit"
+        ]
+      },
+      {
+        "names": [
+          "MUCAINE GEL"
+        ]
+      },
+      {
+        "names": [
+          "MUCAINE GEL"
+        ]
+      }
+    ],
+    "bills": []
+  }
+}

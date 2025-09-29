@@ -1,0 +1,22 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "Investigation Charges Disposable",
+      "amount": 15.0
+    },
+    {
+      "name": "Medicine Charges",
+      "amount": 3735.0
+    },
+    {
+      "name": "Doctors Consultation",
+      "amount": 200.0
+    },
+    {
+      "name": "Total",
+      "amount": 4250.0
+    }
+  ]
+}

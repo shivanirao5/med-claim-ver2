@@ -1,0 +1,26 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "HALINCTUS JUNIOR SYP",
+      "amount": 105.0
+    },
+    {
+      "name": "ITHA 200MG 5ML",
+      "amount": 114.57
+    },
+    {
+      "name": "PARALKA D SUSP",
+      "amount": 288.0
+    },
+    {
+      "name": "ALANCER 250MG SYP",
+      "amount": 44.35
+    },
+    {
+      "name": "ROVIT SYP",
+      "amount": 148.0
+    }
+  ]
+}

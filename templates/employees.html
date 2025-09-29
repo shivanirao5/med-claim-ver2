@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employee Records - Medical Bill Processor</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}" />
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='logo.png') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <style>
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .row { display: flex; gap: 8px; align-items: center; }
+    .btn { background: #2563eb; color: #fff; border: 0; padding: 10px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+    .btn:hover { background: #1d4ed8; transform: translateY(-1px); }
+    .btn-secondary { background: #6b7280; }
+    .btn-secondary:hover { background: #4b5563; }
+    .box { border: 1px dashed #cbd5e1; padding: 12px; border-radius: 8px; background: #f8fafc; }
+    .link { color: #2563eb; text-decoration: underline; cursor: pointer; }
+    .link:hover { color: #1d4ed8; }
+    .table { display: grid; gap: 6px; margin-top: 10px; }
+    .tr { display: grid; gap: 8px; align-items: center; padding: 12px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; transition: all 0.2s; }
+    .tr:hover { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .tr.th { background: #f1f5f9; font-weight: 700; }
+    .tr.employee { grid-template-columns: 1fr auto auto auto; }
+    .tr.session { grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto; }
+    .search-box { position: relative; flex: 1; }
+    .search-input { 
+      width: 100%; 
+      padding: 12px 16px; 
+      border: 2px solid #e5e7eb; 
+      border-radius: 8px; 
+      font-size: 16px;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { 
+      outline: none; 
+      border-color: #2563eb; 
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .clear-search { 
+      position: absolute; 
+      right: 12px; 
+      top: 50%; 
+      transform: translateY(-50%); 
+      background: none; 
+      border: none; 
+      cursor: pointer; 
+      color: #6b7280; 
+      display: none;
+    }
+    .summary-card { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      color: white; 
+      padding: 16px; 
+      border-radius: 12px; 
+      margin-bottom: 20px;
+    }
+    .summary-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+      gap: 12px; 
+      margin-top: 12px;
+    }
+    .summary-item { 
+      background: rgba(255,255,255,0.2); 
+      padding: 12px; 
+      border-radius: 8px; 
+      text-align: center;
+    }
+    .summary-number { 
+      font-size: 24px; 
+      font-weight: bold; 
+      display: block;
+    }
+    .summary-label { 
+      font-size: 12px; 
+      opacity: 0.9; 
+      margin-top: 4px;
+    }
+    .filter-tabs { 
+      display: flex; 
+      gap: 8px; 
+      margin: 16px 0;
+    }
+    .filter-tab { 
+      padding: 8px 16px; 
+      border: 1px solid #e5e7eb; 
+      background: white; 
+      border-radius: 6px; 
+      cursor: pointer; 
+      transition: all 0.2s;
+    }
+    .filter-tab.active { 
+      background: #2563eb; 
+      color: white; 
+      border-color: #2563eb;
+    }
+    .badge { 
+      display: inline-block; 
+      padding: 4px 8px; 
+      background: #dbeafe; 
+      color: #1e40af; 
+      border-radius: 12px; 
+      font-size: 12px; 
+      font-weight: 500;
+    }
+    .badge.success { background: #dcfce7; color: #166534; }
+    .badge.warning { background: #fef3c7; color: #92400e; }
+    .badge.error { background: #fecaca; color: #991b1b; }
+    .amount { 
+      font-weight: 600; 
+      color: #059669;
+    }
+    .loading { 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+      color: #6b7280;
+    }
+    .loading::before { 
+      content: ''; 
+      width: 16px; 
+      height: 16px; 
+      border: 2px solid #e5e7eb; 
+      border-top-color: #2563eb; 
+      border-radius: 50%; 
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { 
+      to { transform: rotate(360deg); }
+    }
+    .no-results { 
+      text-align: center; 
+      padding: 40px; 
+      color: #6b7280;
+    }
+    .brand { 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      justify-content: space-between; 
+      margin-bottom: 20px;
+    }
+    .brand-left { 
+      display: flex; 
+      align-items: center; 
+      gap: 12px;
+    }
+    .brand-logo { 
+      width: 40px; 
+      height: 40px; 
+      object-fit: contain;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+    .close {
+      color: #6b7280;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .close:hover {
+      color: #374151;
+    }
+    .medicine-list {
+      background: #f8fafc;
+      border-left: 4px solid #3b82f6;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .bill-item {
+      background: #ecfdf5;
+      border-left: 4px solid #059669;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 0 4px 4px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .simple-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+    .simple-title {
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand">
+      <div class="brand-left">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="MED Claim Assistant Logo" class="brand-logo" onerror="this.style.display='none'" />
+        <h1 style="margin:0; color: #1f2937;">👥 Employee Records</h1>
+      </div>
+      <a href="/" class="btn" style="text-decoration:none;">Back to Home</a>
+    </div>
+
+    <!-- Summary Dashboard -->
+    <div id="summaryDashboard" class="summary-card" style="display:none;">
+      <h3 style="margin:0; font-size: 18px;">📊 System Overview</h3>
+      <div class="summary-grid" id="summaryGrid">
+        <!-- Summary items will be populated here -->
+      </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="box">
+      <div class="row">
+        <div class="search-box">
+          <input type="text" id="empSearch" placeholder="🔍 Type employee name to search..." class="search-input" />
+          <button class="clear-search" id="clearSearch">×</button>
+        </div>
+        <button class="btn" id="refreshBtn">🔄 Refresh Data</button>
+      </div>
+      
+      <div class="filter-tabs" id="filterTabs">
+        <div class="filter-tab active" data-filter="all">📋 All Employees</div>
+        <div class="filter-tab" data-filter="recent">⏰ Recent Activity</div>
+        <div class="filter-tab" data-filter="high-volume">📊 Active Users</div>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="empResults" class="box" style="margin-top:12px;">
+      <div class="loading">Loading employee data...</div>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const empSearch = document.getElementById('empSearch');
+    const clearSearch = document.getElementById('clearSearch');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const empResults = document.getElementById('empResults');
+    const summaryDashboard = document.getElementById('summaryDashboard');
+    const summaryGrid = document.getElementById('summaryGrid');
+    const filterTabs = document.querySelectorAll('.filter-tab');
+
+    // State
+    let allEmployeesData = [];
+    let allSessionsData = {};
+    let currentFilter = 'all';
+    let currentEmployee = '';
+    let searchTimeout = null;
+
+    // Utility functions
+    function escapeHtml(s) { 
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); 
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return 'N/A';
+      try {
+        return new Date(dateStr).toLocaleDateString('en-US', {
+          year: 'numeric', month: 'short', day: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        });
+      } catch {
+        return dateStr;
+      }
+    }
+
+    function formatCurrency(amount) {
+      return amount ? `₹${amount.toFixed(2)}` : '₹0.00';
+    }
+
+    function debounce(func, wait) {
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(searchTimeout);
+          func(...args);
+        };
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(later, wait);
+      };
+    }
+
+    // Data fetching
+    async function fetchAllEmployees() {
+      try {
+        const res = await fetch('/api/datasets?limit=1000');
+        const data = await res.json();
+        return {
+          employees: data.employees || [],
+          employeesWithStats: data.employeesWithStats || []
+        };
+      } catch (e) {
+        console.error('Error fetching employees:', e);
+        return { employees: [], employeesWithStats: [] };
+      }
+    }
+
+    async function fetchEmployeeData(employee) {
+      try {
+        const res = await fetch(`/api/datasets?employee=${encodeURIComponent(employee)}&limit=100`);
+        const data = await res.json();
+        return data.sessions || [];
+      } catch (e) {
+        console.error(`Error fetching data for ${employee}:`, e);
+        return [];
+      }
+    }
+
+    async function fetchAnalytics() {
+      try {
+        const res = await fetch('/api/analytics/overview');
+        return await res.json();
+      } catch (e) {
+        console.error('Error fetching analytics:', e);
+        return null;
+      }
+    }
+
+    async function loadAllData() {
+      empResults.innerHTML = '<div class="loading">Loading employee data...</div>';
+      
+      try {
+        // Fetch analytics first for dashboard
+        const analytics = await fetchAnalytics();
+        if (analytics && !analytics.error) {
+          generateSummaryFromAnalytics(analytics);
+        }
+        
+        // Fetch employee data
+        const employeeData = await fetchAllEmployees();
+        allEmployeesData = employeeData.employees;
+        
+        // If we have stats, use them; otherwise fetch sessions individually
+        if (employeeData.employeesWithStats && employeeData.employeesWithStats.length > 0) {
+          // Use pre-computed stats from database
+          employeeData.employeesWithStats.forEach(emp => {
+            allSessionsData[emp.name] = []; // We'll lazy load sessions when needed
+          });
+        } else {
+          // Fallback: fetch sessions for each employee (for smaller datasets)
+          if (allEmployeesData.length <= 50) { // Only for small datasets
+            const sessionPromises = allEmployeesData.map(async (emp) => {
+              const sessions = await fetchEmployeeData(emp);
+              allSessionsData[emp] = sessions;
+              return { employee: emp, sessions };
+            });
+            
+            await Promise.all(sessionPromises);
+          }
+        }
+        
+        // Generate summary if not already done
+        if (!analytics || analytics.error) {
+          generateSummary();
+        }
+        
+        // Render based on current view
+        if (currentEmployee) {
+          renderEmployeeSessions(currentEmployee);
+        } else {
+          renderEmployeeList();
+        }
+        
+      } catch (e) {
+        empResults.innerHTML = `<div style="color:#b91c1c; text-align:center; padding:20px;">
+          <strong>Error loading data:</strong> ${escapeHtml(e.message || String(e))}
+          <br><br>
+          <button class="btn" onclick="loadAllData()">Retry</button>
+        </div>`;
+      }
+    }
+
+    // Summary generation
+    function generateSummaryFromAnalytics(analytics) {
+      summaryGrid.innerHTML = `
+        <div class="summary-item">
+          <span class="summary-number">${analytics.totalEmployees || 0}</span>
+          <div class="summary-label">Total Employees</div>
+        </div>
+        <div class="summary-item">
+          <span class="summary-number">${analytics.totalSessions || 0}</span>
+          <div class="summary-label">Total Sessions</div>
+        </div>
+        <div class="summary-item">
+          <span class="summary-number">${analytics.totalFiles || 0}</span>
+          <div class="summary-label">Files Processed</div>
+        </div>
+        <div class="summary-item">
+          <span class="summary-number">${formatCurrency(analytics.totalAmount || 0)}</span>
+          <div class="summary-label">Total Amount</div>
+        </div>
+        <div class="summary-item">
+          <span class="summary-number">${analytics.recentActivity || 0}</span>
+          <div class="summary-label">Recent Activity</div>
+        </div>
+        <div class="summary-item">
+          <span class="summary-number">${analytics.dailyStats ? analytics.dailyStats.length : 0}</span>
+          <div class="summary-label">Active Days</div>
+        </div>
+      `;
+      
+      summaryDashboard.style.display = 'block';
+    }
+
+    function generateSummary() {
+      let totalEmployees = allEmployeesData.length;
+      let totalSessions = 0;
+      let totalFiles = 0;
+      let totalBillAmount = 0;
+      let totalPrescriptions = 0;
+      let recentActivityCount = 0;
+      
+      const oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+      
+      Object.values(allSessionsData).forEach(sessions => {
+        totalSessions += sessions.length;
+        
+        sessions.forEach(session => {
+          if (session.summary) {
+            const summary = session.summary;
+            
+            // Count files
+            if (summary.files) {
+              totalFiles += summary.files.length;
+            }
+            
+            // Count recent activity
+            if (summary.createdAt) {
+              const sessionDate = new Date(summary.createdAt);
+              if (sessionDate > oneWeekAgo) {
+                recentActivityCount++;
+              }
+            }
+            
+            // Count prescriptions and bill amounts
+            if (summary.aggregated) {
+              if (summary.aggregated.prescriptions) {
+                totalPrescriptions += summary.aggregated.prescriptions.length;
+              }
+              
+              if (summary.aggregated.bills) {
+                summary.aggregated.bills.forEach(bill => {
+                  if (bill.items) {
+                    bill.items.forEach(item => {
+                      if (item.amount) {
+                        totalBillAmount += item.amount;
+                      }
+                    });
+                  }
+                });
+              }
+            }
+          }
+        });
+      });
+
+      generateSummaryFromAnalytics({
+        totalEmployees,
+        totalSessions,
+        totalFiles,
+        totalAmount: totalBillAmount,
+        recentActivity: recentActivityCount
+      });
+    }
+
+    // Rendering functions
+    function renderEmployeeList() {
+      const searchTerm = empSearch.value.toLowerCase().trim();
+      
+      let filteredEmployees = allEmployeesData.filter(emp => 
+        emp.toLowerCase().includes(searchTerm)
+      );
+      
+      // Apply current filter
+      if (currentFilter === 'recent') {
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+        
+        filteredEmployees = filteredEmployees.filter(emp => {
+          const sessions = allSessionsData[emp] || [];
+          return sessions.some(session => {
+            if (session.summary && session.summary.createdAt) {
+              const sessionDate = new Date(session.summary.createdAt);
+              return sessionDate > oneWeekAgo;
+            }
+            return false;
+          });
+        });
+      } else if (currentFilter === 'high-volume') {
+        filteredEmployees = filteredEmployees.filter(emp => {
+          const sessions = allSessionsData[emp] || [];
+          return sessions.length >= 3; // Consider 3+ sessions as high volume
+        });
+      }
+      
+      if (!filteredEmployees.length) {
+        empResults.innerHTML = `<div class="no-results">
+          <h3>No employees found</h3>
+          <p>Try adjusting your search terms or filters</p>
+        </div>`;
+        return;
+      }
+      
+      const employeeRows = filteredEmployees.map(emp => {
+        const sessions = allSessionsData[emp] || [];
+        const totalFiles = sessions.reduce((acc, s) => acc + (s.summary?.files?.length || 0), 0);
+        const latestSession = sessions.sort((a, b) => 
+          new Date(b.summary?.createdAt || 0) - new Date(a.summary?.createdAt || 0)
+        )[0];
+        
+        const totalAmount = sessions.reduce((acc, s) => {
+          if (s.summary?.aggregated?.bills) {
+            return acc + s.summary.aggregated.bills.reduce((billAcc, bill) => {
+              return billAcc + (bill.items || []).reduce((itemAcc, item) => 
+                itemAcc + (item.amount || 0), 0);
+            }, 0);
+          }
+          return acc;
+        }, 0);
+        
+        return `
+          <div class="tr employee">
+            <div>
+              <strong>${escapeHtml(emp)}</strong>
+              <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">
+                Last activity: ${latestSession?.summary?.createdAt ? formatDate(latestSession.summary.createdAt) : 'No activity'}
+              </div>
+            </div>
+            <div>
+              <span class="badge">${sessions.length} sessions</span>
+            </div>
+            <div>
+              <span class="badge success">${totalFiles} files</span>
+            </div>
+            <div class="amount">${formatCurrency(totalAmount)}</div>
+            <div>
+              <button class="btn" onclick="viewEmployee('${emp}')">View Details</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      empResults.innerHTML = `
+        <div class="table">
+          <div class="tr th employee">
+            <div>Employee Name</div>
+            <div>Sessions</div>
+            <div>Files</div>
+            <div>Total Amount</div>
+            <div>Actions</div>
+          </div>
+          ${employeeRows}
+        </div>
+      `;
+    }
+
+    async function renderEmployeeSessions(employee) {
+      // Show loading state
+      empResults.innerHTML = '<div class="loading">Loading sessions for ' + escapeHtml(employee) + '...</div>';
+      
+      // Lazy load sessions if not already loaded
+      if (!allSessionsData[employee] || allSessionsData[employee].length === 0) {
+        try {
+          const sessions = await fetchEmployeeData(employee);
+          allSessionsData[employee] = sessions;
+        } catch (e) {
+          empResults.innerHTML = `<div style="color:#b91c1c; text-align:center; padding:20px;">
+            <strong>Error loading sessions:</strong> ${escapeHtml(e.message || String(e))}
+            <br><br>
+            <button class="btn" onclick="backToEmployees()">Back to Employees</button>
+          </div>`;
+          return;
+        }
+      }
+      
+      const sessions = allSessionsData[employee] || [];
+      
+      if (!sessions.length) {
+        empResults.innerHTML = `<div class="no-results">
+          <h3>No sessions found for ${escapeHtml(employee)}</h3>
+          <p>This employee hasn't uploaded any documents yet</p>
+          <button class="btn" onclick="backToEmployees()">Back to Employees</button>
+        </div>`;
+        return;
+      }
+
+      // Calculate daily summaries
+      const dailySummaries = {};
+      sessions.forEach(session => {
+        if (session.summary?.createdAt) {
+          const date = new Date(session.summary.createdAt).toDateString();
+          if (!dailySummaries[date]) {
+            dailySummaries[date] = { sessions: 0, files: 0, amount: 0, prescriptions: 0 };
+          }
+          dailySummaries[date].sessions++;
+          dailySummaries[date].files += session.summary.files?.length || 0;
+          
+          if (session.summary.aggregated?.bills) {
+            session.summary.aggregated.bills.forEach(bill => {
+              (bill.items || []).forEach(item => {
+                dailySummaries[date].amount += item.amount || 0;
+              });
+            });
+          }
+          
+          if (session.summary.aggregated?.prescriptions) {
+            dailySummaries[date].prescriptions += session.summary.aggregated.prescriptions.length;
+          }
+        }
+      });
+
+      const sessionRows = sessions.map(session => {
+        const summary = session.summary || {};
+        const files = summary.files || [];
+        const billItems = summary.aggregated?.bills?.reduce((acc, bill) => acc.concat(bill.items || []), []) || [];
+        const prescriptions = summary.aggregated?.prescriptions?.reduce((acc, presc) => acc.concat(presc.names || []), []) || [];
+        const totalAmount = billItems.reduce((acc, item) => acc + (item.amount || 0), 0);
+        
+        return `
+          <div class="tr session">
+            <div>
+              <strong>${escapeHtml(session.session)}</strong>
+              <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">
+                ${summary.createdAt ? formatDate(summary.createdAt) : 'Unknown date'}
+              </div>
+            </div>
+            <div>
+              <span class="badge">${files.length} files</span>
+            </div>
+            <div>
+              <span class="badge success">${prescriptions.length} medicines</span>
+            </div>
+            <div>
+              <span class="badge warning">${billItems.length} items</span>
+            </div>
+            <div class="amount">${formatCurrency(totalAmount)}</div>
+            <div>
+              <button class="btn" onclick="viewSessionDetails('${employee}', '${escapeHtml(session.session)}')">
+                View Details
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Daily summary section
+      const dailySummaryRows = Object.entries(dailySummaries)
+        .sort(([a], [b]) => new Date(b) - new Date(a))
+        .slice(0, 7) // Show last 7 days
+        .map(([date, data]) => `
+          <div class="tr">
+            <div><strong>${new Date(date).toLocaleDateString()}</strong></div>
+            <div><span class="badge">${data.sessions} sessions</span></div>
+            <div><span class="badge">${data.files} files</span></div>
+            <div><span class="badge success">${data.prescriptions} prescriptions</span></div>
+            <div class="amount">${formatCurrency(data.amount)}</div>
+          </div>
+        `).join('');
+
+      empResults.innerHTML = `
+        <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <h2 style="margin: 0;">Sessions for ${escapeHtml(employee)}</h2>
+          <button class="btn btn-secondary" onclick="backToEmployees()">← Back to Employees</button>
+        </div>
+        
+        ${Object.keys(dailySummaries).length > 0 ? `
+          <div class="box" style="margin-bottom: 20px;">
+            <h3 style="margin-top: 0;">Daily Summary (Last 7 Days)</h3>
+            <div class="table">
+              <div class="tr th" style="grid-template-columns: 2fr 1fr 1fr 1fr 1fr;">
+                <div>Date</div>
+                <div>Sessions</div>
+                <div>Files</div>
+                <div>Prescriptions</div>
+                <div>Amount</div>
+              </div>
+              ${dailySummaryRows}
+            </div>
+          </div>
+        ` : ''}
+        
+        <div class="table">
+          <div class="tr th session">
+            <div>Session ID</div>
+            <div>Files</div>
+            <div>Prescriptions</div>
+            <div>Bill Items</div>
+            <div>Total Amount</div>
+            <div>Actions</div>
+          </div>
+          ${sessionRows}
+        </div>
+      `;
+    }
+
+    // Event handlers
+    async function handleSearch() {
+      const searchTerm = empSearch.value.toLowerCase().trim();
+      
+      // Show/hide clear button
+      clearSearch.style.display = searchTerm ? 'block' : 'none';
+      
+      // If we have a specific employee selected, go back to employee list view
+      if (currentEmployee && searchTerm !== currentEmployee.toLowerCase()) {
+        currentEmployee = '';
+      }
+      
+      // If search term is provided, use API search for better performance
+      if (searchTerm.length > 0) {
+        try {
+          const res = await fetch(`/api/search/employees?q=${encodeURIComponent(searchTerm)}&limit=50`);
+          const data = await res.json();
+          
+          if (data.employees) {
+            // Use search results
+            const searchResults = data.employees.map(emp => emp.name || emp);
+            renderEmployeeListFromSearch(searchResults, data.employees);
+            return;
+          }
+        } catch (e) {
+          console.error('Search API failed, falling back to local search:', e);
+        }
+      }
+      
+      // Fallback to local search
+      renderEmployeeList();
+    }
+
+    function renderEmployeeListFromSearch(employeeNames, employeeStats) {
+      if (!employeeNames.length) {
+        empResults.innerHTML = `<div class="no-results">
+          <h3>No employees found</h3>
+          <p>No employees match your search "${escapeHtml(empSearch.value)}"</p>
+        </div>`;
+        return;
+      }
+      
+      const employeeRows = employeeNames.map((empName, index) => {
+        const stats = employeeStats[index] || {};
+        const sessionCount = stats.sessionCount || 0;
+        const fileCount = stats.fileCount || 0;
+        const totalAmount = stats.totalAmount || 0;
+        const lastActivity = stats.lastActivity || 'No activity';
+        
+        return `
+          <div class="tr employee">
+            <div>
+              <strong>${escapeHtml(empName)}</strong>
+              <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">
+                Last activity: ${lastActivity !== 'No activity' ? formatDate(lastActivity) : lastActivity}
+              </div>
+            </div>
+            <div>
+              <span class="badge">${sessionCount} sessions</span>
+            </div>
+            <div>
+              <span class="badge success">${fileCount} files</span>
+            </div>
+            <div class="amount">${formatCurrency(totalAmount)}</div>
+            <div>
+              <button class="btn" onclick="viewEmployee('${empName}')">View Details</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      empResults.innerHTML = `
+        <div style="margin-bottom: 10px; color: #6b7280; font-size: 14px;">
+          Showing ${employeeNames.length} employees matching "${escapeHtml(empSearch.value)}"
+        </div>
+        <div class="table">
+          <div class="tr th employee">
+            <div>Employee Name</div>
+            <div>Sessions</div>
+            <div>Files</div>
+            <div>Total Amount</div>
+            <div>Actions</div>
+          </div>
+          ${employeeRows}
+        </div>
+      `;
+    }
+
+    function handleFilterChange(filter) {
+      currentFilter = filter;
+      filterTabs.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.filter === filter);
+      });
+      
+      if (!currentEmployee) {
+        renderEmployeeList();
+      }
+    }
+
+    function clearSearchInput() {
+      empSearch.value = '';
+      clearSearch.style.display = 'none';
+      currentEmployee = '';
+      renderEmployeeList();
+    }
+
+    // Global functions
+    window.viewEmployee = async function(employee) {
+      currentEmployee = employee;
+      empSearch.value = employee;
+      clearSearch.style.display = 'block';
+      await renderEmployeeSessions(employee);
+    };
+
+    window.backToEmployees = function() {
+      currentEmployee = '';
+      empSearch.value = '';
+      clearSearch.style.display = 'none';
+      renderEmployeeList();
+    };
+
+
+
+    // Event listeners
+    const debouncedSearch = debounce(handleSearch, 300);
+    empSearch.addEventListener('input', debouncedSearch);
+    empSearch.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSearch();
+      }
+    });
+
+    clearSearch.addEventListener('click', clearSearchInput);
+    refreshBtn.addEventListener('click', loadAllData);
+
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => handleFilterChange(tab.dataset.filter));
+    });
+
+    // Modal functions
+    window.viewSessionDetails = async function(employee, sessionId) {
+      const modal = document.getElementById('sessionModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalBody = document.getElementById('modalBody');
+      
+      modalTitle.textContent = `${employee} - ${sessionId}`;
+      modalBody.innerHTML = '<div class="loading">Loading session details...</div>';
+      modal.style.display = 'block';
+      
+      try {
+        const response = await fetch(`/api/datasets/${encodeURIComponent(employee)}/${encodeURIComponent(sessionId)}`);
+        const data = await response.json();
+        
+        if (data.summary) {
+          renderSessionDetailsModal(data.summary, data.files || []);
+        } else {
+          modalBody.innerHTML = '<p>No session details available.</p>';
+        }
+      } catch (error) {
+        modalBody.innerHTML = `<p style="color: #b91c1c;">Error loading session details: ${error.message}</p>`;
+      }
+    };
+
+    window.closeModal = function() {
+      document.getElementById('sessionModal').style.display = 'none';
+    };
+
+    function renderSessionDetailsModal(summary, files) {
+      const modalBody = document.getElementById('modalBody');
+      
+      let content = '';
+      
+      // Session info
+      content += `<div class="simple-card">
+        <div class="simple-title">Session Information</div>
+        <p><strong>Date:</strong> ${summary.createdAt ? formatDate(summary.createdAt) : 'Unknown'}</p>
+        <p><strong>Files Processed:</strong> ${summary.files ? summary.files.length : 0}</p>
+      </div>`;
+      
+      // Prescriptions
+      if (summary.aggregated && summary.aggregated.prescriptions && summary.aggregated.prescriptions.length > 0) {
+        content += `<div class="simple-card">
+          <div class="simple-title">💊 Prescribed Medicines</div>`;
+        
+        summary.aggregated.prescriptions.forEach((prescription, index) => {
+          if (prescription.names && prescription.names.length > 0) {
+            content += `<div class="medicine-list">
+              <strong>Prescription ${index + 1}:</strong><br>`;
+            prescription.names.forEach(medicine => {
+              content += `• ${escapeHtml(medicine)}<br>`;
+            });
+            content += `</div>`;
+          }
+        });
+        content += `</div>`;
+      }
+      
+      // Bills
+      if (summary.aggregated && summary.aggregated.bills && summary.aggregated.bills.length > 0) {
+        content += `<div class="simple-card">
+          <div class="simple-title">🧾 Bill Items</div>`;
+        
+        let totalAmount = 0;
+        summary.aggregated.bills.forEach((bill, index) => {
+          if (bill.items && bill.items.length > 0) {
+            content += `<div style="margin-bottom: 16px;">
+              <strong>Bill ${index + 1}:</strong><br>`;
+            
+            bill.items.forEach(item => {
+              const amount = item.amount || 0;
+              totalAmount += amount;
+              content += `<div class="bill-item">
+                <span>${escapeHtml(item.name)}</span>
+                <span class="amount">${formatCurrency(amount)}</span>
+              </div>`;
+            });
+            content += `</div>`;
+          }
+        });
+        
+        content += `<div style="border-top: 2px solid #059669; padding-top: 12px; margin-top: 16px;">
+          <strong style="font-size: 18px;">Total Amount: ${formatCurrency(totalAmount)}</strong>
+        </div></div>`;
+      }
+      
+      // Files list (simplified)
+      if (files && files.length > 0) {
+        content += `<div class="simple-card">
+          <div class="simple-title">📁 Uploaded Files</div>`;
+        files.forEach(file => {
+          if (!file.endsWith('.json')) { // Only show image files, not JSON
+            content += `<p>• ${escapeHtml(file)}</p>`;
+          }
+        });
+        content += `</div>`;
+      }
+      
+      if (!content.includes('simple-card')) {
+        content = '<p>No data available for this session.</p>';
+      }
+      
+      modalBody.innerHTML = content;
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('sessionModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+
+    // Initialize
+    loadAllData();
+  </script>
+
+  <!-- Session Details Modal -->
+  <div id="sessionModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Session Details</h2>
+        <span class="close" onclick="closeModal()">&times;</span>
+      </div>
+      <div id="modalBody">
+        <!-- Content will be loaded here -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>

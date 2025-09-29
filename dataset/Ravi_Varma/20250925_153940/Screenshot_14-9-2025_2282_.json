@@ -1,0 +1,10 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "Consultation / Procedure",
+      "amount": 500.0
+    }
+  ]
+}

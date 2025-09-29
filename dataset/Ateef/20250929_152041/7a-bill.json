@@ -1,0 +1,14 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "ZIMBA 1% CREAM 30GM",
+      "amount": 240.0
+    },
+    {
+      "name": "RWAZI 500 MG",
+      "amount": 79.16
+    }
+  ]
+}

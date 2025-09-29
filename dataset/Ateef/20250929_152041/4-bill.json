@@ -1,0 +1,10 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "first dose of (pneumococcal vaccine)",
+      "amount": 4600.0
+    }
+  ]
+}
