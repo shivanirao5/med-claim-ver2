@@ -1,12 +1,101 @@
-// Using server-side API key; API key UI removed
+// Enhanced Medical Claim Assistant - Modern JavaScript Application
+// Version: 2.0 - Professional GenAI Developer Enhanced
 
-const prescriptionInput = document.getElementById('prescriptionInput');
-const analyzePrescriptionBtn = document.getElementById('analyzePrescription');
+// Performance monitoring
+const performance_start = performance.now();
+
+// Modern Theme Management
+class ThemeManager {
+  constructor() {
+    this.theme = localStorage.getItem('theme') || 'light';
+    this.init();
+  }
+  
+  init() {
+    document.documentElement.setAttribute('data-theme', this.theme);
+    this.updateThemeButton();
+  }
+  
+  toggle() {
+    this.theme = this.theme === 'light' ? 'dark' : 'light';
+    localStorage.setItem('theme', this.theme);
+    document.documentElement.setAttribute('data-theme', this.theme);
+    this.updateThemeButton();
+    this.showToast('Theme updated to ' + this.theme + ' mode');
+  }
+  
+  updateThemeButton() {
+    const themeIcon = document.getElementById('themeIcon');
+    if (themeIcon) {
+      themeIcon.textContent = this.theme === 'light' ? 'Dark' : 'Light';
+    }
+  }
+  
+  showToast(message) {
+    // Simple toast for theme changes
+    console.log(message);
+  }
+}
+
+// Enhanced Progress Management
+class ProgressManager {
+  constructor(containerId, fillId, textId, percentId) {
+    this.container = document.getElementById(containerId);
+    this.fill = document.getElementById(fillId);
+    this.text = document.getElementById(textId);
+    this.percent = document.getElementById(percentId);
+  }
+  
+  show() {
+    if (this.container) this.container.style.display = 'block';
+  }
+  
+  hide() {
+    if (this.container) this.container.style.display = 'none';
+  }
+  
+  update(percentage, text) {
+    if (this.fill) this.fill.style.width = percentage + '%';
+    if (this.text) this.text.textContent = text;
+    if (this.percent) this.percent.textContent = Math.round(percentage) + '%';
+  }
+}
+
+// Performance Analytics
+class AnalyticsManager {
+  constructor() {
+    this.events = [];
+    this.startTime = performance.now();
+  }
+  
+  trackEvent(event, data = {}) {
+    this.events.push({
+      event,
+      data,
+      timestamp: performance.now() - this.startTime
+    });
+  }
+  
+  getMetrics() {
+    return {
+      totalEvents: this.events.length,
+      sessionDuration: performance.now() - this.startTime,
+      events: this.events
+    };
+  }
+}
+
+// Initialize managers
+const themeManager = new ThemeManager();
+const progressManager = new ProgressManager('uploadProgress', 'progressFill', 'progressText', 'progressPercent');
+const analytics = new AnalyticsManager();
+
+// DOM Elements with enhanced error handling
 const prescriptionResults = document.getElementById('prescriptionResults');
-
-const billInput = document.getElementById('billInput');
-const analyzeBillBtn = document.getElementById('analyzeBill');
+const prescriptionResultsContent = document.getElementById('prescriptionResultsContent');
+const reAnalyzeBillBtn = document.getElementById('reAnalyzeBill');
 const billResults = document.getElementById('billResults');
+const billResultsContent = document.getElementById('billResultsContent');
 
 const compareBtn = document.getElementById('compareBtn');
 const compareResults = document.getElementById('compareResults');
@@ -21,6 +110,7 @@ const newAnalysisBtn = document.getElementById('newAnalysisBtn');
 const bulkInput = document.getElementById('bulkInput');
 const bulkThumbs = document.getElementById('bulkThumbs');
 const employeeNameInput = document.getElementById('employeeName');
+const employeeIdInput = document.getElementById('employeeId');
 const dropZone = document.getElementById('dropZone');
 const globalSummary = document.getElementById('globalSummary');
 
@@ -65,6 +155,25 @@ let lastBillSig = null;
 function fileSignature(file) {
   if (!file) return null;
   return `${file.name}|${file.size}|${file.lastModified}`;
+}
+
+function validateEmployeeInfo() {
+  const name = (employeeNameInput?.value || '').trim();
+  const id = (employeeIdInput?.value || '').trim();
+  
+  if (!name) {
+    showPopup('error', 'Employee Name Required', 'Please enter the employee name before processing documents.');
+    employeeNameInput?.focus();
+    return false;
+  }
+  
+  if (!id) {
+    showPopup('error', 'Employee ID Required', 'Please enter the employee ID to avoid confusion with employees having similar names.');
+    employeeIdInput?.focus();
+    return false;
+  }
+  
+  return true;
 }
 
 // Helper functions for state management
@@ -141,13 +250,19 @@ function updateCompareAvailability() {
   renderGlobalSummary();
 }
 
-// Custom Popup System
-function showPopup(type, title, message, onConfirm = null, onCancel = null) {
+// Notification System - Reduced popups for better UX
+function showPopup(type, title, message, onConfirm = null, onCancel = null, suppressSuccess = false) {
+  // For success messages, show subtle notification instead of modal
+  if (type === 'success' && !onConfirm && !onCancel && suppressSuccess) {
+    showToast(type, title, message);
+    return;
+  }
+  
   const icons = {
-    success: '✅',
-    error: '❌',
-    warning: '⚠️',
-    info: 'ℹ️'
+    success: 'SUCCESS',
+    error: 'ERROR',
+    warning: 'WARNING',
+    info: 'INFO'
   };
   
   popupIcon.textContent = icons[type] || icons.info;
@@ -174,6 +289,35 @@ function showPopup(type, title, message, onConfirm = null, onCancel = null) {
       onCancel();
     };
   }
+}
+
+// Toast notification for non-critical success messages
+function showToast(type, title, message) {
+  const toast = document.createElement('div');
+  const icons = { success: '✅', warning: '⚠️', error: '❌', info: 'ℹ️' };
+  
+  toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${type === 'success' ? '#10b981' : type === 'warning' ? '#f59e0b' : '#ef4444'};
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1001;
+    max-width: 300px;
+    font-size: 14px;
+    animation: slideIn 0.3s ease;
+  `;
+  
+  toast.innerHTML = `${icons[type]} <strong>${title}</strong><br>${message}`;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.animation = 'slideOut 0.3s ease';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
 }
 
 function hidePopup() {
@@ -242,36 +386,18 @@ function hideFileInfo(fileInfoElement) {
   }
 })();
 
-prescriptionInput.addEventListener('change', () => {
-  const hasFile = prescriptionInput.files?.length;
-  analyzePrescriptionBtn.disabled = !hasFile;
-  
-  if (hasFile) {
-    showFileInfo(prescriptionInput.files[0], prescriptionFileInfo, prescriptionFileName, prescriptionFileSize);
-  } else {
-    hideFileInfo(prescriptionFileInfo);
-  }
-  updateCompareAvailability();
-});
+// Individual file inputs removed - using bulk upload only
 
-billInput.addEventListener('change', () => {
-  const hasFile = billInput.files?.length;
-  analyzeBillBtn.disabled = !hasFile;
-  
-  if (hasFile) {
-    showFileInfo(billInput.files[0], billFileInfo, billFileName, billFileSize);
-  } else {
-    hideFileInfo(billFileInfo);
-  }
-  updateCompareAvailability();
-});
+
 
 // Remove file buttons
 removePrescriptionFile.addEventListener('click', () => {
   prescriptionInput.value = '';
   analyzePrescriptionBtn.disabled = true;
+  reAnalyzePrescriptionBtn.disabled = true;
   hideFileInfo(prescriptionFileInfo);
   prescriptionResults.innerHTML = '';
+  prescriptionResults.style.display = 'none';
   prescriptionEditor.innerHTML = '';
   
   // Remove current prescription if it exists
@@ -289,8 +415,10 @@ removePrescriptionFile.addEventListener('click', () => {
 removeBillFile.addEventListener('click', () => {
   billInput.value = '';
   analyzeBillBtn.disabled = true;
+  reAnalyzeBillBtn.disabled = true;
   hideFileInfo(billFileInfo);
   billResults.innerHTML = '';
+  billResults.style.display = 'none';
   billEditor.innerHTML = '';
   
   // Remove current bill if it exists
@@ -310,8 +438,6 @@ newAnalysisBtn.addEventListener('click', () => {
   // provide OK and Cancel actions
   showPopup('warning', 'Reset Analysis', 'Are you sure you want to start a new analysis? This will clear all current data.', () => {
     // Reset file inputs
-    prescriptionInput.value = '';
-    billInput.value = '';
     if (bulkInput) bulkInput.value = '';
     
     // Reset state
@@ -320,94 +446,96 @@ newAnalysisBtn.addEventListener('click', () => {
     state.currentPrescriptionIndex = -1;
     state.currentBillIndex = -1;
     state._rows = [];
-    lastPrescriptionSig = null;
-    lastBillSig = null;
     
     // Reset UI elements
-    prescriptionResults.innerHTML = '';
-    billResults.innerHTML = '';
-    compareResults.innerHTML = '';
+    if (prescriptionResults) prescriptionResults.style.display = 'none';
+    if (billResults) billResults.style.display = 'none';
+    if (compareResults) compareResults.innerHTML = '';
     if (mappingResults) mappingResults.innerHTML = '';
-    prescriptionEditor.innerHTML = '';
-    billEditor.innerHTML = '';
+    if (prescriptionEditor) prescriptionEditor.innerHTML = '';
+    if (billEditor) billEditor.innerHTML = '';
     if (bulkThumbs) bulkThumbs.innerHTML = '';
     if (globalSummary) globalSummary.innerHTML = '';
     
-    // Hide file info and progress
-    hideFileInfo(prescriptionFileInfo);
-    hideFileInfo(billFileInfo);
-    // no progress elements
+    // Hide analysis sections
+    const analysisSection = document.getElementById('analysisSection');
+    const analysisResults = document.getElementById('analysisResults');
+    if (analysisSection) analysisSection.style.display = 'none';
+    if (analysisResults) analysisResults.style.display = 'none';
     
     // Reset button states
-    analyzePrescriptionBtn.disabled = true;
-    analyzeBillBtn.disabled = true;
-    compareBtn.disabled = true;
     if (exportCsvBtn) exportCsvBtn.disabled = true;
     if (exportPdfBtn) exportPdfBtn.disabled = true;
     if (employeeNameInput) employeeNameInput.value = '';
+    if (employeeIdInput) employeeIdInput.value = '';
     
-    // Update count badges and accumulated data
+    // Update displays
     updateCountBadges();
     updateCompareAvailability();
     
-    showPopup('success', 'Analysis Reset', 'All data has been cleared. You can now start a new analysis.');
+    showToast('success', 'Data Cleared', 'Ready for new analysis');
   }, () => {
     // Cancel pressed: nothing to do
   });
 });
 
-analyzePrescriptionBtn.addEventListener('click', async () => {
-  if (!prescriptionInput.files?.length) { 
-    showPopup('error', 'No File Selected', 'Please choose a prescription image first.');
-    return; 
-  }
-  
-  const file = prescriptionInput.files[0];
-  const sig = fileSignature(file);
-  if (sig && sig === lastPrescriptionSig) {
-    showPopup('warning', 'Same Image Detected', 'You have already analyzed this same prescription image. Proceed to analyze again?', async () => {
-      await analyzePrescriptionFile(file);
-    }, () => {});
-    return;
-  }
-  await analyzePrescriptionFile(file);
-});
+// Individual analyze buttons removed - using bulk upload workflow only
 
-async function analyzePrescriptionFile(file) {
+async function analyzePrescriptionFile(file, isReAnalysis = false) {
   analyzePrescriptionBtn.disabled = true;
+  reAnalyzePrescriptionBtn.disabled = true;
   
-  prescriptionResults.innerHTML = '<em>Analyzing prescription...</em>';
+  prescriptionResults.style.display = 'block';
+  if (prescriptionResultsContent) {
+    prescriptionResultsContent.innerHTML = '<em>Analyzing prescription...</em>';
+  } else {
+    prescriptionResults.innerHTML = '<em>Analyzing prescription...</em>';
+  }
   
   try {
     const employee = (employeeNameInput?.value || '').trim();
-    const { prescriptionNames } = await callServerWithEmployee('/api/ocr/prescription', file, employee);
+    const employeeId = (employeeIdInput?.value || '').trim();
+    const employeeData = `${employee} (ID: ${employeeId})`;
+    
+    const { prescriptionNames } = await callServerWithEmployee('/api/ocr/prescription', file, employeeData);
     const names = prescriptionNames || [];
-    addPrescription(names);
+    
+    if (isReAnalysis && state.currentPrescriptionIndex >= 0) {
+      // Replace current prescription instead of adding new
+      updateCurrentPrescription(names);
+    } else {
+      addPrescription(names);
+    }
+    
     // Render combined prescription list
-    renderList(prescriptionResults, getAllPrescriptionNames());
+    const targetElement = prescriptionResultsContent || prescriptionResults;
+    renderList(targetElement, getAllPrescriptionNames());
     renderPrescriptionEditor();
     updateCountBadges();
     updateCompareAvailability();
     lastPrescriptionSig = fileSignature(file);
     
-    const allPrescriptions = getAllPrescriptionNames();
+    const action = isReAnalysis ? 'Re-analysis' : 'Analysis';
     if (names.length > 0) {
-      showPopup('success', 'Analysis Complete', `Successfully detected ${names.length} medicine(s) from the prescription. Total prescriptions: ${state.prescriptions.length}`);
+      showToast('success', `${action} Complete`, `Found ${names.length} medicine(s). Total: ${state.prescriptions.length} prescriptions`);
     } else {
-      showPopup('warning', 'No Medicines Found', 'No medicines were detected in the prescription. You can manually add them using the "Add Medicine" button.');
+      showToast('warning', 'No Medicines Found', 'Use "Add Medicine" to add items manually');
     }
   } catch (e) {
     console.error(e);
-    prescriptionResults.innerHTML = `<span style="color:red">${e.message}</span>`;
+    const targetElement = prescriptionResultsContent || prescriptionResults;
+    targetElement.innerHTML = `<span style="color:red">${e.message}</span>`;
     showPopup('error', 'Analysis Failed', `Failed to analyze prescription: ${e.message}`);
   } finally {
     analyzePrescriptionBtn.disabled = false;
+    reAnalyzePrescriptionBtn.disabled = false;
     updateCompareAvailability();
     if (exportCsvBtn) exportCsvBtn.disabled = true;
   }
 }
 
 analyzeBillBtn.addEventListener('click', async () => {
+  if (!validateEmployeeInfo()) return;
   if (!billInput.files?.length) { 
     showPopup('error', 'No File Selected', 'Please choose a bill image first.');
     return; 
@@ -424,36 +552,70 @@ analyzeBillBtn.addEventListener('click', async () => {
   await analyzeBillFile(file);
 });
 
-async function analyzeBillFile(file) {
-  analyzeBillBtn.disabled = true;
+// Re-analyze bill button
+reAnalyzeBillBtn.addEventListener('click', async () => {
+  if (!validateEmployeeInfo()) return;
+  if (!billInput.files?.length) { 
+    showPopup('error', 'No File Selected', 'Please choose a bill image first.');
+    return; 
+  }
   
-  billResults.innerHTML = '<em>Analyzing bill...</em>';
+  const file = billInput.files[0];
+  showPopup('info', 'Re-analyzing Bill', 'Re-analyzing the bill with fresh extraction. This may yield different results.', async () => {
+    lastBillSig = null; // Clear signature to force re-analysis
+    await analyzeBillFile(file, true);
+  }, () => {});
+});
+
+async function analyzeBillFile(file, isReAnalysis = false) {
+  analyzeBillBtn.disabled = true;
+  reAnalyzeBillBtn.disabled = true;
+  
+  billResults.style.display = 'block';
+  if (billResultsContent) {
+    billResultsContent.innerHTML = '<em>Analyzing bill...</em>';
+  } else {
+    billResults.innerHTML = '<em>Analyzing bill...</em>';
+  }
   
   try {
     const employee = (employeeNameInput?.value || '').trim();
-    const { billItems } = await callServerWithEmployee('/api/ocr/bill', file, employee);
+    const employeeId = (employeeIdInput?.value || '').trim();
+    const employeeData = `${employee} (ID: ${employeeId})`;
+    
+    const { billItems } = await callServerWithEmployee('/api/ocr/bill', file, employeeData);
     const items = billItems || [];
-    addBill(items);
+    
+    if (isReAnalysis && state.currentBillIndex >= 0) {
+      // Replace current bill instead of adding new
+      updateCurrentBill(items);
+    } else {
+      addBill(items);
+    }
+    
     // Render combined bills list
-    renderList(billResults, getAllBillItems().map(i => `${i.name}${i.amount!=null?` - ₹${i.amount}`:''}`));
+    const targetElement = billResultsContent || billResults;
+    renderList(targetElement, getAllBillItems().map(i => `${i.name}${i.amount!=null?` - ₹${i.amount}`:''}`));
     renderBillEditor();
     updateCountBadges();
     updateCompareAvailability();
     lastBillSig = fileSignature(file);
     
-    const allBills = getAllBillItems();
+    const action = isReAnalysis ? 'Re-analysis' : 'Analysis';
     if (items.length > 0) {
       const totalAmount = items.reduce((sum, item) => sum + (item.amount || 0), 0);
-      showPopup('success', 'Analysis Complete', `Successfully detected ${items.length} item(s) from the bill with total amount ₹${totalAmount.toFixed(2)}. Total bills: ${state.bills.length}`);
+      showToast('success', `${action} Complete`, `Found ${items.length} item(s), ₹${totalAmount.toFixed(2)}. Total: ${state.bills.length} bills`);
     } else {
-      showPopup('warning', 'No Items Found', 'No items were detected in the bill. You can manually add them using the "Add Bill Item" button.');
+      showToast('warning', 'No Items Found', 'Use "Add Item" to add items manually');
     }
   } catch (e) {
     console.error(e);
-    billResults.innerHTML = `<span style="color:red">${e.message}</span>`;
+    const targetElement = billResultsContent || billResults;
+    targetElement.innerHTML = `<span style="color:red">${e.message}</span>`;
     showPopup('error', 'Analysis Failed', `Failed to analyze bill: ${e.message}`);
   } finally {
     analyzeBillBtn.disabled = false;
+    reAnalyzeBillBtn.disabled = false;
     updateCompareAvailability();
     if (exportCsvBtn) exportCsvBtn.disabled = true;
   }
@@ -532,6 +694,11 @@ function doCompare(silent) {
   const total = rows.reduce((s, r) => s + r.amount, 0);
   const admissible = rows.filter(r => r.status==='admissible').reduce((s, r) => s + (r.admissibleAmount || r.amount), 0);
   const inadmissible = total - admissible;
+  
+  // Show result sections
+  compareResults.style.display = 'block';
+  mappingResults.style.display = 'block';
+  
   compareResults.innerHTML = renderCompareTable(rows, { total, admissible, inadmissible });
   mappingResults.innerHTML = renderMapping(rows);
   if (exportCsvBtn) exportCsvBtn.disabled = false;
@@ -544,11 +711,11 @@ function doCompare(silent) {
   
   if (!silent) {
     if (admissibleCount > 0) {
-      showPopup('success', 'Comparison Complete', 
-        `Analysis completed! ${admissibleCount} item(s) are admissible (₹${admissible.toFixed(2)}) and ${inadmissibleCount} item(s) are inadmissible (₹${inadmissible.toFixed(2)}).`);
+      showToast('success', 'Analysis Complete', 
+        `✅ ${admissibleCount} admissible (₹${admissible.toFixed(2)}) • ❌ ${inadmissibleCount} inadmissible (₹${inadmissible.toFixed(2)})`);
     } else {
-      showPopup('warning', 'No Admissible Items', 
-        `No items match the prescription. All ${inadmissibleCount} item(s) are inadmissible (₹${inadmissible.toFixed(2)}).`);
+      showToast('warning', 'No Matches Found', 
+        `All ${inadmissibleCount} item(s) are inadmissible (₹${inadmissible.toFixed(2)})`);
     }
   }
 }
@@ -622,7 +789,8 @@ function renderPrescriptionEditor() {
       state.prescriptions[pIndex].names.splice(nIndex,1);
       if (state.prescriptions[pIndex].names.length === 0) state.prescriptions.splice(pIndex,1);
       renderPrescriptionEditor();
-      renderList(prescriptionResults, getAllPrescriptionNames());
+      const targetElement = prescriptionResultsContent || prescriptionResults;
+      renderList(targetElement, getAllPrescriptionNames());
       updateCountBadges();
     });
     row.querySelector('[data-save]')?.addEventListener('click', () => { flashSaved(row); });
@@ -646,7 +814,8 @@ function renderBillEditor() {
       state.bills[bIndex].items.splice(iIndex,1);
       if (state.bills[bIndex].items.length === 0) state.bills.splice(bIndex,1);
       renderBillEditor();
-      renderList(billResults, getAllBillItems().map(i => `${i.name}${i.amount!=null?` - ₹${i.amount}`:''}`));
+      const targetElement = billResultsContent || billResults;
+      renderList(targetElement, getAllBillItems().map(i => `${i.name}${i.amount!=null?` - ₹${i.amount}`:''}`));
       updateCountBadges();
     });
     row.querySelector('[data-save]')?.addEventListener('click', () => { flashSaved(row); });
@@ -662,33 +831,68 @@ if (exportCsvBtn) {
     const totalAmt = rows.reduce((s,r)=>s+r.amount,0);
     const admAmt = adm.reduce((s,r)=>s+(r.admissibleAmount || r.amount),0);
     const inadAmt = inad.reduce((s,r)=>s+r.amount,0);
+    
+    // Get unique prescription items to avoid repetition
+    const allPrescriptionNames = [...new Set(getAllPrescriptionNames())];
+    
     const sections = [];
-    sections.push('Category,Bill Item,Admissible Amount,Original Amount,Reason');
-    // Inadmissible first for readability
-    sections.push(...inad.map(r=>`${'Inadmissible'},${escapeCsv(r.bill)},,${Number(r.amount).toFixed(2)},${escapeCsv(r.reason||'')}`));
-    // Admissible
-    sections.push(...adm.map(r=>`${'Admissible'},${escapeCsv(r.bill)},${Number(r.admissibleAmount || r.amount).toFixed(2)},${Number(r.amount).toFixed(2)},${escapeCsv(r.reason||'')}`));
+    
+    // Employee info header
+    const employeeName = document.getElementById('employeeName')?.value || 'Unknown';
+    const employeeId = document.getElementById('employeeId')?.value || 'Unknown';
+    sections.push(`Employee Name,${escapeCsv(employeeName)}`);
+    sections.push(`Employee ID,${escapeCsv(employeeId)}`);
+    sections.push(`Report Generated,${new Date().toLocaleString()}`);
     sections.push('');
-    sections.push('Totals,,,');
-    sections.push(`,Total,${Number(admAmt+inadAmt).toFixed(2)},`);
-    sections.push(`,Admissible,${Number(admAmt).toFixed(2)},`);
-    sections.push(`,Inadmissible,${Number(inadAmt).toFixed(2)},`);
+    
+    // Prescription summary
+    sections.push('PRESCRIPTION MEDICINES');
+    if (allPrescriptionNames.length > 0) {
+      allPrescriptionNames.forEach((medicine, index) => {
+        sections.push(`${index + 1},${escapeCsv(medicine)}`);
+      });
+    } else {
+      sections.push('1,No prescriptions analyzed');
+    }
+    sections.push('');
+    
+    // Analysis results
+    sections.push('CLAIM ANALYSIS RESULTS');
+    sections.push('Status,Bill Item,Amount (INR),Admissible Amount (INR),Match Details');
+    
+    // Sort results: Admissible first, then inadmissible
+    [...adm, ...inad].forEach(r => {
+      const matchedWith = r.matchedWith ? escapeCsv(r.matchedWith) : 'No match';
+      sections.push(`${r.status},${escapeCsv(r.bill)},${Number(r.amount).toFixed(2)},${Number(r.admissibleAmount || r.amount).toFixed(2)},"${matchedWith}"`);
+    });
+    
+    sections.push('');
+    sections.push('SUMMARY');
+    sections.push(`Total Amount,${Number(totalAmt).toFixed(2)}`);
+    sections.push(`Admissible Amount,${Number(admAmt).toFixed(2)}`);
+    sections.push(`Inadmissible Amount,${Number(inadAmt).toFixed(2)}`);
+    sections.push(`Admissible Percentage,${totalAmt > 0 ? ((admAmt/totalAmt)*100).toFixed(1) : 0}%`);
+    
     const csv = sections.join('\n');
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
+    const timestamp = new Date().toISOString().slice(0, 10);
     a.href = url;
-    a.download = 'comparison.csv';
+    a.download = `Medical_Claim_Analysis_${employeeName.replace(/\s+/g, '_')}_${timestamp}.csv`;
     a.click();
     URL.revokeObjectURL(url);
+    
+    showToast('success', 'Excel Export Complete', `Report saved with ${rows.length} items`);
   });
 }
 
-// Lightweight PDF export using browser print-to-PDF fallback if jsPDF not present
+// Professional PDF export with proper formatting and text wrapping
 if (exportPdfBtn) {
   exportPdfBtn.addEventListener('click', async () => {
     const rows = state._rows || [];
     if (!rows.length) return;
+    
     // Try dynamic import of jsPDF from CDN; fallback to printable window
     try {
       const jsPdfUrl = 'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js';
@@ -696,43 +900,233 @@ if (exportPdfBtn) {
         const s = document.createElement('script');
         s.src = jsPdfUrl; s.onload = resolve; s.onerror = reject; document.head.appendChild(s);
       });
-      // @ts-ignore
+      
       const { jsPDF } = window.jspdf || window.jspdf_umd || window.jspdf || {};
       if (!jsPDF) throw new Error('jsPDF unavailable');
+      
       const doc = new jsPDF();
-      let y = 10;
-      doc.setFontSize(14);
-      doc.text('Medical Claim Comparison', 10, y); y += 8;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const margin = 15;
+      let y = margin;
+      
+      // Header
+      doc.setFontSize(16);
+      doc.setFont(undefined, 'bold');
+      doc.text('MEDICAL CLAIM ANALYSIS REPORT', pageWidth/2, y, { align: 'center' });
+      y += 10;
+      
+      // Employee information
       doc.setFontSize(10);
+      doc.setFont(undefined, 'normal');
+      const employeeName = document.getElementById('employeeName')?.value || 'Unknown';
+      const employeeId = document.getElementById('employeeId')?.value || 'Unknown';
+      const reportDate = new Date().toLocaleDateString();
+      
+      doc.text(`Employee: ${employeeName}`, margin, y);
+      doc.text(`Employee ID: ${employeeId}`, margin, y + 5);
+      doc.text(`Report Date: ${reportDate}`, margin, y + 10);
+      y += 20;
+      
+      // Summary statistics
       const admissible = rows.filter(r=>r.status==='admissible').reduce((s,r)=>s+(r.admissibleAmount||r.amount||0),0);
       const total = rows.reduce((s,r)=>s+(r.amount||0),0);
-      const inad = total - admissible;
-      doc.text(`Total: ₹${total.toFixed(2)} | Admissible: ₹${admissible.toFixed(2)} | Inadmissible: ₹${inad.toFixed(2)}`, 10, y); y += 6;
-      y += 2;
-      // Table header
+      const inadmissible = total - admissible;
+      
       doc.setFont(undefined, 'bold');
-      doc.text('Bill Item', 10, y);
-      doc.text('Status', 90, y);
-      doc.text('Amount (₹)', 120, y);
-      doc.text('Reason', 160, y);
+      doc.text('SUMMARY', margin, y);
       doc.setFont(undefined, 'normal');
-      y += 5;
-      rows.forEach(r => {
-        const reason = String(r.reason || '').slice(0, 80);
-        doc.text(String(r.bill || ''), 10, y);
-        doc.text(String(r.status || ''), 90, y);
-        doc.text(String(Number(r.admissibleAmount || r.amount || 0).toFixed(2)), 120, y);
-        doc.text(reason, 160, y, { maxWidth: 45 });
-        y += 5;
-        if (y > 285) { doc.addPage(); y = 10; }
+      y += 8;
+      
+      doc.text(`Total Claim Amount: ₹${total.toFixed(2)}`, margin, y);
+      doc.text(`Admissible Amount: ₹${admissible.toFixed(2)}`, margin, y + 5);
+      doc.text(`Inadmissible Amount: ₹${inadmissible.toFixed(2)}`, margin, y + 10);
+      doc.text(`Approval Rate: ${total > 0 ? ((admissible/total)*100).toFixed(1) : 0}%`, margin, y + 15);
+      y += 25;
+      
+      // Prescription medicines
+      const allPrescriptionNames = [...new Set(getAllPrescriptionNames())];
+      if (allPrescriptionNames.length > 0) {
+        doc.setFont(undefined, 'bold');
+        doc.text('PRESCRIBED MEDICINES', margin, y);
+        doc.setFont(undefined, 'normal');
+        y += 8;
+        
+        allPrescriptionNames.slice(0, 15).forEach((medicine, index) => {
+          const text = `${index + 1}. ${medicine}`;
+          const lines = doc.splitTextToSize(text, pageWidth - 2 * margin);
+          doc.text(lines, margin, y);
+          y += lines.length * 5;
+        });
+        
+        if (allPrescriptionNames.length > 15) {
+          doc.text(`... and ${allPrescriptionNames.length - 15} more medicines`, margin, y);
+          y += 5;
+        }
+        y += 10;
+      }
+      
+      // Check if we need a new page
+      if (y > pageHeight - 60) {
+        doc.addPage();
+        y = margin;
+      }
+      
+      // Analysis results table
+      doc.setFont(undefined, 'bold');
+      doc.text('DETAILED ANALYSIS', margin, y);
+      y += 10;
+      
+      // Table headers
+      const colWidths = [60, 25, 30, 30, 45];
+      const colPositions = [margin];
+      for (let i = 1; i < colWidths.length; i++) {
+        colPositions.push(colPositions[i-1] + colWidths[i-1]);
+      }
+      
+      doc.text('Item Description', colPositions[0], y);
+      doc.text('Status', colPositions[1], y);
+      doc.text('Amount', colPositions[2], y);
+      doc.text('Approved', colPositions[3], y);
+      doc.text('Match Details', colPositions[4], y);
+      
+      doc.setFont(undefined, 'normal');
+      y += 8;
+      
+      // Draw line under headers
+      doc.line(margin, y - 2, pageWidth - margin, y - 2);
+      y += 3;
+      
+      // Table rows
+      rows.forEach((r, index) => {
+        // Check if we need a new page
+        if (y > pageHeight - 30) {
+          doc.addPage();
+          y = margin + 10;
+        }
+        
+        const billText = doc.splitTextToSize(String(r.bill || ''), colWidths[0] - 2);
+        const matchText = doc.splitTextToSize(String(r.matchedWith || 'No match'), colWidths[4] - 2);
+        const maxLines = Math.max(billText.length, matchText.length, 1);
+        
+        // Item description with text wrapping
+        doc.text(billText, colPositions[0], y);
+        
+        // Status
+        doc.text(String(r.status || ''), colPositions[1], y);
+        
+        // Original amount
+        doc.text(`₹${Number(r.amount).toFixed(2)}`, colPositions[2], y);
+        
+        // Admissible amount
+        doc.text(`₹${Number(r.admissibleAmount || r.amount).toFixed(2)}`, colPositions[3], y);
+        
+        // Match details with text wrapping
+        doc.text(matchText, colPositions[4], y);
+        
+        y += maxLines * 5 + 2;
+        
+        // Draw separator line every few rows for readability
+        if ((index + 1) % 5 === 0 && index < rows.length - 1) {
+          doc.line(margin, y - 1, pageWidth - margin, y - 1);
+          y += 2;
+        }
       });
-      doc.save('comparison.pdf');
+      
+      // Footer
+      const pageCount = doc.internal.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.text(`Page ${i} of ${pageCount}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
+        doc.text('Generated by Medical Claim Assistant', margin, pageHeight - 10);
+      }
+      
+      const timestamp = new Date().toISOString().slice(0, 10);
+      doc.save(`Medical_Claim_Report_${employeeName.replace(/\s+/g, '_')}_${timestamp}.pdf`);
+      
+      showToast('success', 'PDF Export Complete', 'Professional report generated successfully');
+      
     } catch (e) {
-      // Fallback: open a print-friendly window
+      console.error('PDF generation failed:', e);
+      
+      // Enhanced fallback: create a professional print-friendly window
       const w = window.open('', '_blank');
-      if (!w) return;
-      const tableHtml = compareResults.innerHTML;
-      w.document.write(`<html><head><title>Comparison</title></head><body>${tableHtml}</body></html>`);
+      if (!w) {
+        showToast('error', 'Export Failed', 'Please allow popups to export PDF');
+        return;
+      }
+      
+      const employeeName = document.getElementById('employeeName')?.value || 'Unknown';
+      const employeeId = document.getElementById('employeeId')?.value || 'Unknown';
+      const reportDate = new Date().toLocaleDateString();
+      const admissible = rows.filter(r=>r.status==='admissible').reduce((s,r)=>s+(r.admissibleAmount||r.amount||0),0);
+      const total = rows.reduce((s,r)=>s+(r.amount||0),0);
+      
+      const printContent = `
+        <html>
+        <head>
+          <title>Medical Claim Analysis Report</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.4; }
+            .header { text-align: center; margin-bottom: 30px; }
+            .header h1 { color: #2563eb; margin: 0; }
+            .info-section { margin: 20px 0; }
+            .summary { background: #f8fafc; padding: 15px; border-radius: 5px; margin: 20px 0; }
+            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #3b82f6; color: white; }
+            .admissible { color: #059669; font-weight: bold; }
+            .inadmissible { color: #dc2626; font-weight: bold; }
+            @media print { body { margin: 0; } }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>MEDICAL CLAIM ANALYSIS REPORT</h1>
+          </div>
+          
+          <div class="info-section">
+            <p><strong>Employee:</strong> ${escapeHtml(employeeName)}</p>
+            <p><strong>Employee ID:</strong> ${escapeHtml(employeeId)}</p>
+            <p><strong>Report Date:</strong> ${reportDate}</p>
+          </div>
+          
+          <div class="summary">
+            <h3>Summary</h3>
+            <p><strong>Total Claim:</strong> ₹${total.toFixed(2)}</p>
+            <p><strong>Admissible:</strong> ₹${admissible.toFixed(2)}</p>
+            <p><strong>Inadmissible:</strong> ₹${(total - admissible).toFixed(2)}</p>
+            <p><strong>Approval Rate:</strong> ${total > 0 ? ((admissible/total)*100).toFixed(1) : 0}%</p>
+          </div>
+          
+          <table class="export-table">
+            <thead>
+              <tr>
+                <th>Item Description</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Approved Amount</th>
+                <th>Match Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows.map(r => `
+                <tr>
+                  <td>${escapeHtml(r.bill)}</td>
+                  <td class="${r.status}">${r.status}</td>
+                  <td>₹${Number(r.amount).toFixed(2)}</td>
+                  <td>₹${Number(r.admissibleAmount || r.amount).toFixed(2)}</td>
+                  <td>${escapeHtml(r.matchedWith || 'No match')}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </body>
+        </html>
+      `;
+      
+      w.document.write(printContent);
       w.document.close();
       w.focus();
       w.print();
@@ -750,17 +1144,30 @@ function flashSaved(row) {
 
 function renderCompareTable(rows, totals) {
   const header = `<div class="row" style="gap:16px; flex-wrap:wrap">
-    <div class="stat"><div class="stat-label">Total</div><div class="stat-value">₹${totals.total.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-label">Total Amount</div><div class="stat-value">₹${totals.total.toFixed(2)}</div></div>
     <div class="stat positive"><div class="stat-label">Admissible</div><div class="stat-value">₹${totals.admissible.toFixed(2)}</div></div>
     <div class="stat negative"><div class="stat-label">Inadmissible</div><div class="stat-value">₹${totals.inadmissible.toFixed(2)}</div></div>
   </div>`;
+  
+  const allPrescriptionNames = getAllPrescriptionNames();
+  const prescriptionContent = allPrescriptionNames.length > 0 ? 
+    allPrescriptionNames.map(name => `<span class="pill">${escapeHtml(name)}</span>`).join(' ') : 
+    '<em>No prescriptions analyzed</em>';
+    
   const table = `<div class="table">
-    <div class="tr th"><div>Bill Item</div><div>Status</div><div class="right">Amount (₹)</div><div>Reason</div></div>
-    ${rows.map(r=>`<div class=\"tr\">
-      <div>${escapeHtml(r.bill)}</div>
+    <div class="tr th" style="grid-template-columns: 1fr 1fr 100px 140px 1fr;">
+      <div>Bill Item</div>
+      <div>Prescription Content</div>
+      <div>Status</div>
+      <div class="right">Amount (₹)</div>
+      <div>Match Details</div>
+    </div>
+    ${rows.map(r=>`<div class=\"tr\" style="grid-template-columns: 1fr 1fr 100px 140px 1fr;">
+      <div style="font-weight:600;">${escapeHtml(r.bill)}</div>
+      <div style="font-size:12px;">${prescriptionContent}</div>
       <div><span class=\"badge ${r.status}\">${r.status}</span></div>
       <div class=\"right\">${Number(r.admissibleAmount || r.amount || 0).toFixed(2)}${r.admissibleAmount && r.admissibleAmount !== r.amount ? `<br><small style="color:#666;">(orig: ₹${Number(r.amount||0).toFixed(2)})</small>` : ''}</div>
-      <div style="font-size:12px; color:#666;">${escapeHtml(r.reason || '')}</div>
+      <div style="font-size:11px; color:#666;">${escapeHtml(r.reason || '')}</div>
     </div>`).join('')}
   </div>`;
   return header + table;
@@ -947,11 +1354,15 @@ if (bulkInput) {
   bulkInput.addEventListener('change', async () => {
     const files = Array.from(bulkInput.files || []);
     if (!files.length) return;
-    const employee = (employeeNameInput?.value || '').trim();
-    if (!employee) {
-      showPopup('warning', 'Employee Name Required', 'Please enter the employee name before uploading to save the dataset.');
+    
+    if (!validateEmployeeInfo()) {
+      bulkInput.value = ''; // Clear the file input
       return;
     }
+    
+    const employee = (employeeNameInput?.value || '').trim();
+    const employeeId = (employeeIdInput?.value || '').trim();
+    const employeeData = `${employee} (ID: ${employeeId})`;
     // Render thumbnails with pending status
     if (bulkThumbs) {
       bulkThumbs.innerHTML = '';
@@ -966,7 +1377,7 @@ if (bulkInput) {
     try {
       const form = new FormData();
       files.forEach(f => form.append('files', f));
-      form.append('employee', employee);
+      form.append('employee', employeeData);
       const res = await fetch('/api/ocr/auto', { method: 'POST', body: form });
       if (!res.ok) throw new Error(await res.text());
       const data = await res.json();
@@ -992,13 +1403,24 @@ if (bulkInput) {
       (agg.prescriptions || []).forEach(p => addPrescription(p.names || []));
       (agg.bills || []).forEach(b => addBill(b.items || []));
       // Render
-      renderList(prescriptionResults, getAllPrescriptionNames());
+      const prescriptionTarget = prescriptionResultsContent || prescriptionResults;
+      const billTarget = billResultsContent || billResults;
+      
+      renderList(prescriptionTarget, getAllPrescriptionNames());
       renderPrescriptionEditor();
-      renderList(billResults, getAllBillItems().map(i => `${i.name}${i.amount!=null?` - ₹${i.amount}`:''}`));
+      renderList(billTarget, getAllBillItems().map(i => `${i.name}${i.amount!=null?` - ₹${i.amount}`:''}`));
       renderBillEditor();
+      
+      // Show result sections if they have content
+      if (getAllPrescriptionNames().length > 0) {
+        prescriptionResults.style.display = 'block';
+      }
+      if (getAllBillItems().length > 0) {
+        billResults.style.display = 'block';
+      }
       updateCountBadges();
       updateCompareAvailability();
-      showPopup('success', 'Bulk Analysis Complete', `Processed ${files.length} image(s). Found ${getAllPrescriptionNames().length} prescriptions entries and ${getAllBillItems().length} bill entries.`);
+      showToast('success', 'Bulk Analysis Complete', `📁 ${files.length} files processed • 💊 ${getAllPrescriptionNames().length} prescriptions • 🧾 ${getAllBillItems().length} bill items`);
     } catch (e) {
       console.error(e);
       showPopup('error', 'Bulk Analysis Failed', String(e.message || e));
@@ -1011,10 +1433,20 @@ if (dropZone && bulkInput) {
   const dz = dropZone;
   const prevent = (e)=>{ e.preventDefault(); e.stopPropagation(); };
   ['dragenter','dragover','dragleave','drop'].forEach(ev => dz.addEventListener(ev, prevent));
-  dz.addEventListener('dragover', ()=>{ dz.style.background = '#f1f5f9'; });
-  dz.addEventListener('dragleave', ()=>{ dz.style.background = ''; });
+  dz.addEventListener('dragover', ()=>{ 
+    dz.style.background = '#dbeafe'; 
+    dz.style.borderColor = '#2563eb';
+    dz.style.transform = 'scale(1.02)';
+  });
+  dz.addEventListener('dragleave', ()=>{ 
+    dz.style.background = ''; 
+    dz.style.borderColor = '';
+    dz.style.transform = '';
+  });
   dz.addEventListener('drop', (e)=>{
     dz.style.background = '';
+    dz.style.borderColor = '';
+    dz.style.transform = '';
     const files = Array.from(e.dataTransfer?.files || []);
     if (!files.length) return;
     const dt = new DataTransfer();
@@ -1031,11 +1463,412 @@ function renderGlobalSummary() {
   const totalPres = getAllPrescriptionNames().length;
   const totalBillItems = getAllBillItems().length;
   const sum = getAllBillItems().reduce((s, it)=> s + Number(it.amount||0), 0);
-  globalSummary.innerHTML = `
-    <div class="row" style="gap:12px; flex-wrap:wrap">
-      <div class="stat"><div class="stat-label">Prescription entries</div><div class="stat-value">${totalPres}</div></div>
-      <div class="stat"><div class="stat-label">Bill items</div><div class="stat-value">${totalBillItems}</div></div>
-      <div class="stat"><div class="stat-label">Bill total</div><div class="stat-value">₹${sum.toFixed(2)}</div></div>
-    </div>`;
+  
+  if (totalPres > 0 || totalBillItems > 0) {
+    globalSummary.style.display = 'block';
+    globalSummary.innerHTML = `
+      <div class="results-header">
+        <h3 class="results-title">Processing Summary</h3>
+        <span class="results-count">${totalPres + totalBillItems} items</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--spacing-md);">
+        <div class="stat">
+          <div class="stat-label">Prescriptions</div>
+          <div class="stat-value">${totalPres}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Bill Items</div>
+          <div class="stat-value">${totalBillItems}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Total Amount</div>
+          <div class="stat-value">₹${sum.toFixed(2)}</div>
+        </div>
+      </div>
+    `;
+  } else {
+    globalSummary.style.display = 'none';
+  }
+}
+
+// Enhanced Bulk Upload with Progress Tracking
+function createThumbnailElement(file, index) {
+  const thumbnail = document.createElement('div');
+  thumbnail.className = 'thumbnail-item';
+  thumbnail.setAttribute('role', 'listitem');
+  
+  const isImage = file.type.startsWith('image/');
+  const icon = isImage ? '🖼️' : '📄';
+  
+  thumbnail.innerHTML = `
+    <div style="font-size: 2rem; margin-bottom: var(--spacing-sm);">${icon}</div>
+    <div style="font-weight: 600; margin-bottom: var(--spacing-xs); font-size: 0.8rem;">${escapeHtml(file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name)}</div>
+    <div style="color: var(--text-secondary); font-size: 0.75rem;">${formatFileSize(file.size)}</div>
+    <div class="pill" id="status-${index}">Pending</div>
+  `;
+  
+  return thumbnail;
+}
+
+function handleBulkUploadResults(data, files) {
+  // Update file statuses
+  if (Array.isArray(data.files)) {
+    data.files.forEach((fileResult, i) => {
+      const statusElement = document.getElementById(`status-${i}`);
+      if (!statusElement) return;
+      
+      if (fileResult.error) {
+        statusElement.textContent = 'Error';
+        statusElement.className = 'pill pill-error';
+      } else {
+        const type = fileResult.type || 'unknown';
+        statusElement.textContent = type === 'prescription' ? 'Prescription ✓' : 
+                                  type === 'bill' ? 'Bill ✓' : 'Unknown';
+        statusElement.className = type === 'unknown' ? 'pill pill-warning' : 'pill pill-success';
+      }
+    });
+  }
+  
+  // Merge results
+  (data.aggregated?.prescriptions || []).forEach(p => addPrescription(p.names || []));
+  (data.aggregated?.bills || []).forEach(b => addBill(b.items || []));
+  
+  // Render results
+  updateAllDisplays();
+  
+  // Show analysis section if files are processed
+  showAnalysisSection();
+  
+  showToast('success', 'Upload Complete', 
+    `${files.length} files uploaded • ${getAllPrescriptionNames().length} prescriptions • ${getAllBillItems().length} bill items`);
+}
+
+function updateAllDisplays() {
+  const prescriptionTarget = prescriptionResultsContent || prescriptionResults;
+  const billTarget = billResultsContent || billResults;
+  
+  renderList(prescriptionTarget, getAllPrescriptionNames());
+  renderPrescriptionEditor();
+  renderList(billTarget, getAllBillItems().map(i => `${i.name}${i.amount!=null?` - ₹${i.amount}`:''}`));
+  renderBillEditor();
+  
+  // Show result sections if they have content
+  if (getAllPrescriptionNames().length > 0) {
+    prescriptionResults.style.display = 'block';
+  }
+  if (getAllBillItems().length > 0) {
+    billResults.style.display = 'block';
+  }
+  
+  updateCountBadges();
+  updateCompareAvailability();
+}
+
+// Theme Toggle Event Listener
+const themeToggle = document.getElementById('themeToggle');
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => themeManager.toggle());
+}
+
+// Enhanced Accessibility - Keyboard Navigation for Drop Zone
+if (dropZone) {
+  dropZone.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      bulkInput?.click();
+    }
+  });
+}
+
+// Service Worker Registration for PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('ServiceWorker registration successful');
+        analytics.trackEvent('pwa_registered');
+      })
+      .catch(err => console.log('ServiceWorker registration failed'));
+  });
+}
+
+// Performance Monitoring
+window.addEventListener('load', () => {
+  const loadTime = performance.now() - performance_start;
+  analytics.trackEvent('page_loaded', { loadTime });
+  console.log(`Page loaded in ${loadTime.toFixed(2)}ms`);
+});
+
+// Analysis Section Management
+function showAnalysisSection() {
+  const analysisSection = document.getElementById('analysisSection');
+  const startBtn = document.getElementById('startAnalysisBtn');
+  
+  if (analysisSection && startBtn) {
+    analysisSection.style.display = 'block';
+    
+    // Enable button if we have files uploaded
+    const hasFiles = bulkInput?.files?.length > 0;
+    
+    startBtn.disabled = !hasFiles;
+    
+    // Add event listener if not already added
+    if (!startBtn.hasAttribute('data-listener')) {
+      startBtn.addEventListener('click', startAnalysis);
+      startBtn.setAttribute('data-listener', 'true');
+    }
+  }
+}
+
+// Process bulk uploaded files
+async function processBulkFiles() {
+  if (!bulkInput || !bulkInput.files || bulkInput.files.length === 0) return;
+  
+  const files = Array.from(bulkInput.files);
+  const employeeName = document.getElementById('employeeName')?.value?.trim();
+  const employeeId = document.getElementById('employeeId')?.value?.trim();
+  const employee = `${employeeName} (ID: ${employeeId})`;
+  
+  // Hide analysis section and show progress
+  const analysisSection = document.getElementById('analysisSection');
+  if (analysisSection) analysisSection.style.display = 'none';
+  
+  progressManager.show();
+  progressManager.update(0, 'Starting analysis...');
+  
+  try {
+    // Process files using the existing bulk API
+    const formData = new FormData();
+    files.forEach(file => formData.append('files', file));
+    formData.append('employee', employee);
+    
+    const response = await fetch('/api/ocr/auto', {
+      method: 'POST',
+      body: formData
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    
+    progressManager.update(100, 'Analysis complete!');
+    
+    // Process and display results
+    handleBulkAnalysisResults(data, files);
+    
+    setTimeout(() => {
+      progressManager.hide();
+      showAnalysisResults();
+    }, 1000);
+    
+  } catch (error) {
+    console.error('Analysis failed:', error);
+    progressManager.hide();
+    showPopup('error', 'Analysis Failed', `Failed to analyze files: ${error.message}`);
+  }
+}
+
+function handleBulkAnalysisResults(data, files) {
+  // Clear existing data
+  state.prescriptions = [];
+  state.bills = [];
+  
+  // Process aggregated results
+  if (data.aggregated?.prescriptions) {
+    data.aggregated.prescriptions.forEach(p => {
+      if (p.names && p.names.length > 0) {
+        addPrescription(p.names);
+      }
+    });
+  }
+  
+  if (data.aggregated?.bills) {
+    data.aggregated.bills.forEach(b => {
+      if (b.items && b.items.length > 0) {
+        addBill(b.items);
+      }
+    });
+  }
+  
+  // Update displays
+  updateAllDisplays();
+  
+  // Update file statuses in thumbnails
+  if (Array.isArray(data.files)) {
+    data.files.forEach((fileResult, i) => {
+      const statusElement = document.getElementById(`status-${i}`);
+      if (statusElement) {
+        if (fileResult.error) {
+          statusElement.textContent = 'Error';
+          statusElement.className = 'pill pill-error';
+        } else {
+          const type = fileResult.type || 'unknown';
+          statusElement.textContent = type === 'prescription' ? 'Prescription' : 
+                                    type === 'bill' ? 'Bill' : 'Unknown';
+          statusElement.className = type === 'unknown' ? 'pill pill-warning' : 'pill pill-success';
+        }
+      }
+    });
+  }
+}
+
+function showAnalysisResults() {
+  const analysisResults = document.getElementById('analysisResults');
+  const prescriptionResults = document.getElementById('prescriptionResults');
+  const billResults = document.getElementById('billResults');
+  
+  if (analysisResults) {
+    analysisResults.style.display = 'block';
+    
+    // Show prescription results if we have any
+    if (getAllPrescriptionNames().length > 0 && prescriptionResults) {
+      prescriptionResults.style.display = 'block';
+      renderPrescriptionContent();
+    }
+    
+    // Show bill results if we have any
+    if (getAllBillItems().length > 0 && billResults) {
+      billResults.style.display = 'block';
+      const billTarget = document.getElementById('billResultsContent');
+      if (billTarget) {
+        renderList(billTarget, getAllBillItems().map(i => `${i.name}${i.amount!=null?` - ₹${i.amount}`:''}`));
+      }
+    }
+    
+    // Auto-compare if we have both prescriptions and bills
+    if (getAllPrescriptionNames().length > 0 && getAllBillItems().length > 0) {
+      setTimeout(() => {
+        autoCompare();
+      }, 500);
+    }
+    
+    // Show success message
+    const totalPrescriptions = getAllPrescriptionNames().length;
+    const totalBills = getAllBillItems().length;
+    showToast('success', 'Analysis Complete', 
+      `Found ${totalPrescriptions} medicines and ${totalBills} bill items`);
+  }
+}
+
+function startAnalysis() {
+  const employeeName = document.getElementById('employeeName')?.value?.trim();
+  const employeeId = document.getElementById('employeeId')?.value?.trim();
+  
+  if (!employeeName || !employeeId) {
+    showPopup('error', 'Missing Information', 'Please enter both employee name and ID before starting analysis.');
+    return;
+  }
+  
+  // Process all uploaded files using bulk upload
+  if (bulkInput && bulkInput.files && bulkInput.files.length > 0) {
+    processBulkFiles();
+  } else {
+    showPopup('warning', 'No Files', 'Please upload some files first before starting analysis.');
+  }
+}
+
+// Enhanced prescription content display to avoid duplicates
+function renderPrescriptionContent() {
+  const prescriptionContent = document.getElementById('prescriptionResultsContent');
+  if (!prescriptionContent) return;
+  
+  const allMedicines = getAllPrescriptionNames();
+  const uniqueMedicines = [...new Set(allMedicines)]; // Remove duplicates
+  
+  if (uniqueMedicines.length === 0) {
+    prescriptionContent.innerHTML = '<em>No medicines extracted yet.</em>';
+    return;
+  }
+  
+  prescriptionContent.innerHTML = uniqueMedicines.map((medicine, index) => 
+    `<div class="medicine-item">${index + 1}. ${escapeHtml(medicine)}</div>`
+  ).join('');
+}
+
+// Update the existing renderList function to handle prescription content better
+function renderList(container, items) {
+  if (!container) return;
+  
+  // Special handling for prescription content
+  if (container.classList && container.classList.contains('prescription-content')) {
+    renderPrescriptionContent();
+    return;
+  }
+  
+  // Regular list rendering with deduplication
+  if (!items || !Array.isArray(items)) { 
+    container.innerHTML = '<em>No items detected.</em>'; 
+    return; 
+  }
+  
+  // Remove duplicates for cleaner display
+  const uniqueItems = [...new Set(items)];
+  
+  if (uniqueItems.length === 0) {
+    container.innerHTML = '<em>No items detected.</em>';
+    return;
+  }
+  
+  container.innerHTML = uniqueItems.map((item, index) => 
+    `<span class="pill">${index + 1}. ${escapeHtml(item)}</span>`
+  ).join(' ');
+}
+
+// Initialize Application
+document.addEventListener('DOMContentLoaded', () => {
+  analytics.trackEvent('app_initialized');
+  renderGlobalSummary();
+  
+  // Set up bulk input handler to show analysis section
+  const bulkInput = document.getElementById('bulkInput');
+  if (bulkInput) {
+    bulkInput.addEventListener('change', () => {
+      if (bulkInput.files && bulkInput.files.length > 0) {
+        showAnalysisSection();
+        // Update thumbnails
+        updateBulkThumbnails();
+      }
+    });
+  }
+  
+  // Add More Files button
+  const addMoreFilesBtn = document.getElementById('addMoreFilesBtn');
+  if (addMoreFilesBtn) {
+    addMoreFilesBtn.addEventListener('click', () => {
+      bulkInput?.click();
+    });
+  }
+  
+  // Re-analyze All button
+  const reAnalyzeAllBtn = document.getElementById('reAnalyzeAllBtn');
+  if (reAnalyzeAllBtn) {
+    reAnalyzeAllBtn.addEventListener('click', () => {
+      if (bulkInput?.files?.length > 0) {
+        showPopup('info', 'Re-analyzing All Files', 
+          'This will re-process all uploaded files. Continue?', 
+          () => {
+            processBulkFiles();
+          });
+      } else {
+        showToast('warning', 'No Files', 'Please upload files first');
+      }
+    });
+  }
+});
+
+// Update bulk thumbnails display
+function updateBulkThumbnails() {
+  if (!bulkInput || !bulkThumbs) return;
+  
+  bulkThumbs.innerHTML = '';
+  
+  if (bulkInput.files && bulkInput.files.length > 0) {
+    Array.from(bulkInput.files).forEach((file, index) => {
+      const thumbnail = createThumbnailElement(file, index);
+      bulkThumbs.appendChild(thumbnail);
+    });
+  }
 }
 

@@ -130,6 +130,14 @@
     @keyframes spin { 
       to { transform: rotate(360deg); }
     }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
     .no-results { 
       text-align: center; 
       padding: 40px; 
@@ -226,14 +234,14 @@
     <div class="brand">
       <div class="brand-left">
         <img src="{{ url_for('static', filename='logo.png') }}" alt="MED Claim Assistant Logo" class="brand-logo" onerror="this.style.display='none'" />
-        <h1 style="margin:0; color: #1f2937;">👥 Employee Records</h1>
+        <h1 style="margin:0; color: #1f2937;">Employee Records</h1>
       </div>
       <a href="/" class="btn" style="text-decoration:none;">Back to Home</a>
     </div>
 
     <!-- Summary Dashboard -->
     <div id="summaryDashboard" class="summary-card" style="display:none;">
-      <h3 style="margin:0; font-size: 18px;">📊 System Overview</h3>
+      <h3 style="margin:0; font-size: 18px;">System Overview</h3>
       <div class="summary-grid" id="summaryGrid">
         <!-- Summary items will be populated here -->
       </div>
@@ -243,16 +251,18 @@
     <div class="box">
       <div class="row">
         <div class="search-box">
-          <input type="text" id="empSearch" placeholder="🔍 Type employee name to search..." class="search-input" />
+          <input type="text" id="empSearch" placeholder="Type employee name to search..." class="search-input" />
           <button class="clear-search" id="clearSearch">×</button>
         </div>
-        <button class="btn" id="refreshBtn">🔄 Refresh Data</button>
+        <button class="btn" id="refreshBtn">Refresh Data</button>
+        <button class="btn btn-secondary" id="syncBtn">Sync Database</button>
+        <button class="btn btn-secondary" id="cleanupBtn">Cleanup</button>
       </div>
       
       <div class="filter-tabs" id="filterTabs">
-        <div class="filter-tab active" data-filter="all">📋 All Employees</div>
-        <div class="filter-tab" data-filter="recent">⏰ Recent Activity</div>
-        <div class="filter-tab" data-filter="high-volume">📊 Active Users</div>
+        <div class="filter-tab active" data-filter="all">All Employees</div>
+        <div class="filter-tab" data-filter="recent">Recent Activity</div>
+        <div class="filter-tab" data-filter="high-volume">Active Users</div>
       </div>
     </div>
 
@@ -312,9 +322,10 @@
     }
 
     // Data fetching
-    async function fetchAllEmployees() {
+    async function fetchAllEmployees(forceSync = false) {
       try {
-        const res = await fetch('/api/datasets?limit=1000');
+        const url = forceSync ? '/api/datasets?limit=1000&sync=true' : '/api/datasets?limit=1000';
+        const res = await fetch(url);
         const data = await res.json();
         return {
           employees: data.employees || [],
@@ -324,6 +335,89 @@
         console.error('Error fetching employees:', e);
         return { employees: [], employeesWithStats: [] };
       }
+    }
+
+    async function syncDatabase() {
+      try {
+        empResults.innerHTML = '<div class="loading">Synchronizing database with filesystem...</div>';
+        
+        const res = await fetch('/api/sync', { method: 'POST' });
+        const data = await res.json();
+        
+        if (data.status === 'success') {
+          showNotification('success', 'Database synchronized successfully');
+          // Reload data after sync
+          await loadAllData();
+        } else {
+          throw new Error(data.error || 'Sync failed');
+        }
+      } catch (e) {
+        console.error('Sync failed:', e);
+        showNotification('error', `Sync failed: ${e.message}`);
+        empResults.innerHTML = `<div style="color:#b91c1c; text-align:center; padding:20px;">
+          <strong>Sync failed:</strong> ${escapeHtml(e.message || String(e))}
+          <br><br>
+          <button class="btn" onclick="loadAllData()">Reload Data</button>
+        </div>`;
+      }
+    }
+
+    async function cleanupDatabase() {
+      try {
+        if (!confirm('This will clean up the database and remove empty directories. Continue?')) {
+          return;
+        }
+        
+        empResults.innerHTML = '<div class="loading">Cleaning up database and empty directories...</div>';
+        
+        const res = await fetch('/api/cleanup', { 
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ removeEmptyDirs: true })
+        });
+        const data = await res.json();
+        
+        if (data.status === 'success') {
+          showNotification('success', 
+            `Cleanup completed. Database changes: ${data.database_changes ? 'Yes' : 'No'}, 
+             Removed directories: ${data.removed_directories}`);
+          // Reload data after cleanup
+          await loadAllData();
+        } else {
+          throw new Error(data.error || 'Cleanup failed');
+        }
+      } catch (e) {
+        console.error('Cleanup failed:', e);
+        showNotification('error', `Cleanup failed: ${e.message}`);
+        empResults.innerHTML = `<div style="color:#b91c1c; text-align:center; padding:20px;">
+          <strong>Cleanup failed:</strong> ${escapeHtml(e.message || String(e))}
+          <br><br>
+          <button class="btn" onclick="loadAllData()">Reload Data</button>
+        </div>`;
+      }
+    }
+
+    function showNotification(type, message) {
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: 6px;
+        color: white;
+        font-weight: 600;
+        z-index: 1000;
+        animation: slideIn 0.3s ease-out;
+        background: ${type === 'success' ? '#059669' : '#dc2626'};
+      `;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => document.body.removeChild(notification), 300);
+      }, 3000);
     }
 
     async function fetchEmployeeData(employee) {
@@ -347,7 +441,7 @@
       }
     }
 
-    async function loadAllData() {
+    async function loadAllData(forceSync = false) {
       empResults.innerHTML = '<div class="loading">Loading employee data...</div>';
       
       try {
@@ -357,8 +451,8 @@
           generateSummaryFromAnalytics(analytics);
         }
         
-        // Fetch employee data
-        const employeeData = await fetchAllEmployees();
+        // Fetch employee data with optional sync
+        const employeeData = await fetchAllEmployees(forceSync);
         allEmployeesData = employeeData.employees;
         
         // If we have stats, use them; otherwise fetch sessions individually
@@ -859,7 +953,19 @@
     });
 
     clearSearch.addEventListener('click', clearSearchInput);
-    refreshBtn.addEventListener('click', loadAllData);
+    refreshBtn.addEventListener('click', () => loadAllData(true)); // Force sync on refresh
+    
+    // Add new button listeners
+    const syncBtn = document.getElementById('syncBtn');
+    const cleanupBtn = document.getElementById('cleanupBtn');
+    
+    if (syncBtn) {
+      syncBtn.addEventListener('click', syncDatabase);
+    }
+    
+    if (cleanupBtn) {
+      cleanupBtn.addEventListener('click', cleanupDatabase);
+    }
 
     filterTabs.forEach(tab => {
       tab.addEventListener('click', () => handleFilterChange(tab.dataset.filter));
@@ -908,7 +1014,7 @@
       // Prescriptions
       if (summary.aggregated && summary.aggregated.prescriptions && summary.aggregated.prescriptions.length > 0) {
         content += `<div class="simple-card">
-          <div class="simple-title">💊 Prescribed Medicines</div>`;
+          <div class="simple-title"> Prescribed Medicines</div>`;
         
         summary.aggregated.prescriptions.forEach((prescription, index) => {
           if (prescription.names && prescription.names.length > 0) {
@@ -926,7 +1032,7 @@
       // Bills
       if (summary.aggregated && summary.aggregated.bills && summary.aggregated.bills.length > 0) {
         content += `<div class="simple-card">
-          <div class="simple-title">🧾 Bill Items</div>`;
+          <div class="simple-title"> Bill Items</div>`;
         
         let totalAmount = 0;
         summary.aggregated.bills.forEach((bill, index) => {
@@ -954,7 +1060,7 @@
       // Files list (simplified)
       if (files && files.length > 0) {
         content += `<div class="simple-card">
-          <div class="simple-title">📁 Uploaded Files</div>`;
+          <div class="simple-title"> Uploaded Files </div>`;
         files.forEach(file => {
           if (!file.endsWith('.json')) { // Only show image files, not JSON
             content += `<p>• ${escapeHtml(file)}</p>`;

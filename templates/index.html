@@ -1,126 +1,338 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Medical Bill Processor</title>
+  <title>Medical Claim Assistant - AI-Powered Healthcare Claims Processing</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Advanced AI-powered medical claim processing system for healthcare professionals. Analyze prescriptions and bills with intelligent matching algorithms." />
+  <meta name="keywords" content="medical claims, healthcare AI, prescription analysis, bill processing, healthcare automation" />
+  <meta name="author" content="Medical Claim Assistant" />
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Medical Claim Assistant" />
+  <meta property="og:description" content="AI-Powered Healthcare Claims Processing System" />
+  
+  <!-- Favicon -->
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}" />
   <link rel="apple-touch-icon" href="{{ url_for('static', filename='logo.png') }}" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
+  <meta name="theme-color" content="#3b82f6" />
   <style>
-    .step { border: 1px solid #6ee2e6; border-radius: 8px; padding: 16px; margin: 12px 0; background: #fff; }
-    .hidden { display: none; }
-    .row { display: flex; gap: 8px; align-items: center; }
-    .btn { background: #2563eb; color: #ffffff; border: 0; padding: 10px 14px; border-radius: 6px; cursor: pointer; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .pill { display: inline-block; padding: 4px 8px; background: #eef2ff; color: #1e3a8a; border-radius: 9999px; margin: 2px; }
-    .box { border: 1px dashed #cbd5e1; padding: 8px; border-radius: 6px; background: #f8fafc; }
-    .section-title { font-weight: 700; margin-bottom: 8px; }
-    .list { display: grid; gap: 6px; }
-    .list-row { display: grid; grid-template-columns: 1fr auto; gap: 6px; }
+    .step { 
+      border: 1px solid #e5e7eb; 
+      border-radius: 12px; 
+      padding: 20px; 
+      margin: 16px 0; 
+      background: #fff; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+    }
+    .step:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .hidden { display: none !important; }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .btn { 
+      background: #2563eb; 
+      color: #ffffff; 
+      border: 0; 
+      padding: 10px 16px; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn:hover:not(:disabled) { 
+      background: #1d4ed8; 
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+    }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .pill { 
+      display: inline-block; 
+      padding: 4px 10px; 
+      background: #eff6ff; 
+      color: #1e40af; 
+      border-radius: 20px; 
+      margin: 2px; 
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .box { 
+      border: 1px solid #e5e7eb; 
+      padding: 16px; 
+      border-radius: 10px; 
+      background: #f8fafc; 
+      margin-top: 12px;
+    }
+    .section-title { 
+      font-weight: 700; 
+      margin-bottom: 12px; 
+      font-size: 16px;
+      color: #1f2937;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .list { display: grid; gap: 8px; }
+    .list-row { 
+      display: grid; 
+      grid-template-columns: 1fr auto; 
+      gap: 12px; 
+      align-items: center;
+      padding: 8px;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #e5e7eb;
+    }
     .amount { width: 120px; }
+    
+    /* Better spacing and organization */
+    .control-group {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    
+    .results-section {
+      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+    
+    .input-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .input-group input {
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.2s ease;
+    }
+    
+    .input-group input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="brand">
-      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="brand-logo" onerror="this.style.display='none'" />
-      <div class="brand-text" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-        <h1>📋 Medical Bill Processor</h1>
-        <div class="row" style="gap:8px">
-          <a href="/employees" class="btn" style="text-decoration:none; background:#334155">👥 View Employee Records</a>
-          <button class="btn" id="newAnalysisBtn" style="background:#2382db;">📄 Process New Bills</button>
+    <!-- Modern Header -->
+    <header class="brand">
+      <div class="brand-left">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Medical Claim Assistant Logo" class="brand-logo" onerror="this.style.display='none'" />
+        <h1>Medical Claim Assistant</h1>
+      </div>
+      <nav class="brand-actions" role="navigation" aria-label="Main navigation">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <span id="themeIcon">Theme</span>
+        </button>
+        <a href="/employees" class="btn btn-secondary" aria-label="View employee records">
+          Employee Records
+        </a>
+        <button class="btn btn-error" id="newAnalysisBtn" aria-label="Start new analysis">
+          New Analysis
+        </button>
+      </nav>
+    </header>
+    
+    <!-- Main Content Area -->
+    <main class="main-content" role="main">
+      <!-- Global Summary Dashboard -->
+      <section id="globalSummary" class="results-section" style="display:none;" role="region" aria-label="Processing summary">
+      </section>
+      <!-- Help Section -->
+      <section class="step help-section" id="step-help" role="region" aria-labelledby="help-title">
+        <h2 class="section-title" id="help-title">Medical Claim Processing Guide</h2>
+        <div class="section-subtitle">
+          <p><strong>Step 1:</strong> Enter employee name and ID (required for accurate identification)</p>
+          <p><strong>Step 2:</strong> Upload medical prescriptions and bills using drag & drop or file selection</p>
+          <p><strong>Step 3:</strong> Start analysis by clicking the "Begin Analysis" button</p>
+          <p><strong>Step 4:</strong> Review intelligent matching between prescriptions and bills</p>
+          <p><strong>Step 5:</strong> Export comprehensive reports as Excel or PDF</p>
+          <div style="margin-top:var(--spacing-lg); padding:var(--spacing-md); background:rgba(59,130,246,0.1); border-radius:var(--radius-md); border-left: 4px solid var(--primary-color);">
+            <strong>Important Notes:</strong>
+            <ul style="margin-top:var(--spacing-sm); padding-left:var(--spacing-lg);">
+              <li>Use bulk upload for processing multiple documents at once</li>
+              <li>Individual analysis provides detailed extraction review</li>
+              <li>All results are automatically saved with employee records</li>
+              <li>Re-analyze feature helps improve accuracy for difficult documents</li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </div>
-    <div id="globalSummary" class="box" style="margin-top:8px"></div>
-    <div class="step" id="step-help" style="background: #f0f9ff; border-color: #0ea5e9;">
-      <div class="section-title">📖 How to Use This Application</div>
-      <div style="color: #0f172a; line-height: 1.6;">
-        <p><strong>Step 1:</strong> Enter the employee's name below</p>
-        <p><strong>Step 2:</strong> Upload medical bills and prescription images</p>
-        <p><strong>Step 3:</strong> The system will automatically extract medicine names and amounts</p>
-        <p><strong>Step 4:</strong> Review and save the results</p>
-        <p><strong>📁 To view saved records:</strong> Click "View Employee Records" button above</p>
-      </div>
-    </div>
+      </section>
 
-    <div class="step" id="step-employee">
-      <div class="section-title">👤 Employee Information</div>
-      <div class="row" style="margin-top:4px; gap:8px; align-items:center;">
-        <input type="text" id="employeeName" placeholder="Enter employee name (e.g., John Smith)" style="flex:1; padding:10px; border:1px solid #e5e7eb; border-radius:6px;"/>
-      </div>
-      <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">
-        💡 This name will be used to organize and save the processed documents
-      </div>
-    </div>
-    <div class="step" id="step-bulk">
-      <div class="section-title">📸 Upload Medical Documents</div>
-      <input type="file" id="bulkInput" accept="image/*" multiple />
-      <label for="bulkInput" class="upload-label" style="margin-left:0;margin-top:8px;display:inline-block;">📂 Choose Images (Bills & Prescriptions)</label>
-      <div id="dropZone" class="box" style="margin-top:8px; padding:18px; text-align:center; border-style:dashed; cursor:pointer">
-        📁 Drag & drop your medical bill and prescription images here<br>
-        <small style="color: #6b7280;">Supported formats: JPG, PNG, JPEG</small>
-      </div>
-      <div class="box" style="margin-top:8px; font-size:12px; color:#475569;">
-        ✨ The system will automatically identify medicines and amounts from your documents
-      </div>
-      <div id="bulkThumbs" class="list" style="margin-top:8px"></div>
-    </div>
-    <div class="step hidden" id="step-prescription">
-      <div class="section-title">Prescription  <span id="prescriptionCount" </span></div>
-      <input type="file" id="prescriptionInput" accept="image/*" />
-      <label for="prescriptionInput" class="upload-label" style="margin-left:0;margin-top:8px;display:inline-block;">Choose Prescription Image</label>
-      <div id="prescriptionFileInfo" class="file-info hidden">
-        <div class="file-details">
-          <span class="file-icon">📄</span>
-          <span class="file-name" id="prescriptionFileName"></span>
-          <span class="file-size" id="prescriptionFileSize"></span>
+      <!-- Employee Information Section -->
+      <section class="step" id="step-employee" role="region" aria-labelledby="employee-title">
+        <h2 class="section-title" id="employee-title">Employee Information</h2>
+        <div class="input-group">
+          <div style="flex: 2;">
+            <label for="employeeName" class="sr-only">Employee Full Name</label>
+            <input 
+              type="text" 
+              id="employeeName" 
+              placeholder="Enter employee full name (e.g., Rahul Khanna)" 
+              aria-describedby="employee-help"
+              autocomplete="name"
+              required
+            />
+          </div>
+          <div style="flex: 1;">
+            <label for="employeeId" class="sr-only">Employee ID</label>
+            <input 
+              type="text" 
+              id="employeeId" 
+              placeholder="Employee ID (e.g., EMP001)" 
+              aria-describedby="employee-help"
+              autocomplete="organization-title"
+              required
+            />
+          </div>
         </div>
-        <button class="remove-file-btn" id="removePrescriptionFile">×</button>
-      </div>
-      <div style="margin-top:8px">
-        <button class="btn" id="analyzePrescription" disabled>Analyze Prescription</button>
-      </div>
-      <div id="prescriptionResults" class="box" style="margin-top:12px"></div>
-      <div id="prescriptionEditor" class="list" style="margin-top:8px"></div>
-      <button class="btn" id="addPrescription" style="margin-top:6px; background:#6b7280">Add Medicine</button>
-    </div>
-    <div class="step hidden" id="step-bill">
-      <div class="section-title">Bill  <span id="billCount" </span></div>
-      <input type="file" id="billInput" accept="image/*" />
-      <label for="billInput" class="upload-label" style="margin-left:0;margin-top:8px;display:inline-block;">Choose Bill Image</label>
-      <div id="billFileInfo" class="file-info hidden">
-        <div class="file-details">
-          <span class="file-icon">🧾</span>
-          <span class="file-name" id="billFileName"></span>
-          <span class="file-size" id="billFileSize"></span>
+        <div id="employee-help" class="section-subtitle">
+          <span class="pill pill-warning">Required Fields</span>
+          Both name and ID are mandatory to prevent confusion between employees with similar names
         </div>
-        <button class="remove-file-btn" id="removeBillFile">×</button>
-      </div>
-      <div style="margin-top:8px">
-        <button class="btn" id="analyzeBill" disabled>Analyze Bill</button>
-      </div>
-      <div id="billResults" class="box" style="margin-top:12px"></div>
-      <div id="billEditor" class="list" style="margin-top:8px"></div>
-      <button class="btn" id="addBillItem" style="margin-top:6px; background:#6b7280">Add Bill Item</button>
-    </div>
+      </section>
+      <!-- Bulk Upload Section -->
+      <section class="step" id="step-bulk" role="region" aria-labelledby="bulk-title">
+        <h2 class="section-title" id="bulk-title">Document Upload</h2>
+        <input 
+          type="file" 
+          id="bulkInput" 
+          accept="image/*,.pdf" 
+          multiple 
+          aria-describedby="bulk-help"
+        />
+        
+        <div class="control-group">
+          <label for="bulkInput" class="btn btn-success" style="cursor:pointer;">
+            Select Files
+          </label>
+          <span class="section-subtitle">or drag & drop files below</span>
+        </div>
+        
+        <div 
+          id="dropZone" 
+          class="upload-zone" 
+          role="button" 
+          tabindex="0"
+          aria-label="Drop files here to upload"
+          aria-describedby="bulk-help"
+        >
+          <div class="upload-icon">+</div>
+          <div class="upload-text">Drop your medical documents here</div>
+          <div class="upload-subtext" id="bulk-help">
+            Supports JPG, PNG, JPEG, PDF • AI automatically categorizes prescriptions and bills
+          </div>
+        </div>
+        
+        <div id="bulkThumbs" class="thumbnail-grid" role="list" aria-label="Uploaded files"></div>
+        
+        <!-- Upload Progress -->
+        <div id="uploadProgress" class="progress-container" style="display:none;">
+          <div class="progress-header">
+            <span class="progress-title">Processing Files...</span>
+            <span class="progress-percentage" id="progressPercent">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text" id="progressText">Initializing...</div>
+        </div>
+
+        <!-- Analysis Start Section -->
+        <div class="start-analysis-section" id="analysisSection" style="display:none;">
+          <h3 style="margin-bottom: var(--spacing-md); color: var(--text-primary);">Ready to Begin Analysis</h3>
+          <p style="margin-bottom: var(--spacing-lg); color: var(--text-secondary);">
+            Files have been uploaded successfully. Click the button below to start the AI analysis process.
+          </p>
+          <button class="start-analysis-btn" id="startAnalysisBtn" disabled>
+            Begin Analysis
+          </button>
+        </div>
+
+        <!-- Analysis Results within Upload Section -->
+        <div id="analysisResults" class="results-section" style="display:none;">
+          <div class="results-header">
+            <h3 class="results-title">Analysis Results</h3>
+            <div class="control-group">
+              <button class="btn" id="addMoreFilesBtn" style="background:#6366f1;">Add More Files</button>
+              <button class="btn" id="reAnalyzeAllBtn" style="background:#f59e0b;">Re-Analyze All</button>
+            </div>
+          </div>
+          
+          <!-- Prescription Results -->
+          <div id="prescriptionResults" class="box" style="display:none;">
+            <h4 style="margin-bottom: 12px; color: var(--text-primary);">Extracted Medicines</h4>
+            <div id="prescriptionResultsContent" class="prescription-content"></div>
+            <div class="control-group" style="margin-top: 12px;">
+              <button class="btn" id="addPrescription" style="background:#6b7280;">Add Medicine</button>
+            </div>
+            <div id="prescriptionEditor" class="list" style="margin-top:12px"></div>
+          </div>
+
+          <!-- Bill Results -->
+          <div id="billResults" class="box" style="display:none;">
+            <h4 style="margin-bottom: 12px; color: var(--text-primary);">Extracted Bill Items</h4>
+            <div id="billResultsContent"></div>
+            <div class="control-group" style="margin-top: 12px;">
+              <button class="btn" id="addBillItem" style="background:#6b7280;">Add Item</button>
+            </div>
+            <div id="billEditor" class="list" style="margin-top:12px"></div>
+          </div>
+        </div>
+      </section>
+
     <div class="step" id="step-compare">
-      <div class="section-title">📊 Processing Results</div>
-      <div class="row" style="display:flex; justify-content:center; align-items:center; position:sticky; top:8px; z-index:2; background:#fff; padding:8px; border-radius:8px;">
-        <button class="btn" id="compareBtn" disabled>🔍 Process & Analyze Documents</button>
-        <button class="btn" id="exportCsvBtn" disabled style="background:#16a34a">📊 Save as Excel</button>
-        <button class="btn" id="exportPdfBtn" disabled style="background:#0f766e">📄 Save as PDF</button>
+      <div class="section-title">Analysis Results</div>
+      <div class="row" style="display:flex; justify-content:center; align-items:center; position:sticky; top:8px; z-index:2; background:#fff; padding:8px; border-radius:8px; gap:8px; flex-wrap:wrap;">
+        <button class="btn" id="compareBtn" hidden>Analyze Documents</button>
+        <button class="btn" id="exportCsvBtn" disabled style="background:#16a34a">Export Excel</button>
+        <button class="btn" id="exportPdfBtn" disabled style="background:#0f766e">Export PDF</button>
       </div>
-      <div id="compareResults" class="box" style="margin-top:12px"></div>
-      <div id="mappingResults" class="box" style="margin-top:12px"></div>
-    </div>
+      <!-- Analysis Results Section -->
+      <section id="compareResults" class="results-section" style="display:none;" role="region" aria-label="Analysis results">
+      </section>
+      
+      <!-- Mapping Results Section -->
+      <section id="mappingResults" class="results-section" style="display:none;" role="region" aria-label="Prescription to bill mapping">
+      </section>
+      
+    </main>
   </div>
-  <div id="customPopup" class="popup-overlay hidden">
+
+  <!-- Enhanced Modal System -->
+  <div id="customPopup" class="popup-overlay hidden" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupMessage">
     <div class="popup-container">
       <div class="popup-header">
-        <div class="popup-icon" id="popupIcon">ℹ️</div>
+        <div class="popup-icon" id="popupIcon">INFO</div>
         <h3 class="popup-title" id="popupTitle">Information</h3>
       </div>
       <div class="popup-content">
@@ -132,6 +344,33 @@
       </div>
     </div>
   </div>
+
+  <!-- Accessibility: Skip Link -->
+  <a href="#main-content" class="sr-only">Skip to main content</a>
+
+  <!-- Toast Container for Modern Notifications -->
+  <div id="toast-container" style="position: fixed; top: 80px; right: 20px; z-index: 1002; display: flex; flex-direction: column; gap: 8px;"></div>
+
   <script src="{{ url_for('static', filename='app.js') }}"></script>
+  
+  <!-- Performance Monitoring -->
+  <script>
+    window.addEventListener('load', () => {
+      if ('performance' in window) {
+        const perfData = performance.getEntriesByType('navigation')[0];
+        const metrics = {
+          domContentLoaded: Math.round(perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart),
+          loadComplete: Math.round(perfData.loadEventEnd - perfData.loadEventStart),
+          totalTime: Math.round(perfData.loadEventEnd - perfData.fetchStart)
+        };
+        console.log('🚀 Performance Metrics:', metrics);
+        
+        // Track performance for optimization
+        if (metrics.totalTime > 3000) {
+          console.warn('⚠️ Slow page load detected:', metrics.totalTime + 'ms');
+        }
+      }
+    });
+  </script>
 </body>
 </html>

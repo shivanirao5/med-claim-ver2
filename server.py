@@ -90,6 +90,78 @@ def update_employee_stats(employee_name):
                 
                 conn.commit()
 
+def sync_database_with_filesystem():
+    """Synchronize database with filesystem - clean up records for deleted folders"""
+    with db_lock:
+        with sqlite3.connect(DB_PATH) as conn:
+            # Get all employees from database
+            cursor = conn.execute('SELECT name FROM employees')
+            db_employees = [row[0] for row in cursor.fetchall()]
+            
+            # Get all sessions from database  
+            cursor = conn.execute('SELECT employee_name, session_id FROM sessions')
+            db_sessions = cursor.fetchall()
+            
+            # Check which employees no longer exist on filesystem
+            employees_to_delete = []
+            for employee in db_employees:
+                emp_dir = os.path.join(DATASET_DIR, _sanitize_name(employee))
+                if not os.path.isdir(emp_dir):
+                    employees_to_delete.append(employee)
+            
+            # Check which sessions no longer exist on filesystem
+            sessions_to_delete = []
+            for employee_name, session_id in db_sessions:
+                emp_dir = os.path.join(DATASET_DIR, _sanitize_name(employee_name))
+                sess_dir = os.path.join(emp_dir, session_id)
+                if not os.path.isdir(sess_dir):
+                    sessions_to_delete.append((employee_name, session_id))
+            
+            # Delete orphaned records
+            if employees_to_delete:
+                print(f"Cleaning up {len(employees_to_delete)} deleted employees from database")
+                for employee in employees_to_delete:
+                    conn.execute('DELETE FROM employees WHERE name = ?', (employee,))
+                    conn.execute('DELETE FROM sessions WHERE employee_name = ?', (employee,))
+            
+            if sessions_to_delete:
+                print(f"Cleaning up {len(sessions_to_delete)} deleted sessions from database")
+                for employee_name, session_id in sessions_to_delete:
+                    conn.execute('DELETE FROM sessions WHERE employee_name = ? AND session_id = ?', 
+                               (employee_name, session_id))
+            
+            # Recalculate stats for remaining employees
+            cursor = conn.execute('SELECT DISTINCT employee_name FROM sessions')
+            remaining_employees = [row[0] for row in cursor.fetchall()]
+            
+            for employee in remaining_employees:
+                # Recalculate stats
+                cursor = conn.execute('''
+                    SELECT COUNT(*) as total_sessions, 
+                           SUM(file_count) as total_files, 
+                           SUM(total_amount) as total_amount,
+                           MAX(created_at) as last_activity
+                    FROM sessions 
+                    WHERE employee_name = ?
+                ''', (employee,))
+                
+                row = cursor.fetchone()
+                if row:
+                    total_sessions, total_files, total_amount, last_activity = row
+                    conn.execute('''
+                        INSERT OR REPLACE INTO employees 
+                        (name, total_sessions, total_files, total_amount, last_activity)
+                        VALUES (?, ?, ?, ?, ?)
+                    ''', (employee, total_sessions or 0, total_files or 0, 
+                          total_amount or 0.0, last_activity or datetime.now().isoformat()))
+            
+            conn.commit()
+            
+            if employees_to_delete or sessions_to_delete:
+                print(f"Database synchronization complete: removed {len(employees_to_delete)} employees and {len(sessions_to_delete)} sessions")
+                return True
+            return False
+
 def record_session(employee_name, session_id, summary_data):
     """Record session data in database"""
     with db_lock:
@@ -448,6 +520,11 @@ def list_datasets():
     employee = request.args.get('employee', '').strip()
     limit = request.args.get('limit', type=int) or 100
     offset = request.args.get('offset', type=int) or 0
+    force_sync = request.args.get('sync', '').lower() == 'true'
+    
+    # Auto-sync database with filesystem if requested or if no employee specified (listing all)
+    if force_sync or not employee:
+        sync_database_with_filesystem()
     
     try:
         with sqlite3.connect(DB_PATH) as conn:
@@ -825,6 +902,77 @@ def auto_migrate_on_startup():
 # Run auto-migration on startup
 auto_migrate_on_startup()
 
+
+# Enhanced Routes for Modern Web Features
+
+@app.route('/sw.js')
+def service_worker():
+    """Serve the service worker from static folder"""
+    return send_from_directory('static', 'sw.js', mimetype='application/javascript')
+
+@app.route('/manifest.json')
+def manifest():
+    """Serve the PWA manifest"""
+    return send_from_directory('static', 'manifest.json', mimetype='application/json')
+
+@app.route('/api/performance', methods=['POST'])
+def track_performance():
+    """Track client-side performance metrics"""
+    try:
+        data = request.get_json()
+        # In a production app, you'd save this to analytics DB
+        print(f"Performance data: {data}")
+        return jsonify({"status": "recorded"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route('/api/sync', methods=['POST'])
+def sync_database():
+    """Manually synchronize database with filesystem"""
+    try:
+        changes_made = sync_database_with_filesystem()
+        return jsonify({
+            "status": "success",
+            "message": "Database synchronized with filesystem",
+            "changes_made": changes_made
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/cleanup', methods=['POST'])
+def cleanup_database():
+    """Clean up database and optionally remove empty directories"""
+    try:
+        remove_empty_dirs = request.get_json().get('removeEmptyDirs', False) if request.is_json else False
+        
+        # First sync database
+        changes_made = sync_database_with_filesystem()
+        
+        # Optionally remove empty directories
+        removed_dirs = 0
+        if remove_empty_dirs:
+            dataset_dir = os.path.join(BASE_DIR, 'dataset')
+            if os.path.exists(dataset_dir):
+                for item in os.listdir(dataset_dir):
+                    item_path = os.path.join(dataset_dir, item)
+                    if os.path.isdir(item_path):
+                        try:
+                            # Try to remove if empty
+                            os.rmdir(item_path)
+                            removed_dirs += 1
+                            print(f"Removed empty directory: {item_path}")
+                        except OSError:
+                            # Directory not empty, that's fine
+                            pass
+        
+        return jsonify({
+            "status": "success", 
+            "message": "Database cleanup completed",
+            "database_changes": changes_made,
+            "removed_directories": removed_dirs
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # No need for a custom static route; Flask serves /static/* automatically
 
