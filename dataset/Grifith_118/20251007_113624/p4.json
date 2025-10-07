@@ -1,0 +1,13 @@
+{
+  "type": "medical_record",
+  "prescriptionNames": [],
+  "testNames": [
+    "Hb",
+    "TLC",
+    "TSH",
+    "RBS",
+    "Urine RE",
+    "Urine P:C ratio"
+  ],
+  "billItems": []
+}

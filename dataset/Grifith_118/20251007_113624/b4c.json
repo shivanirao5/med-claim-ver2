@@ -1,0 +1,21 @@
+{
+  "type": "lab_report",
+  "prescriptionNames": [],
+  "testNames": [
+    "Urine Pus Cells",
+    "Urine Red Blood Cells",
+    "Urine Epithelial Cells",
+    "Hyaline Cast",
+    "Granular Cast",
+    "Red Blood Cell Cast",
+    "White Blood Cell Cast",
+    "Calcium Oxalate",
+    "Uric Acid Crystals",
+    "Triple Phosphate Crystal",
+    "Amorphous Crystals",
+    "Mucus",
+    "Yeast Cells",
+    "Bacteria"
+  ],
+  "billItems": []
+}

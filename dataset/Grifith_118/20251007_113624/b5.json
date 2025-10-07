@@ -1,0 +1,13 @@
+{
+  "type": "consultation_receipt",
+  "prescriptionNames": [],
+  "testNames": [],
+  "billItems": [
+    {
+      "name": "Consultation / Procedure",
+      "amount": 500.0,
+      "isConsultation": true,
+      "isTest": false
+    }
+  ]
+}

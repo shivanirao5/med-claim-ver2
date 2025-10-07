@@ -1,0 +1,13 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "testNames": [],
+  "billItems": [
+    {
+      "name": "CONSULTATION INTERNAL MEDICINE",
+      "amount": 550.0,
+      "isConsultation": true,
+      "isTest": false
+    }
+  ]
+}

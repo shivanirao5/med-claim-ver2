@@ -1,0 +1,13 @@
+{
+  "type": "lab_report",
+  "prescriptionNames": [],
+  "testNames": [
+    "Thyroid Stimulating Hormone (TSH) (Serum)",
+    "GLUCOSE- Random (Plasma)",
+    "SPOT URINE PROTEIN / CREATININE RATIO",
+    "SPOT URINE PROTEIN",
+    "SPOT URINE CREATININE",
+    "SPOTURINE PROTEIN/CREATININERATIO"
+  ],
+  "billItems": []
+}
