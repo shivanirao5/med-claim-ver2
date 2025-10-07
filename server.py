@@ -189,26 +189,48 @@ def get_api_key() -> str:
 
 # Enhanced fuzzy matching utilities
 def normalize_medicine_name(name):
-    """Normalize medicine names for better matching"""
+    """Enhanced normalize medicine names for better matching"""
     if not name:
         return ""
     
     # Convert to lowercase
     name = name.lower().strip()
     
+    # Store original for reference
+    original_name = name
+    
     # Remove common prefixes/suffixes
-    prefixes = ['tab', 'tablet', 'cap', 'capsule', 'syrup', 'inj', 'injection', 'susp', 'suspension']
+    prefixes = ['tab', 'tablet', 'cap', 'capsule', 'syrup', 'syp', 'inj', 'injection', 'susp', 'suspension', 'drops', 'sol', 'solution']
     for prefix in prefixes:
         if name.startswith(prefix + '.'):
             name = name[len(prefix)+1:].strip()
         elif name.startswith(prefix + ' '):
             name = name[len(prefix)+1:].strip()
+        elif name.endswith(' ' + prefix):
+            name = name[:-len(prefix)-1].strip()
+        elif name.endswith('.' + prefix):
+            name = name[:-len(prefix)-1].strip()
     
-    # Remove dosage information
-    name = re.sub(r'\d+\s*mg|\d+\s*ml|\d+\s*gm', '', name)
+    # Handle common suffixes like "kid", "ds", "forte", "plus"
+    suffixes = ['kid', 'ds', 'forte', 'plus', 'sr', 'xl', 'cr', 'er', 'mr']
+    for suffix in suffixes:
+        if name.endswith('-' + suffix):
+            name = name[:-len(suffix)-1].strip()
+        elif name.endswith(' ' + suffix):
+            name = name[:-len(suffix)-1].strip()
+    
+    # Remove dosage information but preserve core name
+    # Extract the base medicine name before dosage
+    name = re.sub(r'\s*\d+\s*mg\s*', ' ', name)
+    name = re.sub(r'\s*\d+\s*ml\s*', ' ', name)
+    name = re.sub(r'\s*\d+\s*gm\s*', ' ', name)
+    name = re.sub(r'\s*\d+\s*mcg\s*', ' ', name)
+    
+    # Replace hyphens with spaces for better matching
+    name = name.replace('-', ' ')
     
     # Remove special characters but keep spaces
-    name = re.sub(r'[^\w\s]', '', name)
+    name = re.sub(r'[^\w\s]', ' ', name)
     
     # Remove extra spaces
     name = ' '.join(name.split())
@@ -216,7 +238,7 @@ def normalize_medicine_name(name):
     return name
 
 def fuzzy_match_score(str1, str2):
-    """Calculate fuzzy match score between two strings"""
+    """Enhanced fuzzy match score calculation for medicine names"""
     if not str1 or not str2:
         return 0.0
     
@@ -227,25 +249,53 @@ def fuzzy_match_score(str1, str2):
     if s1 == s2:
         return 1.0
     
-    # Use SequenceMatcher for fuzzy matching
+    # If either string is empty after normalization, no match
+    if not s1 or not s2:
+        return 0.0
+    
+    # Base sequence matching
     base_score = SequenceMatcher(None, s1, s2).ratio()
     
-    # Check if one string contains the other (partial match)
-    if s1 in s2 or s2 in s1:
-        partial_score = 0.85
-        base_score = max(base_score, partial_score)
-    
-    # Check for word-level matching
+    # Word-level matching (most important for medicines)
     words1 = set(s1.split())
     words2 = set(s2.split())
     
     if words1 and words2:
-        word_overlap = len(words1.intersection(words2)) / max(len(words1), len(words2))
-        base_score = max(base_score, word_overlap * 0.9)
+        # Calculate Jaccard similarity
+        intersection = words1.intersection(words2)
+        union = words1.union(words2)
+        jaccard_score = len(intersection) / len(union) if union else 0
+        
+        # If there's significant word overlap, boost the score
+        if len(intersection) > 0:
+            word_overlap_ratio = len(intersection) / max(len(words1), len(words2))
+            word_score = max(jaccard_score, word_overlap_ratio) * 0.95
+            base_score = max(base_score, word_score)
+    
+    # Check for substring matches (core medicine name)
+    if s1 in s2 or s2 in s1:
+        substring_score = 0.88
+        base_score = max(base_score, substring_score)
+    
+    # Check for partial word matches (like "calpol" matching in both)
+    for word1 in words1:
+        for word2 in words2:
+            if len(word1) >= 4 and len(word2) >= 4:  # Only for meaningful words
+                word_ratio = SequenceMatcher(None, word1, word2).ratio()
+                if word_ratio > 0.8:
+                    partial_word_score = word_ratio * 0.85
+                    base_score = max(base_score, partial_word_score)
+    
+    # Handle numeric variations (like "120" vs "120mg")
+    nums1 = re.findall(r'\d+', str1.lower())
+    nums2 = re.findall(r'\d+', str2.lower())
+    if nums1 and nums2 and set(nums1) == set(nums2):
+        # Same numbers found, boost score
+        base_score = min(1.0, base_score + 0.1)
     
     return base_score
 
-def find_best_match(medicine_name, bill_items, threshold=0.65):
+def find_best_match(medicine_name, bill_items, threshold=0.6):
     """Find the best matching bill item for a given medicine name"""
     best_match = None
     best_score = 0.0
@@ -285,9 +335,10 @@ def build_enhanced_prompt() -> str:
     return (
         "You are an expert medical document analyzer. Analyze this image carefully.\n\n"
         "1) DOCUMENT CLASSIFICATION:\n"
-        "   - Classify as: 'prescription', 'bill', 'medical_record', or 'consultation_receipt'\n"
+        "   - Classify as: 'prescription', 'bill', 'test_report', 'lab_report', 'consultation_receipt', 'medical_record', or 'unknown'\n"
         "   - A prescription contains medicine names prescribed by a doctor\n"
-        "   - A bill/receipt shows items purchased with prices\n"
+        "   - A bill/receipt shows items purchased with prices (medicines, tests, consultations)\n"
+        "   - A test_report/lab_report contains medical test results, lab values, diagnostic tests\n"
         "   - A consultation receipt shows doctor consultation charges\n"
         "   - Medical records show patient history, diagnoses, etc.\n\n"
         "2) MEDICINE EXTRACTION (for prescriptions):\n"
@@ -297,29 +348,39 @@ def build_enhanced_prompt() -> str:
         "   - EXCLUDE: Headers like 'Rx', 'Prescription', or administrative text\n\n"
         "3) BILL ITEM EXTRACTION (for bills/receipts):\n"
         "   - Extract each item name and its corresponding amount\n"
-        "   - Identify consultation fees separately\n"
+        "   - Identify consultation fees, test fees, and medicine costs separately\n"
+        "   - Mark test items with 'isTest': true\n"
+        "   - Mark consultation fees with 'isConsultation': true\n"
         "   - Include medicine names and their prices\n"
         "   - Extract subtotals, taxes, and final totals if present\n\n"
+        "4) TEST EXTRACTION (for test/lab reports):\n"
+        "   - Extract test names (CBC, Blood Sugar, X-Ray, etc.)\n"
+        "   - Look for diagnostic procedure names\n"
+        "   - Include pathology tests, imaging tests, etc.\n\n"
         "Return a JSON object with this EXACT structure:\n"
         "{\n"
-        "  \"type\": \"prescription|bill|consultation_receipt|medical_record|unknown\",\n"
+        "  \"type\": \"prescription|bill|test_report|lab_report|consultation_receipt|medical_record|unknown\",\n"
         "  \"prescriptionNames\": [\"medicine1\", \"medicine2\", ...],\n"
+        "  \"testNames\": [\"CBC\", \"Blood Sugar\", \"X-Ray Chest\", ...],\n"
         "  \"billItems\": [\n"
-        "    {\"name\": \"item_name\", \"amount\": 100.50, \"isConsultation\": false},\n"
+        "    {\"name\": \"item_name\", \"amount\": 100.50, \"isConsultation\": false, \"isTest\": false},\n"
         "    ...\n"
         "  ],\n"
         "  \"metadata\": {\n"
         "    \"hasConsultationFee\": false,\n"
+        "    \"hasTestFees\": false,\n"
         "    \"totalAmount\": 0,\n"
         "    \"itemCount\": 0\n"
         "  }\n"
         "}\n\n"
         "IMPORTANT RULES:\n"
         "- Medicine names must be complete and correctly spelled\n"
+        "- Test names should be clear and standard (e.g., 'Complete Blood Count' not 'CBC test done')\n"
         "- For bills, 'amount' must be a number (not string)\n"
         "- Mark consultation fees with 'isConsultation': true\n"
+        "- Mark test/lab fees with 'isTest': true\n"
         "- Use empty arrays for unused fields\n"
-        "- Be thorough in extraction - don't miss any medicines or items\n"
+        "- Be thorough in extraction - don't miss any medicines, tests, or items\n"
     )
 
 def call_gemini(image_bytes: bytes, mime: str, prompt: str, api_key: str):
@@ -463,11 +524,14 @@ def ocr_auto():
         # Normalize output
         typ = (data or {}).get('type') if isinstance(data, dict) else None
         presc_names = []
+        test_names = []
         bill_items = []
         
         if isinstance(data, dict):
             if isinstance(data.get('prescriptionNames'), list):
                 presc_names = [str(n).strip() for n in data.get('prescriptionNames') if isinstance(n, str) and n.strip()]
+            if isinstance(data.get('testNames'), list):
+                test_names = [str(n).strip() for n in data.get('testNames') if isinstance(n, str) and n.strip()]
             if isinstance(data.get('billItems'), list):
                 for it in data.get('billItems'):
                     if isinstance(it, dict) and it.get('name'):
@@ -475,6 +539,7 @@ def ocr_auto():
                         if isinstance(it.get('amount'), (int, float)):
                             entry['amount'] = float(it['amount'])
                         entry['isConsultation'] = it.get('isConsultation', False)
+                        entry['isTest'] = it.get('isTest', False)
                         bill_items.append(entry)
 
         # Filter prescription names
@@ -484,8 +549,9 @@ def ocr_auto():
 
         file_result = {
             "filename": filename,
-            "type": typ or ('bill' if bill_items else ('prescription' if presc_names else 'unknown')),
+            "type": typ or ('bill' if bill_items else ('test_report' if test_names else ('prescription' if presc_names else 'unknown'))),
             "prescriptionNames": presc_names,
+            "testNames": test_names,
             "billItems": bill_items,
         }
         
@@ -496,6 +562,7 @@ def ocr_auto():
             meta = {
                 "type": file_result["type"],
                 "prescriptionNames": presc_names,
+                "testNames": test_names,
                 "billItems": bill_items,
             }
             base_no_ext = os.path.splitext(safe_name)[0]
@@ -518,13 +585,23 @@ def ocr_auto():
         if bill_items:
             all_bills.extend(bill_items)
 
+    # Collect all tests
+    all_tests = []
+    for file_result in results:
+        test_names = file_result.get('testNames', [])
+        if test_names:
+            for test_name in test_names:
+                if test_name not in all_tests:
+                    all_tests.append(test_name)
+    
     # Perform intelligent matching
-    matching_results = perform_intelligent_matching(all_prescriptions, all_bills)
+    matching_results = perform_intelligent_matching(all_prescriptions, all_bills, all_tests)
     
     summary = {
         "files": results,
         "aggregated": {
             "prescriptions": [{"names": all_prescriptions}] if all_prescriptions else [],
+            "tests": [{"names": all_tests}] if all_tests else [],
             "bills": [{"items": all_bills}] if all_bills else []
         },
         "matching": matching_results
@@ -545,10 +622,14 @@ def ocr_auto():
     
     return jsonify(summary)
 
-def perform_intelligent_matching(prescriptions, bill_items):
-    """Perform intelligent fuzzy matching between prescriptions and bills"""
+def perform_intelligent_matching(prescriptions, bill_items, tests=None):
+    """Perform intelligent fuzzy matching between prescriptions, tests and bills"""
+    if tests is None:
+        tests = []
+    
     matched_items = []
     unmatched_prescriptions = []
+    unmatched_tests = []
     inadmissible_items = []
     consultation_adjustments = []
     
@@ -634,6 +715,40 @@ def perform_intelligent_matching(prescriptions, bill_items):
                 })
                 matched_prescription_names.add(normalized_prescription)
     
+    # Match tests with bill items
+    matched_test_names = set()
+    for test_name in tests:
+        normalized_test = normalize_medicine_name(test_name)
+        
+        # Skip if already matched
+        if normalized_test in matched_test_names:
+            continue
+        
+        best_match, match_score = find_best_match(test_name, remaining_bills, threshold=0.7)
+        
+        if best_match:
+            matched_test_names.add(normalized_test)
+            
+            matched_items.append({
+                "prescriptionName": f"Test: {test_name}",
+                "billItemName": best_match['name'],
+                "amount": best_match.get('amount', 0),
+                "matchScore": round(match_score * 100, 2),
+                "status": "admissible",
+                "isTest": True
+            })
+            total_admissible += best_match.get('amount', 0)
+            
+            remaining_bills.remove(best_match)
+        else:
+            if normalized_test not in matched_test_names:
+                unmatched_tests.append({
+                    "testName": test_name,
+                    "status": "not_billed",
+                    "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+                })
+                matched_test_names.add(normalized_test)
+    
     # Process remaining unmatched bill items as inadmissible
     for bill_item in remaining_bills:
         # Check if it's a consultation fee
@@ -677,13 +792,16 @@ def perform_intelligent_matching(prescriptions, bill_items):
     return {
         "matchedItems": matched_items,
         "unmatchedPrescriptions": unmatched_prescriptions,
+        "unmatchedTests": unmatched_tests,
         "inadmissibleItems": inadmissible_items,
         "consultationAdjustments": consultation_adjustments,
         "summary": {
             "totalPrescriptions": len(prescriptions),
+            "totalTests": len(tests),
             "totalBillItems": len(bill_items),
             "matchedCount": len(matched_items),
             "unmatchedPrescriptionCount": len(unmatched_prescriptions),
+            "unmatchedTestCount": len(unmatched_tests),
             "inadmissibleCount": len(inadmissible_items),
             "totalAdmissibleAmount": round(total_admissible, 2),
             "totalInadmissibleAmount": round(total_inadmissible, 2),

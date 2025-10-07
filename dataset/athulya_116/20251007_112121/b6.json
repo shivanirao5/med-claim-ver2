@@ -1,0 +1,11 @@
+{
+  "type": "consultation_receipt",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "Electro Cautery",
+      "amount": 1500.0,
+      "isConsultation": true
+    }
+  ]
+}

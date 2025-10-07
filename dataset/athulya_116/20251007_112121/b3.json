@@ -1,0 +1,11 @@
+{
+  "type": "consultation_receipt",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "CONSULTATION INTERNAL MEDICINE",
+      "amount": 550.0,
+      "isConsultation": true
+    }
+  ]
+}

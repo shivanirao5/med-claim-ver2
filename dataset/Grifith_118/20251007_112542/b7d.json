@@ -1,0 +1,16 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "CALPOL 120MG SYRUP",
+      "amount": 36.0,
+      "isConsultation": false
+    },
+    {
+      "name": "ZENTEL SYP.",
+      "amount": 17.9,
+      "isConsultation": false
+    }
+  ]
+}

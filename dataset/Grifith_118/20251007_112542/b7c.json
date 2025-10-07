@@ -1,0 +1,11 @@
+{
+  "type": "consultation_receipt",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "CONSULTATION CHARGE",
+      "amount": 250.0,
+      "isConsultation": true
+    }
+  ]
+}

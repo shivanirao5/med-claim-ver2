@@ -322,6 +322,7 @@
   }
 
   function displayMatchingResults(matching) {
+    document.getElementById('step-compare').style.display = 'block';
     compareResults.style.display = 'block';
     mappingResults.style.display = 'block';
 
@@ -899,6 +900,35 @@
     }
   });
 
+  // Add More Files Button
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'addMoreFilesBtn') {
+      bulkInput.click();
+    }
+  });
+
+  // Re-Analyze All Button
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'reAnalyzeAllBtn') {
+      if (uploadedFiles.length === 0) {
+        showNotification('error', 'No files to re-analyze. Please upload files first.');
+        return;
+      }
+      
+      if (confirm('Re-analyze all documents? This may take a few moments.')) {
+        showNotification('info', 'Starting re-analysis...');
+        // Hide current results
+        analysisResults.style.display = 'none';
+        compareResults.style.display = 'none';
+        mappingResults.style.display = 'none';
+        document.getElementById('step-compare').style.display = 'none';
+        
+        // Restart analysis
+        startAnalysis();
+      }
+    }
+  });
+
   function resetAnalysis() {
     uploadedFiles = [];
     analysisData = null;
@@ -914,6 +944,7 @@
     prescriptionResults.style.display = 'none';
     billResults.style.display = 'none';
     uploadProgress.style.display = 'none';
+    document.getElementById('step-compare').style.display = 'none';
     
     startAnalysisBtn.disabled = true;
     document.getElementById('exportCsvBtn').disabled = true;
@@ -921,6 +952,26 @@
     
     showNotification('success', 'Ready for new analysis');
   }
+
+  // Back to Top Button Functionality
+  const backToTopBtn = document.getElementById('backToTopBtn');
+  
+  // Show/hide button based on scroll position
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      backToTopBtn.style.display = 'flex';
+    } else {
+      backToTopBtn.style.display = 'none';
+    }
+  });
+  
+  // Smooth scroll to top
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
 
   // Initialize
   console.log('Medical Claims Processor initialized');

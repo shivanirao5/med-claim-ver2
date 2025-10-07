@@ -1,0 +1,26 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "Investigation Charges Disposable",
+      "amount": 15.0,
+      "isConsultation": false
+    },
+    {
+      "name": "Medicine Charges Cefarix Dxa",
+      "amount": 3735.0,
+      "isConsultation": false
+    },
+    {
+      "name": "Medicine Charges O.P.V.",
+      "amount": 300.0,
+      "isConsultation": false
+    },
+    {
+      "name": "Doctors Consultation",
+      "amount": 200.0,
+      "isConsultation": true
+    }
+  ]
+}

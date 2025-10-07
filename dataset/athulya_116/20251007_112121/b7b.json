@@ -1,0 +1,11 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "INFLUVAC TETRA",
+      "amount": 2444.0,
+      "isConsultation": false
+    }
+  ]
+}
