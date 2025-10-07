@@ -1,0 +1,25 @@
+{
+  "type": "bill",
+  "prescriptionNames": [
+    "PYNOMAX TX CREAM 30GM",
+    "DERMADEM ALOE PLUS CREAM 30GM",
+    "PHOTOSTABLE SUNSCREEN EMUGEL"
+  ],
+  "billItems": [
+    {
+      "name": "PYNOMAX TX CREAM 30GM",
+      "amount": 609.6,
+      "isConsultation": false
+    },
+    {
+      "name": "DERMADEM ALOE PLUS CREAM 30GM",
+      "amount": 252.0,
+      "isConsultation": false
+    },
+    {
+      "name": "PHOTOSTABLE SUNSCREEN EMUGEL",
+      "amount": 827.0,
+      "isConsultation": false
+    }
+  ]
+}

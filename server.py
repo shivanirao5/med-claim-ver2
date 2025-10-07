@@ -10,6 +10,7 @@ import re
 import sqlite3
 import threading
 from datetime import datetime, timedelta
+from difflib import SequenceMatcher
 try:
     from dotenv import load_dotenv
 except ImportError:
@@ -19,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
 
-# Database setup for improved performance and scalability
+# Database setup
 DB_PATH = os.path.join(BASE_DIR, 'med_claim_data.db')
 db_lock = threading.Lock()
 
@@ -66,7 +67,6 @@ def update_employee_stats(employee_name):
     """Update employee statistics in database"""
     with db_lock:
         with sqlite3.connect(DB_PATH) as conn:
-            # Calculate totals from sessions
             cursor = conn.execute('''
                 SELECT COUNT(*) as total_sessions, 
                        SUM(file_count) as total_files, 
@@ -80,7 +80,6 @@ def update_employee_stats(employee_name):
             if row:
                 total_sessions, total_files, total_amount, last_activity = row
                 
-                # Insert or update employee record
                 conn.execute('''
                     INSERT OR REPLACE INTO employees 
                     (name, total_sessions, total_files, total_amount, last_activity)
@@ -91,25 +90,21 @@ def update_employee_stats(employee_name):
                 conn.commit()
 
 def sync_database_with_filesystem():
-    """Synchronize database with filesystem - clean up records for deleted folders"""
+    """Synchronize database with filesystem"""
     with db_lock:
         with sqlite3.connect(DB_PATH) as conn:
-            # Get all employees from database
             cursor = conn.execute('SELECT name FROM employees')
             db_employees = [row[0] for row in cursor.fetchall()]
             
-            # Get all sessions from database  
             cursor = conn.execute('SELECT employee_name, session_id FROM sessions')
             db_sessions = cursor.fetchall()
             
-            # Check which employees no longer exist on filesystem
             employees_to_delete = []
             for employee in db_employees:
                 emp_dir = os.path.join(DATASET_DIR, _sanitize_name(employee))
                 if not os.path.isdir(emp_dir):
                     employees_to_delete.append(employee)
             
-            # Check which sessions no longer exist on filesystem
             sessions_to_delete = []
             for employee_name, session_id in db_sessions:
                 emp_dir = os.path.join(DATASET_DIR, _sanitize_name(employee_name))
@@ -117,25 +112,20 @@ def sync_database_with_filesystem():
                 if not os.path.isdir(sess_dir):
                     sessions_to_delete.append((employee_name, session_id))
             
-            # Delete orphaned records
             if employees_to_delete:
-                print(f"Cleaning up {len(employees_to_delete)} deleted employees from database")
                 for employee in employees_to_delete:
                     conn.execute('DELETE FROM employees WHERE name = ?', (employee,))
                     conn.execute('DELETE FROM sessions WHERE employee_name = ?', (employee,))
             
             if sessions_to_delete:
-                print(f"Cleaning up {len(sessions_to_delete)} deleted sessions from database")
                 for employee_name, session_id in sessions_to_delete:
                     conn.execute('DELETE FROM sessions WHERE employee_name = ? AND session_id = ?', 
                                (employee_name, session_id))
             
-            # Recalculate stats for remaining employees
             cursor = conn.execute('SELECT DISTINCT employee_name FROM sessions')
             remaining_employees = [row[0] for row in cursor.fetchall()]
             
             for employee in remaining_employees:
-                # Recalculate stats
                 cursor = conn.execute('''
                     SELECT COUNT(*) as total_sessions, 
                            SUM(file_count) as total_files, 
@@ -158,7 +148,6 @@ def sync_database_with_filesystem():
             conn.commit()
             
             if employees_to_delete or sessions_to_delete:
-                print(f"Database synchronization complete: removed {len(employees_to_delete)} employees and {len(sessions_to_delete)} sessions")
                 return True
             return False
 
@@ -168,18 +157,15 @@ def record_session(employee_name, session_id, summary_data):
         with sqlite3.connect(DB_PATH) as conn:
             file_count = len(summary_data.get('files', []))
             
-            # Count prescriptions and bills
             aggregated = summary_data.get('aggregated', {})
             prescription_count = len(aggregated.get('prescriptions', []))
             bill_count = len(aggregated.get('bills', []))
             
-            # Calculate total amount
             total_amount = 0
             for bill in aggregated.get('bills', []):
                 for item in bill.get('items', []):
                     total_amount += item.get('amount', 0)
             
-            # Insert or update session
             conn.execute('''
                 INSERT OR REPLACE INTO sessions 
                 (employee_name, session_id, file_count, prescription_count, bill_count, total_amount)
@@ -188,39 +174,153 @@ def record_session(employee_name, session_id, summary_data):
             
             conn.commit()
     
-    # Update employee stats
     update_employee_stats(employee_name)
 
-# Initialize database on startup
 init_database()
 
 GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent"
+
 def get_api_key() -> str:
-    # Load .env once at startup if available
     global _ENV_LOADED
     if load_dotenv and not globals().get('_ENV_LOADED'):
         load_dotenv(os.path.join(BASE_DIR, '.env'))
         _ENV_LOADED = True
     return os.getenv('GEMINI_API_KEY')
 
+# Enhanced fuzzy matching utilities
+def normalize_medicine_name(name):
+    """Normalize medicine names for better matching"""
+    if not name:
+        return ""
+    
+    # Convert to lowercase
+    name = name.lower().strip()
+    
+    # Remove common prefixes/suffixes
+    prefixes = ['tab', 'tablet', 'cap', 'capsule', 'syrup', 'inj', 'injection', 'susp', 'suspension']
+    for prefix in prefixes:
+        if name.startswith(prefix + '.'):
+            name = name[len(prefix)+1:].strip()
+        elif name.startswith(prefix + ' '):
+            name = name[len(prefix)+1:].strip()
+    
+    # Remove dosage information
+    name = re.sub(r'\d+\s*mg|\d+\s*ml|\d+\s*gm', '', name)
+    
+    # Remove special characters but keep spaces
+    name = re.sub(r'[^\w\s]', '', name)
+    
+    # Remove extra spaces
+    name = ' '.join(name.split())
+    
+    return name
 
+def fuzzy_match_score(str1, str2):
+    """Calculate fuzzy match score between two strings"""
+    if not str1 or not str2:
+        return 0.0
+    
+    # Normalize both strings
+    s1 = normalize_medicine_name(str1)
+    s2 = normalize_medicine_name(str2)
+    
+    if s1 == s2:
+        return 1.0
+    
+    # Use SequenceMatcher for fuzzy matching
+    base_score = SequenceMatcher(None, s1, s2).ratio()
+    
+    # Check if one string contains the other (partial match)
+    if s1 in s2 or s2 in s1:
+        partial_score = 0.85
+        base_score = max(base_score, partial_score)
+    
+    # Check for word-level matching
+    words1 = set(s1.split())
+    words2 = set(s2.split())
+    
+    if words1 and words2:
+        word_overlap = len(words1.intersection(words2)) / max(len(words1), len(words2))
+        base_score = max(base_score, word_overlap * 0.9)
+    
+    return base_score
 
-def build_prompt(kind: str) -> str:
-    if kind == 'prescription':
-        return (
-            "Analyze this image of a handwritten prescription.\n"
-            "1. Identify all medicine names, including any dosage information.\n"
-            "2. Return a JSON array of objects: {\"name\": string, \"box_2d\": [ymin,xmin,ymax,xmax] normalized 0-1000}.\n"
-            "3. Only return medicine names, exclude doctor/clinic headers, addresses, dates, signatures.\n"
-            "Return [] if none."
-        )
+def find_best_match(medicine_name, bill_items, threshold=0.65):
+    """Find the best matching bill item for a given medicine name"""
+    best_match = None
+    best_score = 0.0
+    
+    for item in bill_items:
+        item_name = item.get('name', '')
+        score = fuzzy_match_score(medicine_name, item_name)
+        
+        if score > best_score and score >= threshold:
+            best_score = score
+            best_match = item
+    
+    return best_match, best_score
+
+def classify_consultation_fee(item_name, amount):
+    """Check if an item is a consultation fee and validate the amount"""
+    consultation_keywords = [
+        'consultation', 'doctor fee', 'doctor charge', 'consulting', 
+        'visit', 'opd', 'consultation fee', 'dr fee', 'dr charge',
+        'physician fee', 'medical consultation', 'consulting fee'
+    ]
+    
+    normalized_name = normalize_medicine_name(item_name)
+    
+    is_consultation = any(keyword in normalized_name for keyword in consultation_keywords)
+    
+    if is_consultation:
+        max_allowed = 300.0
+        if amount > max_allowed:
+            return True, max_allowed, amount - max_allowed
+        else:
+            return True, amount, 0.0
+    
+    return False, amount, 0.0
+
+def build_enhanced_prompt() -> str:
     return (
-        "Analyze this image of a medical bill/receipt.\n"
-        "1. Extract each billed medicine/item and its total amount if present.\n"
-        "2. Return a JSON array: {\"name\": string, \"amount\": number?}.\n"
-        "Return [] if none."
+        "You are an expert medical document analyzer. Analyze this image carefully.\n\n"
+        "1) DOCUMENT CLASSIFICATION:\n"
+        "   - Classify as: 'prescription', 'bill', 'medical_record', or 'consultation_receipt'\n"
+        "   - A prescription contains medicine names prescribed by a doctor\n"
+        "   - A bill/receipt shows items purchased with prices\n"
+        "   - A consultation receipt shows doctor consultation charges\n"
+        "   - Medical records show patient history, diagnoses, etc.\n\n"
+        "2) MEDICINE EXTRACTION (for prescriptions):\n"
+        "   - Extract ALL medicine names, brands, and generic names\n"
+        "   - Include full medicine names with proper spelling\n"
+        "   - EXCLUDE: doctor names, clinic names, addresses, dates, patient names\n"
+        "   - EXCLUDE: Headers like 'Rx', 'Prescription', or administrative text\n\n"
+        "3) BILL ITEM EXTRACTION (for bills/receipts):\n"
+        "   - Extract each item name and its corresponding amount\n"
+        "   - Identify consultation fees separately\n"
+        "   - Include medicine names and their prices\n"
+        "   - Extract subtotals, taxes, and final totals if present\n\n"
+        "Return a JSON object with this EXACT structure:\n"
+        "{\n"
+        "  \"type\": \"prescription|bill|consultation_receipt|medical_record|unknown\",\n"
+        "  \"prescriptionNames\": [\"medicine1\", \"medicine2\", ...],\n"
+        "  \"billItems\": [\n"
+        "    {\"name\": \"item_name\", \"amount\": 100.50, \"isConsultation\": false},\n"
+        "    ...\n"
+        "  ],\n"
+        "  \"metadata\": {\n"
+        "    \"hasConsultationFee\": false,\n"
+        "    \"totalAmount\": 0,\n"
+        "    \"itemCount\": 0\n"
+        "  }\n"
+        "}\n\n"
+        "IMPORTANT RULES:\n"
+        "- Medicine names must be complete and correctly spelled\n"
+        "- For bills, 'amount' must be a number (not string)\n"
+        "- Mark consultation fees with 'isConsultation': true\n"
+        "- Use empty arrays for unused fields\n"
+        "- Be thorough in extraction - don't miss any medicines or items\n"
     )
-
 
 def call_gemini(image_bytes: bytes, mime: str, prompt: str, api_key: str):
     image_b64 = base64.b64encode(image_bytes).decode('utf-8')
@@ -242,17 +342,16 @@ def call_gemini(image_bytes: bytes, mime: str, prompt: str, api_key: str):
                 headers={"Content-Type": "application/json"},
                 timeout=30,
             )
-            # Retry on 5xx
             if 500 <= r.status_code < 600:
                 raise requests.HTTPError(f"{r.status_code} Server Error", response=r)
             r.raise_for_status()
             data = r.json()
-            text = data.get('candidates', [{}])[0].get('content', {}).get('parts', [{}])[0].get('text', '[]')
+            text = data.get('candidates', [{}])[0].get('content', {}).get('parts', [{}])[0].get('text', '{}')
             cleaned = text.strip().replace('```json', '').replace('```', '')
             try:
                 return json.loads(cleaned)
             except json.JSONDecodeError:
-                return []
+                return {}
         except requests.RequestException as e:
             last_error = e
             if attempt < 2:
@@ -260,8 +359,7 @@ def call_gemini(image_bytes: bytes, mime: str, prompt: str, api_key: str):
                 continue
             raise last_error
 
-
-# Simple in-memory LRU-like cache for OCR results
+# Cache system
 _OCR_CACHE: dict[str, dict] = {}
 _OCR_CACHE_KEYS: list[str] = []
 _OCR_CACHE_MAX = 128
@@ -274,14 +372,12 @@ def _cache_get(cache_key: str):
 
 def _cache_set(cache_key: str, value: dict):
     if cache_key in _OCR_CACHE:
-        # move to end (most recent)
         try:
             _OCR_CACHE_KEYS.remove(cache_key)
         except ValueError:
             pass
     _OCR_CACHE[cache_key] = value
     _OCR_CACHE_KEYS.append(cache_key)
-    # evict oldest
     while len(_OCR_CACHE_KEYS) > _OCR_CACHE_MAX:
         old = _OCR_CACHE_KEYS.pop(0)
         _OCR_CACHE.pop(old, None)
@@ -295,25 +391,7 @@ def fetch_with_cache(kind: str, image_bytes: bytes, mime: str, prompt: str, api_
     _cache_set(key, result)
     return result
 
-def build_auto_prompt() -> str:
-    return (
-        "You are given one medical document image. Classify it and extract data.\n"
-        "1) Determine type: 'prescription' or 'bill'. If unclear, use 'unknown'.\n"
-        "2) If prescription: extract medicine names only (exclude headers/doctors/addresses/dates/signatures).\n"
-        "3) If bill: extract billed item names and amounts if present.\n"
-        "Return a JSON object with this exact shape:\n"
-        "{\n"
-        "  \"type\": \"prescription|bill|unknown\",\n"
-        "  \"prescriptionNames\": string[],\n"
-        "  \"billItems\": {name: string, amount?: number}[]\n"
-        "}\n"
-        "Rules:\n"
-        "- Use empty arrays for unused fields.\n"
-        "- Medicine names must be clean strings without dosage units or prefixes like 'Tab.' when possible.\n"
-        "- For bills, 'amount' is numeric if visible; omit otherwise.\n"
-    )
-
-# -------- Persistence helpers --------
+# Persistence helpers
 DATASET_DIR = os.path.join(BASE_DIR, 'dataset')
 
 def _sanitize_name(name: str) -> str:
@@ -339,61 +417,6 @@ def _save_json(path: str, obj: dict):
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(obj, f, ensure_ascii=False, indent=2)
 
-@app.post('/api/ocr/prescription')
-def ocr_prescription():
-    file = request.files['file']
-    employee = request.form.get('employee')
-    api_key = get_api_key()
-    if not api_key:
-        return ("Missing API key", 400)
-    try:
-        data = file.read()
-        items = fetch_with_cache('prescription', data, file.mimetype, build_prompt('prescription'), api_key)
-    except requests.RequestException as e:
-        return jsonify({"error": "Upstream model temporarily unavailable", "detail": str(e)}), 503
-    names = [i.get('name') for i in items if isinstance(i, dict) and i.get('name')]
-    # filter common headers
-    blacklist = ['dr ', 'clinic', 'medical', 'hospital', 'chemist', 'address']
-    names = [n for n in names if not any(b in n.lower() for b in blacklist)]
-    resp = {"prescriptionNames": names}
-    if employee:
-        session_dir = _new_session_dir(employee)
-        fname = _sanitize_name(getattr(file, 'filename', 'prescription.jpg') or 'prescription.jpg')
-        _save_binary(os.path.join(session_dir, fname), data)
-        _save_json(os.path.join(session_dir, 'prescription.json'), resp)
-        resp['saved'] = {"employee": employee, "sessionDir": os.path.relpath(session_dir, BASE_DIR)}
-    return jsonify(resp)
-
-
-@app.post('/api/ocr/bill')
-def ocr_bill():
-    file = request.files['file']
-    employee = request.form.get('employee')
-    api_key = get_api_key()
-    if not api_key:
-        return ("Missing API key", 400)
-    try:
-        data = file.read()
-        items = fetch_with_cache('bill', data, file.mimetype, build_prompt('bill'), api_key)
-    except requests.RequestException as e:
-        return jsonify({"error": "Upstream model temporarily unavailable", "detail": str(e)}), 503
-    out = []
-    for i in items if isinstance(items, list) else []:
-        if isinstance(i, dict) and i.get('name'):
-            entry = {"name": str(i['name']).strip()}
-            if isinstance(i.get('amount'), (int, float)):
-                entry['amount'] = float(i['amount'])
-            out.append(entry)
-    resp = {"billItems": out}
-    if employee:
-        session_dir = _new_session_dir(employee)
-        fname = _sanitize_name(getattr(file, 'filename', 'bill.jpg') or 'bill.jpg')
-        _save_binary(os.path.join(session_dir, fname), data)
-        _save_json(os.path.join(session_dir, 'bill.json'), resp)
-        resp['saved'] = {"employee": employee, "sessionDir": os.path.relpath(session_dir, BASE_DIR)}
-    return jsonify(resp)
-
-
 @app.post('/api/ocr/auto')
 def ocr_auto():
     api_key = get_api_key()
@@ -403,28 +426,32 @@ def ocr_auto():
         return jsonify({"error": "No files provided"}), 400
 
     results = []
-    all_presc = []
-    all_bill = []
+    all_prescriptions = []
+    all_bills = []
     session_dir = None
+    
     if employee:
         session_dir = _new_session_dir(employee)
+    
+    enhanced_prompt = build_enhanced_prompt()
+    
     for f in files:
         filename = getattr(f, 'filename', '')
         file_bytes = f.read()
-        # Fallback mock mode when API key is missing: categorize by filename and synthesize minimal items
+        
         if not api_key:
+            # Mock mode
             fname_lower = (filename or '').lower()
             mock_type = 'bill' if any(k in fname_lower for k in ['bill', 'receipt', 'invoice']) else (
                 'prescription' if any(k in fname_lower for k in ['pres', 'rx', 'doctor']) else 'unknown'
             )
-            # Deterministic values from hash
             h = int(_hash_bytes(file_bytes)[:6], 16)
             presc_names = [f"Medicine-{h % 97}"] if mock_type == 'prescription' else []
             bill_items = ([{"name": f"Item-{h % 89}", "amount": float((h % 5000) / 10.0)}] if mock_type == 'bill' else [])
             data = {"type": mock_type, "prescriptionNames": presc_names, "billItems": bill_items}
         else:
             try:
-                data = fetch_with_cache('auto', file_bytes, f.mimetype, build_auto_prompt(), api_key)
+                data = fetch_with_cache('enhanced_auto', file_bytes, f.mimetype, enhanced_prompt, api_key)
             except requests.RequestException as e:
                 results.append({
                     "filename": filename,
@@ -437,6 +464,7 @@ def ocr_auto():
         typ = (data or {}).get('type') if isinstance(data, dict) else None
         presc_names = []
         bill_items = []
+        
         if isinstance(data, dict):
             if isinstance(data.get('prescriptionNames'), list):
                 presc_names = [str(n).strip() for n in data.get('prescriptionNames') if isinstance(n, str) and n.strip()]
@@ -446,11 +474,12 @@ def ocr_auto():
                         entry = {"name": str(it['name']).strip()}
                         if isinstance(it.get('amount'), (int, float)):
                             entry['amount'] = float(it['amount'])
+                        entry['isConsultation'] = it.get('isConsultation', False)
                         bill_items.append(entry)
 
-        # basic blacklist for prescription names
+        # Filter prescription names
         if presc_names:
-            blacklist = ['dr ', 'clinic', 'medical', 'hospital', 'chemist', 'address']
+            blacklist = ['dr ', 'clinic', 'medical', 'hospital', 'chemist', 'address', 'prescription', 'rx']
             presc_names = [n for n in presc_names if not any(b in n.lower() for b in blacklist)]
 
         file_result = {
@@ -459,6 +488,7 @@ def ocr_auto():
             "prescriptionNames": presc_names,
             "billItems": bill_items,
         }
+        
         # Persist per-file if requested
         if session_dir:
             safe_name = _sanitize_name(filename or 'image.jpg')
@@ -470,19 +500,36 @@ def ocr_auto():
             }
             base_no_ext = os.path.splitext(safe_name)[0]
             _save_json(os.path.join(session_dir, f"{base_no_ext}.json"), meta)
+        
         results.append(file_result)
+        
         if presc_names:
-            all_presc.append({"names": presc_names})
+            # Add to all_prescriptions, avoiding duplicates
+            for name in presc_names:
+                normalized = normalize_medicine_name(name)
+                # Check if this medicine (normalized) is already in the list
+                already_exists = any(
+                    normalize_medicine_name(existing) == normalized 
+                    for existing in all_prescriptions
+                )
+                if not already_exists:
+                    all_prescriptions.append(name)
+        
         if bill_items:
-            all_bill.append({"items": bill_items})
+            all_bills.extend(bill_items)
 
+    # Perform intelligent matching
+    matching_results = perform_intelligent_matching(all_prescriptions, all_bills)
+    
     summary = {
         "files": results,
         "aggregated": {
-            "prescriptions": all_presc,
-            "bills": all_bill
-        }
+            "prescriptions": [{"names": all_prescriptions}] if all_prescriptions else [],
+            "bills": [{"items": all_bills}] if all_bills else []
+        },
+        "matching": matching_results
     }
+    
     if session_dir:
         full_summary = {
             "employee": employee,
@@ -491,15 +538,161 @@ def ocr_auto():
         }
         _save_json(os.path.join(session_dir, 'summary.json'), full_summary)
         
-        # Record in database for fast querying
         session_id = os.path.basename(session_dir)
         record_session(employee, session_id, full_summary)
         
         summary['saved'] = {"employee": employee, "sessionDir": os.path.relpath(session_dir, BASE_DIR)}
+    
     return jsonify(summary)
 
+def perform_intelligent_matching(prescriptions, bill_items):
+    """Perform intelligent fuzzy matching between prescriptions and bills"""
+    matched_items = []
+    unmatched_prescriptions = []
+    inadmissible_items = []
+    consultation_adjustments = []
+    
+    total_admissible = 0.0
+    total_inadmissible = 0.0
+    total_consultation_excess = 0.0
+    
+    # Create a copy of bill items to track which ones are matched
+    remaining_bills = list(bill_items)
+    
+    # Track which prescriptions have been matched to avoid duplicates
+    matched_prescription_names = set()
+    
+    # Match each prescription with bill items
+    for prescription in prescriptions:
+        # Normalize prescription name for comparison
+        normalized_prescription = normalize_medicine_name(prescription)
+        # Normalize prescription name for comparison
+        normalized_prescription = normalize_medicine_name(prescription)
+        
+        # Skip if this prescription has already been matched (handles duplicates in prescription list)
+        if normalized_prescription in matched_prescription_names:
+            continue
+        
+        best_match, match_score = find_best_match(prescription, remaining_bills)
+        
+        if best_match:
+            # Mark this prescription as matched
+            matched_prescription_names.add(normalized_prescription)
+            
+            # Also mark the bill item's normalized name as matched to prevent double-matching
+            normalized_bill = normalize_medicine_name(best_match['name'])
+            matched_prescription_names.add(normalized_bill)
+            
+            # Check if it's a consultation fee
+            is_consultation, allowed_amount, excess = classify_consultation_fee(
+                best_match['name'], 
+                best_match.get('amount', 0)
+            )
+            
+            if is_consultation:
+                if excess > 0:
+                    consultation_adjustments.append({
+                        "itemName": best_match['name'],
+                        "prescriptionName": prescription,
+                        "matchScore": round(match_score * 100, 2),
+                        "billedAmount": best_match.get('amount', 0),
+                        "admissibleAmount": allowed_amount,
+                        "excessAmount": excess,
+                        "reason": f"Consultation fee capped at ₹300. Excess amount: ₹{excess:.2f}"
+                    })
+                    total_admissible += allowed_amount
+                    total_consultation_excess += excess
+                else:
+                    matched_items.append({
+                        "prescriptionName": prescription,
+                        "billItemName": best_match['name'],
+                        "amount": best_match.get('amount', 0),
+                        "matchScore": round(match_score * 100, 2),
+                        "status": "admissible",
+                        "isConsultation": True
+                    })
+                    total_admissible += best_match.get('amount', 0)
+            else:
+                matched_items.append({
+                    "prescriptionName": prescription,
+                    "billItemName": best_match['name'],
+                    "amount": best_match.get('amount', 0),
+                    "matchScore": round(match_score * 100, 2),
+                    "status": "admissible"
+                })
+                total_admissible += best_match.get('amount', 0)
+            
+            # Remove matched item from remaining bills
+            remaining_bills.remove(best_match)
+        else:
+            # Only add to unmatched if this prescription name hasn't been matched yet
+            if normalized_prescription not in matched_prescription_names:
+                unmatched_prescriptions.append({
+                    "prescriptionName": prescription,
+                    "status": "not_billed",
+                    "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+                })
+                matched_prescription_names.add(normalized_prescription)
+    
+    # Process remaining unmatched bill items as inadmissible
+    for bill_item in remaining_bills:
+        # Check if it's a consultation fee
+        is_consultation, allowed_amount, excess = classify_consultation_fee(
+            bill_item['name'], 
+            bill_item.get('amount', 0)
+        )
+        
+        if is_consultation:
+            if excess > 0:
+                consultation_adjustments.append({
+                    "itemName": bill_item['name'],
+                    "prescriptionName": None,
+                    "matchScore": 0,
+                    "billedAmount": bill_item.get('amount', 0),
+                    "admissibleAmount": allowed_amount,
+                    "excessAmount": excess,
+                    "reason": f"Consultation fee capped at ₹300. Excess amount: ₹{excess:.2f}"
+                })
+                total_admissible += allowed_amount
+                total_consultation_excess += excess
+            else:
+                matched_items.append({
+                    "prescriptionName": "Consultation Fee",
+                    "billItemName": bill_item['name'],
+                    "amount": bill_item.get('amount', 0),
+                    "matchScore": 100,
+                    "status": "admissible",
+                    "isConsultation": True
+                })
+                total_admissible += bill_item.get('amount', 0)
+        else:
+            inadmissible_items.append({
+                "billItemName": bill_item['name'],
+                "amount": bill_item.get('amount', 0),
+                "status": "inadmissible",
+                "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+            })
+            total_inadmissible += bill_item.get('amount', 0)
+    
+    return {
+        "matchedItems": matched_items,
+        "unmatchedPrescriptions": unmatched_prescriptions,
+        "inadmissibleItems": inadmissible_items,
+        "consultationAdjustments": consultation_adjustments,
+        "summary": {
+            "totalPrescriptions": len(prescriptions),
+            "totalBillItems": len(bill_items),
+            "matchedCount": len(matched_items),
+            "unmatchedPrescriptionCount": len(unmatched_prescriptions),
+            "inadmissibleCount": len(inadmissible_items),
+            "totalAdmissibleAmount": round(total_admissible, 2),
+            "totalInadmissibleAmount": round(total_inadmissible, 2),
+            "totalConsultationExcess": round(total_consultation_excess, 2),
+            "totalAmount": round(total_admissible + total_inadmissible + total_consultation_excess, 2)
+        }
+    }
 
-# Always-available routes for both development and production
+# Health and utility routes
 @app.get('/api/health')
 def health():
     key_present = bool(get_api_key())
@@ -509,11 +702,9 @@ def health():
 def index():
     return render_template('index.html')
 
-
 @app.get('/employees')
 def employees_page():
     return render_template('employees.html')
-
 
 @app.get('/api/datasets')
 def list_datasets():
@@ -522,16 +713,14 @@ def list_datasets():
     offset = request.args.get('offset', type=int) or 0
     force_sync = request.args.get('sync', '').lower() == 'true'
     
-    # Auto-sync database with filesystem if requested or if no employee specified (listing all)
     if force_sync or not employee:
         sync_database_with_filesystem()
     
     try:
         with sqlite3.connect(DB_PATH) as conn:
-            conn.row_factory = sqlite3.Row  # Enable dict-like access
+            conn.row_factory = sqlite3.Row
             
             if not employee:
-                # List employees with stats from database
                 cursor = conn.execute('''
                     SELECT name, total_sessions, total_files, total_amount, last_activity
                     FROM employees 
@@ -549,7 +738,6 @@ def list_datasets():
                         'lastActivity': row['last_activity']
                     })
                 
-                # Get total count
                 total_cursor = conn.execute('SELECT COUNT(*) FROM employees')
                 total = total_cursor.fetchone()[0]
                 
@@ -564,7 +752,6 @@ def list_datasets():
                 })
             
             else:
-                # Get sessions for specific employee from database
                 cursor = conn.execute('''
                     SELECT session_id, created_at, file_count, prescription_count, 
                            bill_count, total_amount
@@ -576,7 +763,6 @@ def list_datasets():
                 
                 sessions_data = []
                 for row in cursor.fetchall():
-                    # Still need to load full summary from file for complete data
                     emp_dir = os.path.join(DATASET_DIR, _sanitize_name(employee))
                     sess_dir = os.path.join(emp_dir, row['session_id'])
                     summary = None
@@ -588,7 +774,7 @@ def list_datasets():
                                 with open(summary_path, 'r', encoding='utf-8') as f:
                                     summary = json.load(f)
                             except Exception as e:
-                                print(f"Error loading summary for {emp_dir}/{row['session_id']}: {e}")
+                                print(f"Error loading summary: {e}")
                     
                     sessions_data.append({
                         "session": row['session_id'],
@@ -602,7 +788,6 @@ def list_datasets():
                         }
                     })
                 
-                # Get total session count
                 total_cursor = conn.execute(
                     'SELECT COUNT(*) FROM sessions WHERE employee_name = ?', 
                     (employee,)
@@ -619,70 +804,8 @@ def list_datasets():
                 })
                 
     except Exception as e:
-        # Fallback to file system method
-        print(f"Database query failed, falling back to filesystem: {e}")
-        return list_datasets_filesystem(employee, limit, offset)
-
-def list_datasets_filesystem(employee, limit, offset):
-    """Fallback filesystem-based listing for when database fails"""
-    if not os.path.isdir(DATASET_DIR):
+        print(f"Database query failed: {e}")
         return jsonify({"employees": [], "sessions": [], "total": 0, "hasMore": False})
-    
-    if not employee:
-        try:
-            all_employees = [d for d in os.listdir(DATASET_DIR) if os.path.isdir(os.path.join(DATASET_DIR, d))]
-            all_employees.sort()
-            total = len(all_employees)
-            employees = all_employees[offset:offset + limit]
-            has_more = offset + limit < total
-            
-            return jsonify({
-                "employees": employees, 
-                "sessions": [], 
-                "total": total,
-                "hasMore": has_more,
-                "offset": offset,
-                "limit": limit
-            })
-        except Exception as e:
-            return jsonify({"error": f"Failed to list employees: {str(e)}"}), 500
-    
-    emp_dir = os.path.join(DATASET_DIR, _sanitize_name(employee))
-    if not os.path.isdir(emp_dir):
-        return jsonify({"employees": [], "sessions": [], "total": 0, "hasMore": False})
-    
-    try:
-        all_sessions = [sess for sess in os.listdir(emp_dir) if os.path.isdir(os.path.join(emp_dir, sess))]
-        all_sessions.sort(reverse=True)
-        total_sessions = len(all_sessions)
-        session_subset = all_sessions[offset:offset + limit]
-        
-        sessions = []
-        for sess in session_subset:
-            sdir = os.path.join(emp_dir, sess)
-            summary_path = os.path.join(sdir, 'summary.json')
-            summary = None
-            try:
-                if os.path.isfile(summary_path):
-                    with open(summary_path, 'r', encoding='utf-8') as f:
-                        summary = json.load(f)
-            except Exception as e:
-                print(f"Error loading summary for {emp_dir}/{sess}: {e}")
-            
-            sessions.append({"session": sess, "summary": summary})
-        
-        return jsonify({
-            "employees": [employee], 
-            "sessions": sessions,
-            "total": total_sessions,
-            "hasMore": offset + limit < total_sessions,
-            "offset": offset,
-            "limit": limit
-        })
-        
-    except Exception as e:
-        return jsonify({"error": f"Failed to list sessions: {str(e)}"}), 500
-
 
 @app.get('/api/datasets/<employee>/<session_id>')
 def get_dataset_summary(employee: str, session_id: str):
@@ -698,7 +821,6 @@ def get_dataset_summary(employee: str, session_id: str):
                 summary = json.load(f)
     except Exception:
         summary = None
-    # Also list files
     files = []
     for fn in os.listdir(sess_dir):
         files.append(fn)
@@ -709,15 +831,12 @@ def get_dataset_summary(employee: str, session_id: str):
         "files": files,
     })
 
-
 @app.get('/api/analytics/overview')
 def analytics_overview():
-    """Get high-level analytics for the entire system using database for performance"""
     try:
         with sqlite3.connect(DB_PATH) as conn:
             conn.row_factory = sqlite3.Row
             
-            # Basic totals
             cursor = conn.execute('''
                 SELECT 
                     COUNT(DISTINCT name) as total_employees,
@@ -728,7 +847,6 @@ def analytics_overview():
             ''')
             totals = cursor.fetchone()
             
-            # Recent activity (last 7 days)
             one_week_ago = (datetime.now() - timedelta(days=7)).isoformat()
             cursor = conn.execute('''
                 SELECT COUNT(*) as recent_activity
@@ -737,7 +855,6 @@ def analytics_overview():
             ''', (one_week_ago,))
             recent_activity = cursor.fetchone()['recent_activity']
             
-            # Daily stats for last 30 days
             thirty_days_ago = (datetime.now() - timedelta(days=30)).isoformat()
             cursor = conn.execute('''
                 SELECT 
@@ -770,8 +887,7 @@ def analytics_overview():
             })
             
     except Exception as e:
-        # Fallback to filesystem method if database fails
-        print(f"Database analytics failed, using fallback: {e}")
+        print(f"Analytics failed: {e}")
         return jsonify({
             "totalEmployees": 0,
             "totalSessions": 0,
@@ -782,10 +898,8 @@ def analytics_overview():
             "error": "Analytics unavailable"
         })
 
-
 @app.get('/api/search/employees')
 def search_employees():
-    """Search employees by name with fuzzy matching"""
     query = request.args.get('q', '').strip().lower()
     limit = request.args.get('limit', type=int) or 20
     
@@ -796,7 +910,6 @@ def search_employees():
         with sqlite3.connect(DB_PATH) as conn:
             conn.row_factory = sqlite3.Row
             
-            # Search in database first
             cursor = conn.execute('''
                 SELECT name, total_sessions, total_files, total_amount, last_activity
                 FROM employees 
@@ -821,114 +934,10 @@ def search_employees():
             return jsonify({"employees": employees})
             
     except Exception as e:
-        # Fallback to filesystem search
-        if not os.path.isdir(DATASET_DIR):
-            return jsonify({"employees": []})
-            
-        try:
-            all_employees = []
-            for emp_name in os.listdir(DATASET_DIR):
-                emp_dir = os.path.join(DATASET_DIR, emp_name)
-                if not os.path.isdir(emp_dir):
-                    continue
-                
-                if query in emp_name.lower():
-                    session_count = sum(1 for item in os.listdir(emp_dir) 
-                                      if os.path.isdir(os.path.join(emp_dir, item)))
-                    
-                    all_employees.append({
-                        'name': emp_name,
-                        'sessionCount': session_count,
-                        'relevance': 1 if emp_name.lower().startswith(query) else 0.5
-                    })
-            
-            all_employees.sort(key=lambda x: (-x['relevance'], -x['sessionCount']))
-            return jsonify({"employees": all_employees[:limit]})
-            
-        except Exception as fs_error:
-            return jsonify({"error": f"Search failed: {str(fs_error)}"}), 500
-
-
-# Auto-migrate data on startup if needed
-def auto_migrate_on_startup():
-    """Automatically migrate existing data on server startup"""
-    try:
-        with sqlite3.connect(DB_PATH) as conn:
-            cursor = conn.execute('SELECT COUNT(*) FROM sessions')
-            db_sessions = cursor.fetchone()[0]
-        
-        # Count filesystem sessions
-        fs_sessions = 0
-        if os.path.isdir(DATASET_DIR):
-            for emp_name in os.listdir(DATASET_DIR):
-                emp_dir = os.path.join(DATASET_DIR, emp_name)
-                if os.path.isdir(emp_dir):
-                    fs_sessions += sum(1 for item in os.listdir(emp_dir) 
-                                     if os.path.isdir(os.path.join(emp_dir, item)))
-        
-        # If filesystem has more data, migrate automatically
-        if fs_sessions > db_sessions:
-            print(f"Auto-migrating data: {fs_sessions} filesystem sessions vs {db_sessions} database sessions")
-            
-            migrated_sessions = 0
-            for emp_name in os.listdir(DATASET_DIR):
-                emp_dir = os.path.join(DATASET_DIR, emp_name)
-                if not os.path.isdir(emp_dir):
-                    continue
-                
-                for sess_name in os.listdir(emp_dir):
-                    sess_dir = os.path.join(emp_dir, sess_name)
-                    if not os.path.isdir(sess_dir):
-                        continue
-                    
-                    summary_path = os.path.join(sess_dir, 'summary.json')
-                    if os.path.isfile(summary_path):
-                        try:
-                            with open(summary_path, 'r', encoding='utf-8') as f:
-                                summary = json.load(f)
-                            
-                            record_session(emp_name, sess_name, summary)
-                            migrated_sessions += 1
-                            
-                        except Exception as e:
-                            print(f"Error migrating session {emp_name}/{sess_name}: {e}")
-                            continue
-            
-            print(f"Auto-migration completed: {migrated_sessions} sessions migrated")
-        
-    except Exception as e:
-        print(f"Auto-migration failed: {e}")
-
-# Run auto-migration on startup
-auto_migrate_on_startup()
-
-
-# Enhanced Routes for Modern Web Features
-
-@app.route('/sw.js')
-def service_worker():
-    """Serve the service worker from static folder"""
-    return send_from_directory('static', 'sw.js', mimetype='application/javascript')
-
-@app.route('/manifest.json')
-def manifest():
-    """Serve the PWA manifest"""
-    return send_from_directory('static', 'manifest.json', mimetype='application/json')
-
-@app.route('/api/performance', methods=['POST'])
-def track_performance():
-    """Track client-side performance metrics"""
-    try:
-        data = request.get_json()
-        # In a production app, you'd save this to analytics DB
-        print(f"Performance data: {data}")
-        return jsonify({"status": "recorded"})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"error": f"Search failed: {str(e)}"}), 500
 
 @app.route('/api/sync', methods=['POST'])
 def sync_database():
-    """Manually synchronize database with filesystem"""
     try:
         changes_made = sync_database_with_filesystem()
         return jsonify({
@@ -941,14 +950,11 @@ def sync_database():
 
 @app.route('/api/cleanup', methods=['POST'])
 def cleanup_database():
-    """Clean up database and optionally remove empty directories"""
     try:
         remove_empty_dirs = request.get_json().get('removeEmptyDirs', False) if request.is_json else False
         
-        # First sync database
         changes_made = sync_database_with_filesystem()
         
-        # Optionally remove empty directories
         removed_dirs = 0
         if remove_empty_dirs:
             dataset_dir = os.path.join(BASE_DIR, 'dataset')
@@ -957,12 +963,9 @@ def cleanup_database():
                     item_path = os.path.join(dataset_dir, item)
                     if os.path.isdir(item_path):
                         try:
-                            # Try to remove if empty
                             os.rmdir(item_path)
                             removed_dirs += 1
-                            print(f"Removed empty directory: {item_path}")
                         except OSError:
-                            # Directory not empty, that's fine
                             pass
         
         return jsonify({
@@ -974,9 +977,22 @@ def cleanup_database():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# No need for a custom static route; Flask serves /static/* automatically
+@app.route('/sw.js')
+def service_worker():
+    return send_from_directory('static', 'sw.js', mimetype='application/javascript')
+
+@app.route('/manifest.json')
+def manifest():
+    return send_from_directory('static', 'manifest.json', mimetype='application/json')
+
+@app.route('/api/performance', methods=['POST'])
+def track_performance():
+    try:
+        data = request.get_json()
+        print(f"Performance data: {data}")
+        return jsonify({"status": "recorded"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-
-

@@ -1,0 +1,19 @@
+{
+  "type": "bill",
+  "prescriptionNames": [
+    "LUMIA 60K CAPS",
+    "RABICIP DSR CAP"
+  ],
+  "billItems": [
+    {
+      "name": "LUMIA 60K CAPS",
+      "amount": 240.0,
+      "isConsultation": false
+    },
+    {
+      "name": "RABICIP DSR CAP",
+      "amount": 79.16,
+      "isConsultation": false
+    }
+  ]
+}

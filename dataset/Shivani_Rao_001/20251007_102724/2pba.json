@@ -1,0 +1,16 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "billItems": [
+    {
+      "name": "ZOMMA 10-TABS 10'S",
+      "amount": 240.0,
+      "isConsultation": false
+    },
+    {
+      "name": "RABZI 500-TAB",
+      "amount": 79.16,
+      "isConsultation": false
+    }
+  ]
+}

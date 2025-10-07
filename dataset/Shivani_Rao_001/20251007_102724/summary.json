@@ -1,0 +1,193 @@
+{
+  "employee": "Shivani Rao_001",
+  "createdAt": "2025-10-07T10:28:16.567983",
+  "files": [
+    {
+      "filename": "1p.png",
+      "type": "prescription",
+      "prescriptionNames": [
+        "Dermdew Alo Cream",
+        "Photostable gel",
+        "Pynomax-TX Cream"
+      ],
+      "billItems": []
+    },
+    {
+      "filename": "1pb.jpeg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "billItems": [
+        {
+          "name": "PYROMAX TX CREAM 30GM",
+          "amount": 609.0,
+          "isConsultation": false
+        },
+        {
+          "name": "DERMADEM ALOE PLUS CREAM 80GM",
+          "amount": 252.0,
+          "isConsultation": false
+        },
+        {
+          "name": "PHOTOSTABLE SUNSCREEN EMUGEL",
+          "amount": 827.0,
+          "isConsultation": false
+        }
+      ]
+    },
+    {
+      "filename": "2p.png",
+      "type": "prescription",
+      "prescriptionNames": [
+        "ZIMBA CREAM",
+        "TAB HHAZI 500",
+        "PRILOPLUS CREAM"
+      ],
+      "billItems": []
+    },
+    {
+      "filename": "2pba.png",
+      "type": "bill",
+      "prescriptionNames": [],
+      "billItems": [
+        {
+          "name": "ZOMMA 10-TABS 10'S",
+          "amount": 240.0,
+          "isConsultation": false
+        },
+        {
+          "name": "RABZI 500-TAB",
+          "amount": 79.16,
+          "isConsultation": false
+        }
+      ]
+    },
+    {
+      "filename": "2pbb.png",
+      "type": "bill",
+      "prescriptionNames": [],
+      "billItems": [
+        {
+          "name": "PROSULUS CREAM (10GM)",
+          "amount": 240.0,
+          "isConsultation": false
+        }
+      ]
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [
+      {
+        "names": [
+          "Dermdew Alo Cream",
+          "Photostable gel",
+          "Pynomax-TX Cream",
+          "ZIMBA CREAM",
+          "TAB HHAZI 500",
+          "PRILOPLUS CREAM"
+        ]
+      }
+    ],
+    "bills": [
+      {
+        "items": [
+          {
+            "name": "PYROMAX TX CREAM 30GM",
+            "amount": 609.0,
+            "isConsultation": false
+          },
+          {
+            "name": "DERMADEM ALOE PLUS CREAM 80GM",
+            "amount": 252.0,
+            "isConsultation": false
+          },
+          {
+            "name": "PHOTOSTABLE SUNSCREEN EMUGEL",
+            "amount": 827.0,
+            "isConsultation": false
+          },
+          {
+            "name": "ZOMMA 10-TABS 10'S",
+            "amount": 240.0,
+            "isConsultation": false
+          },
+          {
+            "name": "RABZI 500-TAB",
+            "amount": 79.16,
+            "isConsultation": false
+          },
+          {
+            "name": "PROSULUS CREAM (10GM)",
+            "amount": 240.0,
+            "isConsultation": false
+          }
+        ]
+      }
+    ]
+  },
+  "matching": {
+    "matchedItems": [
+      {
+        "prescriptionName": "Dermdew Alo Cream",
+        "billItemName": "DERMADEM ALOE PLUS CREAM 80GM",
+        "amount": 252.0,
+        "matchScore": 78.05,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Photostable gel",
+        "billItemName": "PHOTOSTABLE SUNSCREEN EMUGEL",
+        "amount": 827.0,
+        "matchScore": 69.77,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Pynomax-TX Cream",
+        "billItemName": "PYROMAX TX CREAM 30GM",
+        "amount": 609.0,
+        "matchScore": 90.32,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "TAB HHAZI 500",
+        "billItemName": "RABZI 500-TAB",
+        "amount": 79.16,
+        "matchScore": 66.67,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "PRILOPLUS CREAM",
+        "billItemName": "PROSULUS CREAM (10GM)",
+        "amount": 240.0,
+        "matchScore": 82.76,
+        "status": "admissible"
+      }
+    ],
+    "unmatchedPrescriptions": [
+      {
+        "prescriptionName": "ZIMBA CREAM",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      }
+    ],
+    "inadmissibleItems": [
+      {
+        "billItemName": "ZOMMA 10-TABS 10'S",
+        "amount": 240.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      }
+    ],
+    "consultationAdjustments": [],
+    "summary": {
+      "totalPrescriptions": 6,
+      "totalBillItems": 6,
+      "matchedCount": 5,
+      "unmatchedPrescriptionCount": 1,
+      "inadmissibleCount": 1,
+      "totalAdmissibleAmount": 2007.16,
+      "totalInadmissibleAmount": 240.0,
+      "totalConsultationExcess": 0.0,
+      "totalAmount": 2247.16
+    }
+  }
+}
