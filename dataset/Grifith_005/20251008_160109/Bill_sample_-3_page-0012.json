@@ -1,0 +1,15 @@
+{
+  "type": "prescription",
+  "prescriptionNames": [
+    "HH linctus Junior",
+    "ITHA 200mg",
+    "Pro Atma B",
+    "Alnacev 25mg",
+    "Radvit 500"
+  ],
+  "testNames": [],
+  "billItems": [],
+  "isPDF": false,
+  "page": null,
+  "originalFilename": "Bill sample -3_page-0012.jpg"
+}

@@ -1,0 +1,42 @@
+{
+  "employee": "Arya_014",
+  "createdAt": "2025-10-08T10:41:44.195360",
+  "files": [
+    {
+      "filename": "Bill sample -2.pdf",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "error",
+      "isPDF": true,
+      "error": "PDF_EXTRACTION_FAILED",
+      "errorMessage": "Poppler not installed. Please install Poppler or convert PDF to images.",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": []
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [],
+    "tests": [],
+    "bills": []
+  },
+  "matching": {
+    "matchedItems": [],
+    "unmatchedPrescriptions": [],
+    "unmatchedTests": [],
+    "inadmissibleItems": [],
+    "consultationAdjustments": [],
+    "summary": {
+      "totalPrescriptions": 0,
+      "totalTests": 0,
+      "totalBillItems": 0,
+      "matchedCount": 0,
+      "unmatchedPrescriptionCount": 0,
+      "unmatchedTestCount": 0,
+      "inadmissibleCount": 0,
+      "totalAdmissibleAmount": 0.0,
+      "totalInadmissibleAmount": 0.0,
+      "totalConsultationExcess": 0.0,
+      "totalAmount": 0.0
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "testNames": [],
+  "billItems": [
+    {
+      "name": "CALPSOR OINT 30GM",
+      "amount": 626.0,
+      "isConsultation": false,
+      "isTest": false
+    }
+  ],
+  "isPDF": false,
+  "page": null,
+  "originalFilename": "Bill sample -2_page-0010.jpg"
+}

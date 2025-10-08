@@ -1,0 +1,16 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "testNames": [],
+  "billItems": [
+    {
+      "name": "Mfr AINEGEL SYP 200 ML",
+      "amount": 243.07,
+      "isConsultation": false,
+      "isTest": false
+    }
+  ],
+  "isPDF": true,
+  "page": 5,
+  "originalFilename": "bill-3-ob.pdf"
+}

@@ -1,0 +1,1758 @@
+{
+  "employee": "athulya_115",
+  "createdAt": "2025-10-08T13:04:23.254801",
+  "files": [
+    {
+      "filename": "Bill sample copy.pdf_page_1",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "claim_form",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 1,
+      "isClaimForm": true
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_2",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "claim_form",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 2,
+      "isClaimForm": true
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_3",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation / Procedure",
+          "amount": 500.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 3
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_4",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Laser removal",
+          "amount": 600.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 4
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_5",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "DERMDEW ALO CREAM",
+        "Photo stable gel",
+        "PYNO MAX-TX CREAM"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 5
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_6",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "PYNOMAX TX CREAM 30GM",
+          "amount": 609.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "DERMADEW ALOE PLUS CREAM 80GM",
+          "amount": 252.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "PHOTOSTABLE SUNSCREEN EMUGEL",
+          "amount": 827.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 6
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_7",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "Inj. Anfoorix",
+        "Hina",
+        "Imboost"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 7
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_8",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Investigation Charges Disposable",
+          "amount": 15.0,
+          "isConsultation": false,
+          "isTest": true
+        },
+        {
+          "name": "Q. Infanrix Hexa",
+          "amount": 3735.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "O.P.V.",
+          "amount": 300.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "Doctors Consultation",
+          "amount": 200.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 8
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_9",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "Infanrix hexa",
+        "Adsorbed Diphtheria, Tetanus, Pertussis (Acellular Component), Hepatitis B (rDNA), Poliomyelitis (Inactivated) and Haemophilus influenzae Type b Conjugate Vaccine I.P."
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 9
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_10",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "unknown",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 10
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_11",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "BCG",
+        "Hep B1 - Birth Dose",
+        "OPV 0",
+        "DTaP/DTwP 1",
+        "Hib 1",
+        "IPV 1",
+        "Hep B2",
+        "PCV 1",
+        "Rota virus 1",
+        "DTaP/DTwP 2",
+        "Hib 2",
+        "IPV 2",
+        "Hep B3",
+        "PCV 2",
+        "Rota virus 2",
+        "DTaP/DTwP 3",
+        "Hib 3",
+        "IPV 3",
+        "Hep B4",
+        "PCV 3",
+        "Rota virus 3",
+        "TCV",
+        "Influenza vaccine",
+        "MMR 1",
+        "MCV 1",
+        "HepA 1",
+        "MCV 2",
+        "PCV B1",
+        "MMR 2",
+        "Varicella 1",
+        "DTaP/DTwP B1",
+        "Hib B1",
+        "IPV B1"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 11
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_12",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "CONSULTATION INTERNAL MEDICINE",
+          "amount": 550.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 12
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_13",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "HbA1c",
+        "TSH",
+        "RBS",
+        "Urine RE",
+        "Urine P:C ratio"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 13
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_14",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "TSH (THYROID STIMULATING HORMONE)",
+          "amount": 600.0,
+          "isConsultation": false,
+          "isTest": true
+        },
+        {
+          "name": "GLUCOSE - RANDOM",
+          "amount": 100.0,
+          "isConsultation": false,
+          "isTest": true
+        },
+        {
+          "name": "URINE PROTEIN CREATININE RATIO",
+          "amount": 550.0,
+          "isConsultation": false,
+          "isTest": true
+        },
+        {
+          "name": "URINE COMPLETE ANALYSIS",
+          "amount": 160.0,
+          "isConsultation": false,
+          "isTest": true
+        },
+        {
+          "name": "HAEMOGLOBIN (AUTOMATED)",
+          "amount": 160.0,
+          "isConsultation": false,
+          "isTest": true
+        },
+        {
+          "name": "DIFFERENTIAL COUNT (AUTOMATED CELL COUNTER)",
+          "amount": 160.0,
+          "isConsultation": false,
+          "isTest": true
+        },
+        {
+          "name": "TC TOTAL COUNT (AUTOMATED)",
+          "amount": 160.0,
+          "isConsultation": false,
+          "isTest": true
+        }
+      ],
+      "isPDF": true,
+      "page": 14
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_15",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "test_report",
+      "prescriptionNames": [],
+      "testNames": [
+        "Haemoglobin (Whole Blood EDTA)",
+        "HEMOGLOBIN, HB",
+        "DIFFERENTIAL LEUCOCYTE COUNT",
+        "Neutrophils",
+        "Lymphocytes",
+        "Eosinophils",
+        "Monocytes",
+        "Basophils",
+        "WBC COUNT (Whole Blood EDTA)"
+      ],
+      "billItems": [],
+      "isPDF": true,
+      "page": 15
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_16",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "test_report",
+      "prescriptionNames": [],
+      "testNames": [
+        "Urine Complete Analysis (Automated)",
+        "Urine Colour",
+        "Urine Specific Gravity",
+        "Urine Reaction (PH)",
+        "Urine Glucose",
+        "Urine Ketones",
+        "Urine Protein",
+        "Urine Blood",
+        "Urine Urobilinogen",
+        "Urine Bilirubin",
+        "Urine Nitrite",
+        "Urine Leukocyte",
+        "MICROSCOPIC DESCRIPTION"
+      ],
+      "billItems": [],
+      "isPDF": true,
+      "page": 16
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_17",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "test_report",
+      "prescriptionNames": [],
+      "testNames": [
+        "Urine Pus Cells",
+        "Urine Red Blood Cells",
+        "Urine Epithelial Cells",
+        "Hyaline Cast",
+        "Granular Cast",
+        "Red Blood Cell Cast",
+        "White Blood Cell Cast",
+        "Calcium Oxalate",
+        "Uric Acid Crystals",
+        "Triple Phosphate Crystal",
+        "Amorphous Crystals",
+        "Mucus",
+        "Yeast Cells",
+        "Bacteria"
+      ],
+      "billItems": [],
+      "isPDF": true,
+      "page": 17
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_18",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "test_report",
+      "prescriptionNames": [],
+      "testNames": [
+        "Thyroid Stimulating Hormone (TSH) (Serum)",
+        "GLUCOSE- Random (Plasma)",
+        "SPOT URINE PROTEIN / CREATININE RATIO",
+        "SPOT URINE PROTEIN",
+        "SPOT URINE CREATININE",
+        "SPOTURINE PROTEIN/CREATININRATIO"
+      ],
+      "billItems": [],
+      "isPDF": true,
+      "page": 18
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_19",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation / Procedure",
+          "amount": 500.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 19
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_20",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "ZIMBA CREAM",
+        "TAB HHAZ1 500",
+        "PRILOPLUS CREAM",
+        "Electro cautery"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 20
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_21",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "ZIMBA 1% CREAM 10GM",
+          "amount": 240.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "HHAZI 500 TAB",
+          "amount": 79.16,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 21
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_22",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "PRILOPLUS CREAM (10GM)",
+          "amount": 240.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 22
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_23",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Electro Cautery",
+          "amount": 1500.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 23
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_24",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "CONSULTATION BREAST SURGERY (DR BASILA AMEER ALI)",
+          "amount": 650.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 24
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_25",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "Methimazole - 5mg"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 25
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_26",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "Inj. INFLUVAC TETRA",
+        "Sy. CALPOL-120",
+        "Zental Liq"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 26
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_27",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "INFLUVAC TETRA",
+          "amount": 2444.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 27
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_28",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "CONSULTATION CHARGE",
+          "amount": 250.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 28
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_29",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "unknown",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 29
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_30",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "test_report",
+      "prescriptionNames": [],
+      "testNames": [
+        "Varicella 2",
+        "Hep A2",
+        "Influenza vaccine",
+        "MCV",
+        "IPV B2",
+        "DTaP/DTwP B2",
+        "MMR 3",
+        "Tdap/Td",
+        "HPV 1",
+        "HPV 2",
+        "HPV 3",
+        "Rabies",
+        "Cholera",
+        "JE",
+        "Yellow Fever",
+        "COVID vaccination in children"
+      ],
+      "billItems": [],
+      "isPDF": true,
+      "page": 30
+    },
+    {
+      "filename": "Bill sample copy.pdf_page_31",
+      "originalFilename": "Bill sample copy.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "CALPOL 120MG SYRUP",
+          "amount": 36.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "ZENTEL SYP.",
+          "amount": 17.9,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 31
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [
+      {
+        "names": [
+          "DERMDEW ALO CREAM",
+          "Photo stable gel",
+          "PYNO MAX-TX CREAM",
+          "Inj. Anfoorix",
+          "Hina",
+          "Imboost",
+          "Infanrix hexa",
+          "Adsorbed Diphtheria, Tetanus, Pertussis (Acellular Component), Hepatitis B (rDNA), Poliomyelitis (Inactivated) and Haemophilus influenzae Type b Conjugate Vaccine I.P.",
+          "BCG",
+          "Hep B1 - Birth Dose",
+          "OPV 0",
+          "DTaP/DTwP 1",
+          "Hib 1",
+          "IPV 1",
+          "Hep B2",
+          "PCV 1",
+          "Rota virus 1",
+          "DTaP/DTwP 2",
+          "Hib 2",
+          "IPV 2",
+          "Hep B3",
+          "PCV 2",
+          "Rota virus 2",
+          "DTaP/DTwP 3",
+          "Hib 3",
+          "IPV 3",
+          "Hep B4",
+          "PCV 3",
+          "Rota virus 3",
+          "TCV",
+          "Influenza vaccine",
+          "MMR 1",
+          "MCV 1",
+          "HepA 1",
+          "MCV 2",
+          "PCV B1",
+          "MMR 2",
+          "Varicella 1",
+          "DTaP/DTwP B1",
+          "Hib B1",
+          "IPV B1",
+          "HbA1c",
+          "TSH",
+          "RBS",
+          "Urine RE",
+          "Urine P:C ratio",
+          "ZIMBA CREAM",
+          "TAB HHAZ1 500",
+          "PRILOPLUS CREAM",
+          "Electro cautery",
+          "Methimazole - 5mg",
+          "Inj. INFLUVAC TETRA",
+          "Sy. CALPOL-120",
+          "Zental Liq"
+        ]
+      }
+    ],
+    "tests": [
+      {
+        "names": [
+          "Haemoglobin (Whole Blood EDTA)",
+          "HEMOGLOBIN, HB",
+          "DIFFERENTIAL LEUCOCYTE COUNT",
+          "Neutrophils",
+          "Lymphocytes",
+          "Eosinophils",
+          "Monocytes",
+          "Basophils",
+          "WBC COUNT (Whole Blood EDTA)",
+          "Urine Complete Analysis (Automated)",
+          "Urine Colour",
+          "Urine Specific Gravity",
+          "Urine Reaction (PH)",
+          "Urine Glucose",
+          "Urine Ketones",
+          "Urine Protein",
+          "Urine Blood",
+          "Urine Urobilinogen",
+          "Urine Bilirubin",
+          "Urine Nitrite",
+          "Urine Leukocyte",
+          "MICROSCOPIC DESCRIPTION",
+          "Urine Pus Cells",
+          "Urine Red Blood Cells",
+          "Urine Epithelial Cells",
+          "Hyaline Cast",
+          "Granular Cast",
+          "Red Blood Cell Cast",
+          "White Blood Cell Cast",
+          "Calcium Oxalate",
+          "Uric Acid Crystals",
+          "Triple Phosphate Crystal",
+          "Amorphous Crystals",
+          "Mucus",
+          "Yeast Cells",
+          "Bacteria",
+          "Thyroid Stimulating Hormone (TSH) (Serum)",
+          "GLUCOSE- Random (Plasma)",
+          "SPOT URINE PROTEIN / CREATININE RATIO",
+          "SPOT URINE PROTEIN",
+          "SPOT URINE CREATININE",
+          "SPOTURINE PROTEIN/CREATININRATIO",
+          "Varicella 2",
+          "Hep A2",
+          "Influenza vaccine",
+          "MCV",
+          "IPV B2",
+          "DTaP/DTwP B2",
+          "MMR 3",
+          "Tdap/Td",
+          "HPV 1",
+          "HPV 2",
+          "HPV 3",
+          "Rabies",
+          "Cholera",
+          "JE",
+          "Yellow Fever",
+          "COVID vaccination in children"
+        ]
+      }
+    ],
+    "bills": [
+      {
+        "items": [
+          {
+            "name": "Consultation / Procedure",
+            "amount": 500.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "Laser removal",
+            "amount": 600.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "PYNOMAX TX CREAM 30GM",
+            "amount": 609.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "DERMADEW ALOE PLUS CREAM 80GM",
+            "amount": 252.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "PHOTOSTABLE SUNSCREEN EMUGEL",
+            "amount": 827.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Investigation Charges Disposable",
+            "amount": 15.0,
+            "isConsultation": false,
+            "isTest": true
+          },
+          {
+            "name": "Q. Infanrix Hexa",
+            "amount": 3735.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "O.P.V.",
+            "amount": 300.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Doctors Consultation",
+            "amount": 200.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "CONSULTATION INTERNAL MEDICINE",
+            "amount": 550.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "TSH (THYROID STIMULATING HORMONE)",
+            "amount": 600.0,
+            "isConsultation": false,
+            "isTest": true
+          },
+          {
+            "name": "GLUCOSE - RANDOM",
+            "amount": 100.0,
+            "isConsultation": false,
+            "isTest": true
+          },
+          {
+            "name": "URINE PROTEIN CREATININE RATIO",
+            "amount": 550.0,
+            "isConsultation": false,
+            "isTest": true
+          },
+          {
+            "name": "URINE COMPLETE ANALYSIS",
+            "amount": 160.0,
+            "isConsultation": false,
+            "isTest": true
+          },
+          {
+            "name": "HAEMOGLOBIN (AUTOMATED)",
+            "amount": 160.0,
+            "isConsultation": false,
+            "isTest": true
+          },
+          {
+            "name": "DIFFERENTIAL COUNT (AUTOMATED CELL COUNTER)",
+            "amount": 160.0,
+            "isConsultation": false,
+            "isTest": true
+          },
+          {
+            "name": "TC TOTAL COUNT (AUTOMATED)",
+            "amount": 160.0,
+            "isConsultation": false,
+            "isTest": true
+          },
+          {
+            "name": "Consultation / Procedure",
+            "amount": 500.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "ZIMBA 1% CREAM 10GM",
+            "amount": 240.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "HHAZI 500 TAB",
+            "amount": 79.16,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "PRILOPLUS CREAM (10GM)",
+            "amount": 240.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Electro Cautery",
+            "amount": 1500.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "CONSULTATION BREAST SURGERY (DR BASILA AMEER ALI)",
+            "amount": 650.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "INFLUVAC TETRA",
+            "amount": 2444.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "CONSULTATION CHARGE",
+            "amount": 250.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "CALPOL 120MG SYRUP",
+            "amount": 36.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "ZENTEL SYP.",
+            "amount": 17.9,
+            "isConsultation": false,
+            "isTest": false
+          }
+        ]
+      }
+    ]
+  },
+  "matching": {
+    "matchedItems": [
+      {
+        "prescriptionName": "DERMDEW ALO CREAM",
+        "billItemName": "DERMADEW ALOE PLUS CREAM 80GM",
+        "amount": 252.0,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "PYNO MAX-TX CREAM",
+        "billItemName": "PYNOMAX TX CREAM 30GM",
+        "amount": 609.0,
+        "matchScore": 95.24,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Infanrix hexa",
+        "billItemName": "Q. Infanrix Hexa",
+        "amount": 3735.0,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Urine P:C ratio",
+        "billItemName": "URINE PROTEIN CREATININE RATIO",
+        "amount": 550.0,
+        "matchScore": 73.33,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "ZIMBA CREAM",
+        "billItemName": "ZIMBA 1% CREAM 10GM",
+        "amount": 240.0,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "TAB HHAZ1 500",
+        "billItemName": "HHAZI 500 TAB",
+        "amount": 79.16,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "PRILOPLUS CREAM",
+        "billItemName": "PRILOPLUS CREAM (10GM)",
+        "amount": 240.0,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Electro cautery",
+        "billItemName": "Electro Cautery",
+        "amount": 1500.0,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Inj. INFLUVAC TETRA",
+        "billItemName": "INFLUVAC TETRA",
+        "amount": 2444.0,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Sy. CALPOL-120",
+        "billItemName": "CALPOL 120MG SYRUP",
+        "amount": 36.0,
+        "matchScore": 69.47,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Zental Liq",
+        "billItemName": "ZENTEL SYP.",
+        "amount": 17.9,
+        "matchScore": 68.75,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Test: Haemoglobin (Whole Blood EDTA)",
+        "billItemName": "HAEMOGLOBIN (AUTOMATED)",
+        "amount": 160.0,
+        "matchScore": 61.22,
+        "status": "admissible",
+        "isTest": true
+      },
+      {
+        "prescriptionName": "Test: DIFFERENTIAL LEUCOCYTE COUNT",
+        "billItemName": "DIFFERENTIAL COUNT (AUTOMATED CELL COUNTER)",
+        "amount": 160.0,
+        "matchScore": 66.67,
+        "status": "admissible",
+        "isTest": true
+      },
+      {
+        "prescriptionName": "Test: Urine Complete Analysis (Automated)",
+        "billItemName": "URINE COMPLETE ANALYSIS",
+        "amount": 160.0,
+        "matchScore": 59.57,
+        "status": "admissible",
+        "isTest": true
+      },
+      {
+        "prescriptionName": "Test: Urine Colour",
+        "billItemName": "GLUCOSE - RANDOM",
+        "amount": 100.0,
+        "matchScore": 85.0,
+        "status": "admissible",
+        "isTest": true
+      },
+      {
+        "prescriptionName": "Test: Urine Nitrite",
+        "billItemName": "TC TOTAL COUNT (AUTOMATED)",
+        "amount": 160.0,
+        "matchScore": 85.0,
+        "status": "admissible",
+        "isTest": true
+      },
+      {
+        "prescriptionName": "Test: Urine Leukocyte",
+        "billItemName": "Doctors Consultation",
+        "amount": 200.0,
+        "matchScore": 85.0,
+        "status": "admissible",
+        "isTest": true
+      },
+      {
+        "prescriptionName": "Test: Thyroid Stimulating Hormone (TSH) (Serum)",
+        "billItemName": "TSH (THYROID STIMULATING HORMONE)",
+        "amount": 600.0,
+        "matchScore": 71.74,
+        "status": "admissible",
+        "isTest": true
+      },
+      {
+        "prescriptionName": "Consultation Fee",
+        "billItemName": "CONSULTATION CHARGE",
+        "amount": 250.0,
+        "matchScore": 100,
+        "status": "admissible",
+        "isConsultation": true
+      }
+    ],
+    "unmatchedPrescriptions": [
+      {
+        "prescriptionName": "Photo stable gel",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Inj. Anfoorix",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Hina",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Imboost",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Adsorbed Diphtheria, Tetanus, Pertussis (Acellular Component), Hepatitis B (rDNA), Poliomyelitis (Inactivated) and Haemophilus influenzae Type b Conjugate Vaccine I.P.",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "BCG",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Hep B1 - Birth Dose",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "OPV 0",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "DTaP/DTwP 1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Hib 1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "IPV 1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Hep B2",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "PCV 1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Rota virus 1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "DTaP/DTwP 2",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Hib 2",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "IPV 2",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Hep B3",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "PCV 2",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Rota virus 2",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "DTaP/DTwP 3",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Hib 3",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "IPV 3",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Hep B4",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "PCV 3",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Rota virus 3",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "TCV",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Influenza vaccine",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "MMR 1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "MCV 1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "HepA 1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "MCV 2",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "PCV B1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "MMR 2",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Varicella 1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "DTaP/DTwP B1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Hib B1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "IPV B1",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "HbA1c",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "TSH",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "RBS",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Urine RE",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Methimazole - 5mg",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      }
+    ],
+    "unmatchedTests": [
+      {
+        "testName": "HEMOGLOBIN, HB",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Neutrophils",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Lymphocytes",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Eosinophils",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Monocytes",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Basophils",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "WBC COUNT (Whole Blood EDTA)",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Urine Specific Gravity",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Urine Reaction (PH)",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Urine Glucose",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Urine Ketones",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Urine Protein",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Urine Blood",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Urine Urobilinogen",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Urine Bilirubin",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "MICROSCOPIC DESCRIPTION",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Urine Pus Cells",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Urine Red Blood Cells",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Urine Epithelial Cells",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Hyaline Cast",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Granular Cast",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Red Blood Cell Cast",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "White Blood Cell Cast",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Calcium Oxalate",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Uric Acid Crystals",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Triple Phosphate Crystal",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Amorphous Crystals",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Mucus",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Yeast Cells",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Bacteria",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "GLUCOSE- Random (Plasma)",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "SPOT URINE PROTEIN / CREATININE RATIO",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "SPOT URINE PROTEIN",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "SPOT URINE CREATININE",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "SPOTURINE PROTEIN/CREATININRATIO",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Varicella 2",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Hep A2",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Influenza vaccine",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "MCV",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "IPV B2",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "DTaP/DTwP B2",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "MMR 3",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Tdap/Td",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "HPV 1",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "HPV 2",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "HPV 3",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Rabies",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Cholera",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "JE",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "Yellow Fever",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      },
+      {
+        "testName": "COVID vaccination in children",
+        "status": "not_billed",
+        "reason": "Test prescribed but not found in bills or test report without corresponding bill."
+      }
+    ],
+    "inadmissibleItems": [
+      {
+        "billItemName": "Laser removal",
+        "amount": 600.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      },
+      {
+        "billItemName": "PHOTOSTABLE SUNSCREEN EMUGEL",
+        "amount": 827.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      },
+      {
+        "billItemName": "Investigation Charges Disposable",
+        "amount": 15.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      },
+      {
+        "billItemName": "O.P.V.",
+        "amount": 300.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      }
+    ],
+    "consultationAdjustments": [
+      {
+        "itemName": "Consultation / Procedure",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 500.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 200.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹200.00"
+      },
+      {
+        "itemName": "CONSULTATION INTERNAL MEDICINE",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 550.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 250.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹250.00"
+      },
+      {
+        "itemName": "CONSULTATION BREAST SURGERY (DR BASILA AMEER ALI)",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 650.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 350.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹350.00"
+      }
+    ],
+    "summary": {
+      "totalPrescriptions": 54,
+      "totalTests": 58,
+      "totalBillItems": 27,
+      "matchedCount": 19,
+      "unmatchedPrescriptionCount": 43,
+      "unmatchedTestCount": 51,
+      "inadmissibleCount": 4,
+      "totalAdmissibleAmount": 12393.06,
+      "totalInadmissibleAmount": 1742.0,
+      "totalConsultationExcess": 800.0,
+      "totalAmount": 14935.06
+    }
+  },
+  "claimForm": {
+    "isClaimForm": true,
+    "employeeDetails": {
+      "employeeNo": "00012619",
+      "name": "Name Of Patient",
+      "designation": "ASSISTANT OPERATION OFFICER",
+      "department": "OPERATIONS",
+      "grade": "TS3",
+      "claimNo": "202501132253",
+      "claimDate": "15.08.2025"
+    },
+    "claimDetails": {
+      "placeOfTreatment": "MRPL"
+    },
+    "treatmentDetails": [
+      {
+        "date": "15.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "15.08.2025"
+      },
+      {
+        "date": "15.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "Claim Submitted date : 15.08.2025"
+      },
+      {
+        "date": "18.06.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "18.06.2025"
+      },
+      {
+        "date": "18.06.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "18.06.2025"
+      },
+      {
+        "date": "21.06.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "21.06.2025"
+      },
+      {
+        "date": "26.06.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "26.06.2025"
+      },
+      {
+        "date": "26.06.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "26.06.2025"
+      },
+      {
+        "date": "17.07.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "17.07.2025"
+      },
+      {
+        "date": "17.07.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "17.07.2025"
+      },
+      {
+        "date": "24.07.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "24.07.2025"
+      },
+      {
+        "date": "24.07.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "24.07.2025"
+      },
+      {
+        "date": "30.07.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "30.07.2025"
+      },
+      {
+        "date": "01.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "01.08.2025"
+      },
+      {
+        "date": "01.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "01.08.2025"
+      },
+      {
+        "date": "01.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "01.08.2025"
+      }
+    ],
+    "declaredAmounts": {
+      "totalClaimed": 375.0,
+      "totalClaimedOnForm": 14781.0
+    },
+    "formType": "medical_reimbursement_claim"
+  },
+  "verification": null
+}

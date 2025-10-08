@@ -1,0 +1,348 @@
+{
+  "employee": "Shivani Rao_001",
+  "createdAt": "2025-10-08T14:36:26.333902",
+  "files": [
+    {
+      "filename": "Bill sample -2_page-0003.jpg",
+      "originalFilename": "Bill sample -2_page-0003.jpg",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation Charges",
+          "amount": 200.0,
+          "isConsultation": true,
+          "isTest": false
+        },
+        {
+          "name": "Injection & Medicines",
+          "amount": 200.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -2_page-0004.jpg",
+      "originalFilename": "Bill sample -2_page-0004.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "LIVMOIST cream",
+        "PIMOVATE CREAM 1%"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -2_page-0005.jpg",
+      "originalFilename": "Bill sample -2_page-0005.jpg",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation fees",
+          "amount": 400.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -2_page-0006.jpg",
+      "originalFilename": "Bill sample -2_page-0006.jpg",
+      "type": "unknown",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -2_page-0007.jpg",
+      "originalFilename": "Bill sample -2_page-0007.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "Tab MEL BOOST",
+        "DELVECO",
+        "NMF E clr BALM",
+        "CALCIPOTRIOL OINTMENT"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -2_page-0008.jpg",
+      "originalFilename": "Bill sample -2_page-0008.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "NMFE LIP BALM",
+        "Tab MELBOOST",
+        "CALPSOR OINTMENT",
+        "DEVELO LOTION"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -2_page-0009.jpg",
+      "originalFilename": "Bill sample -2_page-0009.jpg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "MELBOOST TAB",
+          "amount": 704.99,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -2_page-0010.jpg",
+      "originalFilename": "Bill sample -2_page-0010.jpg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "CALPSOR OINT 30GM",
+          "amount": 626.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -2_page-0011.jpg",
+      "originalFilename": "Bill sample -2_page-0011.jpg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "NMF E LIP CARE",
+          "amount": 199.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -2_page-0012.jpg",
+      "originalFilename": "Bill sample -2_page-0012.jpg",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation O P - Specialist / week (Dr. Ramya Shruthi J)",
+          "amount": 550.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [
+      {
+        "names": [
+          "LIVMOIST cream",
+          "PIMOVATE CREAM 1%",
+          "Tab MEL BOOST",
+          "DELVECO",
+          "NMF E clr BALM",
+          "CALCIPOTRIOL OINTMENT",
+          "NMFE LIP BALM",
+          "Tab MELBOOST",
+          "CALPSOR OINTMENT",
+          "DEVELO LOTION"
+        ]
+      }
+    ],
+    "tests": [],
+    "bills": [
+      {
+        "items": [
+          {
+            "name": "Consultation Charges",
+            "amount": 200.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "Injection & Medicines",
+            "amount": 200.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Consultation fees",
+            "amount": 400.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "MELBOOST TAB",
+            "amount": 704.99,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "CALPSOR OINT 30GM",
+            "amount": 626.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "NMF E LIP CARE",
+            "amount": 199.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Consultation O P - Specialist / week (Dr. Ramya Shruthi J)",
+            "amount": 550.0,
+            "isConsultation": true,
+            "isTest": false
+          }
+        ]
+      }
+    ]
+  },
+  "matching": {
+    "matchedItems": [
+      {
+        "prescriptionName": "Tab MEL BOOST",
+        "billItemName": "MELBOOST TAB",
+        "amount": 704.99,
+        "matchScore": 94.12,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "NMF E clr BALM",
+        "billItemName": "NMF E LIP CARE",
+        "amount": 199.0,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "CALCIPOTRIOL OINTMENT",
+        "billItemName": "CALPSOR OINT 30GM",
+        "amount": 626.0,
+        "matchScore": 63.16,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Consultation Fee",
+        "billItemName": "Consultation Charges",
+        "amount": 200.0,
+        "matchScore": 100,
+        "status": "admissible",
+        "isConsultation": true
+      }
+    ],
+    "unmatchedPrescriptions": [
+      {
+        "prescriptionName": "LIVMOIST cream",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "PIMOVATE CREAM 1%",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "DELVECO",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "NMFE LIP BALM",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Tab MELBOOST",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "CALPSOR OINTMENT",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "DEVELO LOTION",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      }
+    ],
+    "unmatchedTests": [],
+    "inadmissibleItems": [
+      {
+        "billItemName": "Injection & Medicines",
+        "amount": 200.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      }
+    ],
+    "consultationAdjustments": [
+      {
+        "itemName": "Consultation fees",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 400.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 100.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹100.00"
+      },
+      {
+        "itemName": "Consultation O P - Specialist / week (Dr. Ramya Shruthi J)",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 550.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 250.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹250.00"
+      }
+    ],
+    "summary": {
+      "totalPrescriptions": 10,
+      "totalTests": 0,
+      "totalBillItems": 7,
+      "matchedCount": 4,
+      "unmatchedPrescriptionCount": 7,
+      "unmatchedTestCount": 0,
+      "inadmissibleCount": 1,
+      "totalAdmissibleAmount": 2329.99,
+      "totalInadmissibleAmount": 200.0,
+      "totalConsultationExcess": 350.0,
+      "totalAmount": 2879.99
+    }
+  },
+  "claimForm": null,
+  "verification": null
+}

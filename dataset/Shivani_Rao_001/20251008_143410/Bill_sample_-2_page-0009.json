@@ -1,0 +1,16 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "testNames": [],
+  "billItems": [
+    {
+      "name": "MELBOOST TAB",
+      "amount": 704.99,
+      "isConsultation": false,
+      "isTest": false
+    }
+  ],
+  "isPDF": false,
+  "page": null,
+  "originalFilename": "Bill sample -2_page-0009.jpg"
+}

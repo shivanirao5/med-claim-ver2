@@ -1,0 +1,16 @@
+{
+  "type": "consultation_receipt",
+  "prescriptionNames": [],
+  "testNames": [],
+  "billItems": [
+    {
+      "name": "Consultation O P - Specialist / week (Dr. Ramya Shruthi J)",
+      "amount": 550.0,
+      "isConsultation": true,
+      "isTest": false
+    }
+  ],
+  "isPDF": true,
+  "page": 12,
+  "originalFilename": "Bill sample -2.pdf"
+}

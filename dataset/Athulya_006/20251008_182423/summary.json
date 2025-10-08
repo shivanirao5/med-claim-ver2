@@ -1,0 +1,103 @@
+{
+  "employee": "Athulya_006",
+  "createdAt": "2025-10-08T18:25:35.219524",
+  "files": [
+    {
+      "filename": "Bill sample -3_page-0003.jpg",
+      "error": "API Error: 400 Client Error: Bad Request for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=AIzaSyDPV1--8c20uXEqIr9CtTUrpSD9kn-5skw",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": []
+    },
+    {
+      "filename": "Bill sample -3_page-0009.jpg",
+      "error": "API Error: 400 Client Error: Bad Request for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=AIzaSyDPV1--8c20uXEqIr9CtTUrpSD9kn-5skw",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": []
+    },
+    {
+      "filename": "Bill sample -3_page-0010.jpg",
+      "error": "API Error: 400 Client Error: Bad Request for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=AIzaSyDPV1--8c20uXEqIr9CtTUrpSD9kn-5skw",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": []
+    },
+    {
+      "filename": "Bill sample -3_page-0011.jpg",
+      "error": "API Error: 400 Client Error: Bad Request for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=AIzaSyDPV1--8c20uXEqIr9CtTUrpSD9kn-5skw",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": []
+    },
+    {
+      "filename": "Bill sample -3_page-0012.jpg",
+      "error": "API Error: 400 Client Error: Bad Request for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=AIzaSyDPV1--8c20uXEqIr9CtTUrpSD9kn-5skw",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": []
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_1",
+      "error": "API Error: 400 Client Error: Bad Request for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=AIzaSyDPV1--8c20uXEqIr9CtTUrpSD9kn-5skw",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": []
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_2",
+      "error": "API Error: 400 Client Error: Bad Request for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=AIzaSyDPV1--8c20uXEqIr9CtTUrpSD9kn-5skw",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": []
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_3",
+      "error": "API Error: 400 Client Error: Bad Request for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=AIzaSyDPV1--8c20uXEqIr9CtTUrpSD9kn-5skw",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": []
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_4",
+      "error": "API Error: 400 Client Error: Bad Request for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=AIzaSyDPV1--8c20uXEqIr9CtTUrpSD9kn-5skw",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": []
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_5",
+      "error": "API Error: 400 Client Error: Bad Request for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=AIzaSyDPV1--8c20uXEqIr9CtTUrpSD9kn-5skw",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": []
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [],
+    "tests": [],
+    "bills": []
+  },
+  "matching": {
+    "matchedItems": [],
+    "unmatchedPrescriptions": [],
+    "unmatchedTests": [],
+    "inadmissibleItems": [],
+    "consultationAdjustments": [],
+    "summary": {
+      "totalPrescriptions": 0,
+      "totalTests": 0,
+      "totalBillItems": 0,
+      "matchedCount": 0,
+      "unmatchedPrescriptionCount": 0,
+      "unmatchedTestCount": 0,
+      "inadmissibleCount": 0,
+      "totalAdmissibleAmount": 0.0,
+      "totalInadmissibleAmount": 0.0,
+      "totalConsultationExcess": 0.0,
+      "totalAmount": 0.0
+    }
+  },
+  "claimForm": null,
+  "verification": null
+}

@@ -1,0 +1,587 @@
+{
+  "employee": "Niveditha_10",
+  "createdAt": "2025-10-08T18:45:13.159815",
+  "files": [
+    {
+      "filename": "Bill sample -3_page-0001.jpg",
+      "type": "claim_form",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [],
+      "fromCache": false
+    },
+    {
+      "filename": "Bill sample -3_page-0003.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "Influnae tco 6mo 0.5cc",
+        "Vomilax",
+        "Nxt vac plu"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "fromCache": true
+    },
+    {
+      "filename": "Bill sample -3_page-0009.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "SYP. MUCAINE GEL (B/P)"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "fromCache": true
+    },
+    {
+      "filename": "Bill sample -3_page-0010.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "SYP MUCAINE GEL"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "fromCache": true
+    },
+    {
+      "filename": "Bill sample -3_page-0012.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "HH linctus Junior",
+        "ITHA 200",
+        "Pro Alna B",
+        "Alnacer 25",
+        "Rdvit 50"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "fromCache": true
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_1",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation",
+          "amount": 400.0,
+          "isConsultation": true,
+          "isTest": false
+        },
+        {
+          "name": "TOTAL",
+          "amount": 400.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "fromCache": false
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_2",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "HALINCTUS JUNIOR SYP",
+          "amount": 105.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "ITHA 200MG 30ML",
+          "amount": 114.57,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "PROALNA B SUSP",
+          "amount": 288.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "ALNACER 250MG SYP",
+          "amount": 44.35,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "RDVIT SYP",
+          "amount": 148.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "Total",
+          "amount": 700.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "fromCache": false
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_3",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "consultation",
+          "amount": 300.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "fromCache": false
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_4",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Vaccinate (Influrate, Varilrix)",
+          "amount": 4644.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "fromCache": false
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_5",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "MICAINEGEL SYP 200 ML",
+          "amount": 243.07,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "Amount Before Tax",
+          "amount": 217.03,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "Total CGST Amount",
+          "amount": 13.02,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "Total SGST Amount",
+          "amount": 13.02,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "Round Off",
+          "amount": -0.07,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "Net Amount",
+          "amount": 243.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "fromCache": false
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [
+      {
+        "names": [
+          "Influnae tco 6mo 0.5cc",
+          "Vomilax",
+          "Nxt vac plu",
+          "SYP. MUCAINE GEL (B/P)",
+          "SYP MUCAINE GEL",
+          "HH linctus Junior",
+          "ITHA 200",
+          "Pro Alna B",
+          "Alnacer 25",
+          "Rdvit 50"
+        ]
+      }
+    ],
+    "tests": [],
+    "bills": [
+      {
+        "items": [
+          {
+            "name": "Consultation",
+            "amount": 400.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "TOTAL",
+            "amount": 400.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "HALINCTUS JUNIOR SYP",
+            "amount": 105.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "ITHA 200MG 30ML",
+            "amount": 114.57,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "PROALNA B SUSP",
+            "amount": 288.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "ALNACER 250MG SYP",
+            "amount": 44.35,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "RDVIT SYP",
+            "amount": 148.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Total",
+            "amount": 700.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "consultation",
+            "amount": 300.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "Vaccinate (Influrate, Varilrix)",
+            "amount": 4644.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "MICAINEGEL SYP 200 ML",
+            "amount": 243.07,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Amount Before Tax",
+            "amount": 217.03,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Total CGST Amount",
+            "amount": 13.02,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Total SGST Amount",
+            "amount": 13.02,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Round Off",
+            "amount": -0.07,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Net Amount",
+            "amount": 243.0,
+            "isConsultation": false,
+            "isTest": false
+          }
+        ]
+      }
+    ]
+  },
+  "matching": {
+    "matchedItems": [
+      {
+        "prescriptionName": "SYP MUCAINE GEL",
+        "billItemName": "MICAINEGEL SYP 200 ML",
+        "amount": 243.07,
+        "matchScore": 70.59,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "HH linctus Junior",
+        "billItemName": "HALINCTUS JUNIOR SYP",
+        "amount": 105.0,
+        "matchScore": 90.91,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "ITHA 200",
+        "billItemName": "ITHA 200MG 30ML",
+        "amount": 114.57,
+        "matchScore": 66.67,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Pro Alna B",
+        "billItemName": "PROALNA B SUSP",
+        "amount": 288.0,
+        "matchScore": 94.74,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Alnacer 25",
+        "billItemName": "ALNACER 250MG SYP",
+        "amount": 44.35,
+        "matchScore": 82.35,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Rdvit 50",
+        "billItemName": "RDVIT SYP",
+        "amount": 148.0,
+        "matchScore": 76.92,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Vaccination",
+        "billItemName": "Vaccinate (Influrate, Varilrix)",
+        "amount": 4644.0,
+        "matchScore": 100,
+        "status": "admissible",
+        "isVaccination": true
+      }
+    ],
+    "unmatchedPrescriptions": [
+      {
+        "prescriptionName": "Influnae tco 6mo 0.5cc",
+        "status": "not_billed",
+        "reason": "No matching bill found"
+      },
+      {
+        "prescriptionName": "Vomilax",
+        "status": "not_billed",
+        "reason": "No matching bill found"
+      },
+      {
+        "prescriptionName": "Nxt vac plu",
+        "status": "not_billed",
+        "reason": "No matching bill found"
+      },
+      {
+        "prescriptionName": "SYP. MUCAINE GEL (B/P)",
+        "status": "not_billed",
+        "reason": "No matching bill found"
+      }
+    ],
+    "unmatchedTests": [],
+    "inadmissibleItems": [],
+    "consultationAdjustments": [
+      {
+        "itemName": "Consultation",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 400.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 100.0,
+        "reason": "Consultation fee capped at ₹300. Excess: ₹100.00"
+      }
+    ],
+    "summary": {
+      "totalPrescriptions": 10,
+      "totalTests": 0,
+      "totalBillItems": 16,
+      "matchedCount": 7,
+      "unmatchedPrescriptionCount": 4,
+      "unmatchedTestCount": 0,
+      "inadmissibleCount": 0,
+      "totalAdmissibleAmount": 5886.99,
+      "totalInadmissibleAmount": 0.0,
+      "totalConsultationExcess": 100.0,
+      "totalAmount": 5986.99
+    }
+  },
+  "claimForm": {
+    "isClaimForm": true,
+    "employeeDetails": {
+      "employeeNo": "00011860",
+      "name": "Name Of Patient",
+      "designation": "ASSISTANT ENGINEER",
+      "department": "OPERATIONS",
+      "grade": "E2",
+      "claimNo": "202501132664",
+      "claimDate": "22.08.2025"
+    },
+    "claimDetails": {
+      "placeOfTreatment": "MRPL"
+    },
+    "treatmentDetails": [
+      {
+        "date": "22.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "22.08.2025"
+      },
+      {
+        "date": "22.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "Claim Submitted date : 22.08.2025"
+      },
+      {
+        "date": "27.05.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "27.05.2025"
+      },
+      {
+        "date": "27.05.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "27.05.2025"
+      },
+      {
+        "date": "21.06.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "21.06.2025"
+      },
+      {
+        "date": "14.07.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "14.07.2025"
+      },
+      {
+        "date": "14.07.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "14.07.2025"
+      },
+      {
+        "date": "22/08/2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "दिनांक Date: 22/08/2025"
+      }
+    ],
+    "declaredAmounts": {
+      "totalClaimed": 200.0,
+      "totalClaimedOnForm": 6287.0
+    },
+    "formType": "medical_reimbursement_claim"
+  },
+  "verification": {
+    "formPresent": true,
+    "verificationStatus": "under_claimed",
+    "discrepancies": [
+      {
+        "type": "AMOUNT_MISMATCH",
+        "severity": "LOW",
+        "description": "Claimed amount (₹200.00) is less than admissible amount (₹5886.99)",
+        "difference": 5686.99
+      }
+    ],
+    "matches": [
+      {
+        "type": "ITEM_MATCH",
+        "formItem": "UNKNOWN - ₹25.00",
+        "billItem": "ALNACER 250MG SYP - ₹44.35",
+        "confidence": "MEDIUM"
+      },
+      {
+        "type": "ITEM_MATCH",
+        "formItem": "UNKNOWN - ₹25.00",
+        "billItem": "ALNACER 250MG SYP - ₹44.35",
+        "confidence": "MEDIUM"
+      },
+      {
+        "type": "ITEM_MATCH",
+        "formItem": "UNKNOWN - ₹25.00",
+        "billItem": "ALNACER 250MG SYP - ₹44.35",
+        "confidence": "MEDIUM"
+      },
+      {
+        "type": "ITEM_MATCH",
+        "formItem": "UNKNOWN - ₹25.00",
+        "billItem": "ALNACER 250MG SYP - ₹44.35",
+        "confidence": "MEDIUM"
+      },
+      {
+        "type": "ITEM_MATCH",
+        "formItem": "UNKNOWN - ₹25.00",
+        "billItem": "ALNACER 250MG SYP - ₹44.35",
+        "confidence": "MEDIUM"
+      },
+      {
+        "type": "ITEM_MATCH",
+        "formItem": "UNKNOWN - ₹25.00",
+        "billItem": "ALNACER 250MG SYP - ₹44.35",
+        "confidence": "MEDIUM"
+      },
+      {
+        "type": "ITEM_MATCH",
+        "formItem": "UNKNOWN - ₹25.00",
+        "billItem": "ALNACER 250MG SYP - ₹44.35",
+        "confidence": "MEDIUM"
+      },
+      {
+        "type": "ITEM_MATCH",
+        "formItem": "UNKNOWN - ₹25.00",
+        "billItem": "ALNACER 250MG SYP - ₹44.35",
+        "confidence": "MEDIUM"
+      }
+    ],
+    "summary": {
+      "claimedAmount": 200.0,
+      "actualBillAmount": 5986.99,
+      "admissibleAmount": 5886.99,
+      "difference": 5686.99,
+      "discrepancyPercentage": 2843.49
+    }
+  }
+}

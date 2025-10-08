@@ -1,0 +1,413 @@
+{
+  "employee": "Grifith_005",
+  "createdAt": "2025-10-08T16:04:05.789383",
+  "files": [
+    {
+      "filename": "Bill sample -3_page-0003.jpg",
+      "originalFilename": "Bill sample -3_page-0003.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "Influnac tco 0.5cc",
+        "Vaxigrip",
+        "Next vacc flu 20/5/2026"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0004.jpg",
+      "originalFilename": "Bill sample -3_page-0004.jpg",
+      "type": "unknown",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0005.jpg",
+      "originalFilename": "Bill sample -3_page-0005.jpg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Varicella Vaccine, Live IP Varilrix",
+          "amount": 2195.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0006.jpg",
+      "originalFilename": "Bill sample -3_page-0006.jpg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "INFLUVAC TETRA 2025",
+          "amount": 2444.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0009.jpg",
+      "originalFilename": "Bill sample -3_page-0009.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "SYP. MUCAINE GEL"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0010.jpg",
+      "originalFilename": "Bill sample -3_page-0010.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "SYP MUCAINE GEL"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0012.jpg",
+      "originalFilename": "Bill sample -3_page-0012.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "HH linctus Junior",
+        "ITHA 200mg",
+        "Pro Atma B",
+        "Alnacev 25mg",
+        "Radvit 500"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_1",
+      "originalFilename": "bill-3-ob.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation",
+          "amount": 400.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 1
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_2",
+      "originalFilename": "bill-3-ob.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "HALINCTUS JUNIOR SYP",
+          "amount": 105.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "ITHA 200MG 30ML",
+          "amount": 114.57,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "PEDALMA B SUSP",
+          "amount": 288.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "ALMACER 250MG SYP",
+          "amount": 44.35,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "RDVIT SYP",
+          "amount": 143.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 2
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_3",
+      "originalFilename": "bill-3-ob.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation",
+          "amount": 300.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 3
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_4",
+      "originalFilename": "bill-3-ob.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Vaccinate (Influvac tetra, vaxilax)",
+          "amount": 4644.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 4
+    },
+    {
+      "filename": "bill-3-ob.pdf_page_5",
+      "originalFilename": "bill-3-ob.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Mfr AINEGEL SYP 200 ML",
+          "amount": 243.07,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 5
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [
+      {
+        "names": [
+          "Influnac tco 0.5cc",
+          "Vaxigrip",
+          "Next vacc flu 20/5/2026",
+          "SYP. MUCAINE GEL",
+          "HH linctus Junior",
+          "ITHA 200mg",
+          "Pro Atma B",
+          "Alnacev 25mg",
+          "Radvit 500"
+        ]
+      }
+    ],
+    "tests": [],
+    "bills": [
+      {
+        "items": [
+          {
+            "name": "Varicella Vaccine, Live IP Varilrix",
+            "amount": 2195.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "INFLUVAC TETRA 2025",
+            "amount": 2444.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Consultation",
+            "amount": 400.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "HALINCTUS JUNIOR SYP",
+            "amount": 105.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "ITHA 200MG 30ML",
+            "amount": 114.57,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "PEDALMA B SUSP",
+            "amount": 288.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "ALMACER 250MG SYP",
+            "amount": 44.35,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "RDVIT SYP",
+            "amount": 143.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Consultation",
+            "amount": 300.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "Vaccinate (Influvac tetra, vaxilax)",
+            "amount": 4644.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "Mfr AINEGEL SYP 200 ML",
+            "amount": 243.07,
+            "isConsultation": false,
+            "isTest": false
+          }
+        ]
+      }
+    ]
+  },
+  "matching": {
+    "matchedItems": [
+      {
+        "prescriptionName": "Influnac tco 0.5cc",
+        "billItemName": "INFLUVAC TETRA 2025",
+        "amount": 2444.0,
+        "matchScore": 74.59,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Vaxigrip",
+        "billItemName": "Varicella Vaccine, Live IP Varilrix",
+        "amount": 2195.0,
+        "matchScore": 90.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "HH linctus Junior",
+        "billItemName": "HALINCTUS JUNIOR SYP",
+        "amount": 105.0,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "ITHA 200mg",
+        "billItemName": "ITHA 200MG 30ML",
+        "amount": 114.57,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Alnacev 25mg",
+        "billItemName": "ALMACER 250MG SYP",
+        "amount": 44.35,
+        "matchScore": 71.43,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Radvit 500",
+        "billItemName": "RDVIT SYP",
+        "amount": 143.0,
+        "matchScore": 100.0,
+        "status": "admissible"
+      }
+    ],
+    "unmatchedPrescriptions": [
+      {
+        "prescriptionName": "Next vacc flu 20/5/2026",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "SYP. MUCAINE GEL",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Pro Atma B",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      }
+    ],
+    "unmatchedTests": [],
+    "inadmissibleItems": [
+      {
+        "billItemName": "PEDALMA B SUSP",
+        "amount": 288.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      },
+      {
+        "billItemName": "Vaccinate (Influvac tetra, vaxilax)",
+        "amount": 4644.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      },
+      {
+        "billItemName": "Mfr AINEGEL SYP 200 ML",
+        "amount": 243.07,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      }
+    ],
+    "consultationAdjustments": [
+      {
+        "itemName": "Consultation",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 400.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 100.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹100.00"
+      }
+    ],
+    "summary": {
+      "totalPrescriptions": 9,
+      "totalTests": 0,
+      "totalBillItems": 11,
+      "matchedCount": 6,
+      "unmatchedPrescriptionCount": 3,
+      "unmatchedTestCount": 0,
+      "inadmissibleCount": 3,
+      "totalAdmissibleAmount": 5345.92,
+      "totalInadmissibleAmount": 5175.07,
+      "totalConsultationExcess": 100.0,
+      "totalAmount": 10620.99
+    }
+  },
+  "claimForm": null,
+  "verification": null
+}

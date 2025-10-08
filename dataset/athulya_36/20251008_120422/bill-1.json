@@ -1,0 +1,18 @@
+{
+  "type": "test_report",
+  "prescriptionNames": [],
+  "testNames": [
+    "Haemoglobin (Whole Blood EDTA)",
+    "DIFFERENTIAL LEUCOCYTE COUNT",
+    "Neutrophils",
+    "Lymphocytes",
+    "Eosinophils",
+    "Monocytes",
+    "Basophils",
+    "WBC COUNT (Whole Blood EDTA)"
+  ],
+  "billItems": [],
+  "isPDF": true,
+  "page": 27,
+  "originalFilename": "bill-1.pdf"
+}

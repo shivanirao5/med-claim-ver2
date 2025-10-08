@@ -1,0 +1,530 @@
+{
+  "employee": "Arya_014",
+  "createdAt": "2025-10-08T11:11:42.342718",
+  "files": [
+    {
+      "filename": "Bill sample -2.pdf_page_1",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "CONSULTATION AND MEDICINE",
+          "amount": 400.0,
+          "isConsultation": true,
+          "isTest": false
+        },
+        {
+          "name": "CONSULTATION",
+          "amount": 400.0,
+          "isConsultation": true,
+          "isTest": false
+        },
+        {
+          "name": "CONSULTATION",
+          "amount": 550.0,
+          "isConsultation": true,
+          "isTest": false
+        },
+        {
+          "name": "MEDICINE",
+          "amount": 199.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "MEDICINE",
+          "amount": 626.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "MEDICINE",
+          "amount": 705.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 1
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_2",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "unknown",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 2
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_3",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation Charges",
+          "amount": 200.0,
+          "isConsultation": true,
+          "isTest": false
+        },
+        {
+          "name": "Injection & Medicines",
+          "amount": 200.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 3
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_4",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "LIV MOIST cream",
+        "PIMOVATE CREAM 1%"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 4
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_5",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation fees",
+          "amount": 400.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 5
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_6",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "medical_record",
+      "prescriptionNames": [
+        "oral steroid",
+        "tacrolimus ointment"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 6
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_7",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "Tab MEL BOOST",
+        "Delevco lotion",
+        "NMFE Lip Balm SPF 40%",
+        "CALCIPOTRIOL OINTMENT"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 7
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_8",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "NMFE LIP BALM",
+        "Tab MELBOOST",
+        "CALPSOR OINTMENT",
+        "DERIVA C LOTION"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 8
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_9",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "MELBOOST TAB",
+          "amount": 597.46,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "CGST AMT",
+          "amount": 53.77,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "SGST AMT",
+          "amount": 53.77,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 9
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_10",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "CAPSOR OINT 30GM",
+          "amount": 626.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 10
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_11",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "NT E LIP ONE",
+          "amount": 199.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 11
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_12",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation O P - Specialist / week (Dr. Ramya Shruthi J)",
+          "amount": 550.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 12
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [
+      {
+        "names": [
+          "LIV MOIST cream",
+          "PIMOVATE CREAM 1%",
+          "oral steroid",
+          "tacrolimus ointment",
+          "Tab MEL BOOST",
+          "Delevco lotion",
+          "NMFE Lip Balm SPF 40%",
+          "CALCIPOTRIOL OINTMENT",
+          "NMFE LIP BALM",
+          "Tab MELBOOST",
+          "CALPSOR OINTMENT",
+          "DERIVA C LOTION"
+        ]
+      }
+    ],
+    "tests": [],
+    "bills": [
+      {
+        "items": [
+          {
+            "name": "CONSULTATION AND MEDICINE",
+            "amount": 400.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "CONSULTATION",
+            "amount": 400.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "CONSULTATION",
+            "amount": 550.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "MEDICINE",
+            "amount": 199.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "MEDICINE",
+            "amount": 626.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "MEDICINE",
+            "amount": 705.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Consultation Charges",
+            "amount": 200.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "Injection & Medicines",
+            "amount": 200.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Consultation fees",
+            "amount": 400.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "MELBOOST TAB",
+            "amount": 597.46,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "CGST AMT",
+            "amount": 53.77,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "SGST AMT",
+            "amount": 53.77,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "CAPSOR OINT 30GM",
+            "amount": 626.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "NT E LIP ONE",
+            "amount": 199.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Consultation O P - Specialist / week (Dr. Ramya Shruthi J)",
+            "amount": 550.0,
+            "isConsultation": true,
+            "isTest": false
+          }
+        ]
+      }
+    ]
+  },
+  "matching": {
+    "matchedItems": [
+      {
+        "prescriptionName": "Tab MEL BOOST",
+        "billItemName": "MELBOOST TAB",
+        "amount": 597.46,
+        "matchScore": 94.12,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "NMFE Lip Balm SPF 40%",
+        "billItemName": "NT E LIP ONE",
+        "amount": 199.0,
+        "matchScore": 85.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "CALPSOR OINTMENT",
+        "billItemName": "CAPSOR OINT 30GM",
+        "amount": 626.0,
+        "matchScore": 78.46,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Consultation Fee",
+        "billItemName": "Consultation Charges",
+        "amount": 200.0,
+        "matchScore": 100,
+        "status": "admissible",
+        "isConsultation": true
+      }
+    ],
+    "unmatchedPrescriptions": [
+      {
+        "prescriptionName": "LIV MOIST cream",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "PIMOVATE CREAM 1%",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "oral steroid",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "tacrolimus ointment",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Delevco lotion",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "CALCIPOTRIOL OINTMENT",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "NMFE LIP BALM",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "DERIVA C LOTION",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      }
+    ],
+    "unmatchedTests": [],
+    "inadmissibleItems": [
+      {
+        "billItemName": "MEDICINE",
+        "amount": 199.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      },
+      {
+        "billItemName": "MEDICINE",
+        "amount": 626.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      },
+      {
+        "billItemName": "MEDICINE",
+        "amount": 705.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      },
+      {
+        "billItemName": "Injection & Medicines",
+        "amount": 200.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      },
+      {
+        "billItemName": "CGST AMT",
+        "amount": 53.77,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      },
+      {
+        "billItemName": "SGST AMT",
+        "amount": 53.77,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      }
+    ],
+    "consultationAdjustments": [
+      {
+        "itemName": "CONSULTATION AND MEDICINE",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 400.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 100.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹100.00"
+      },
+      {
+        "itemName": "CONSULTATION",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 400.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 100.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹100.00"
+      },
+      {
+        "itemName": "CONSULTATION",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 550.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 250.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹250.00"
+      },
+      {
+        "itemName": "Consultation fees",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 400.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 100.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹100.00"
+      },
+      {
+        "itemName": "Consultation O P - Specialist / week (Dr. Ramya Shruthi J)",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 550.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 250.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹250.00"
+      }
+    ],
+    "summary": {
+      "totalPrescriptions": 12,
+      "totalTests": 0,
+      "totalBillItems": 15,
+      "matchedCount": 4,
+      "unmatchedPrescriptionCount": 8,
+      "unmatchedTestCount": 0,
+      "inadmissibleCount": 6,
+      "totalAdmissibleAmount": 3122.46,
+      "totalInadmissibleAmount": 1837.54,
+      "totalConsultationExcess": 800.0,
+      "totalAmount": 5760.0
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "consultation_receipt",
+  "prescriptionNames": [],
+  "testNames": [],
+  "billItems": [
+    {
+      "name": "Consultation Charges",
+      "amount": 200.0,
+      "isConsultation": true,
+      "isTest": false
+    },
+    {
+      "name": "Injection & Medicines",
+      "amount": 200.0,
+      "isConsultation": false,
+      "isTest": false
+    }
+  ],
+  "isPDF": false,
+  "page": null,
+  "originalFilename": "Bill sample -2_page-0003.jpg"
+}

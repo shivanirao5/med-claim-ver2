@@ -1,0 +1,30 @@
+{
+  "employee": "Shivani Rao_115",
+  "createdAt": "2025-10-08T10:03:05.590011",
+  "files": [],
+  "aggregated": {
+    "prescriptions": [],
+    "tests": [],
+    "bills": []
+  },
+  "matching": {
+    "matchedItems": [],
+    "unmatchedPrescriptions": [],
+    "unmatchedTests": [],
+    "inadmissibleItems": [],
+    "consultationAdjustments": [],
+    "summary": {
+      "totalPrescriptions": 0,
+      "totalTests": 0,
+      "totalBillItems": 0,
+      "matchedCount": 0,
+      "unmatchedPrescriptionCount": 0,
+      "unmatchedTestCount": 0,
+      "inadmissibleCount": 0,
+      "totalAdmissibleAmount": 0.0,
+      "totalInadmissibleAmount": 0.0,
+      "totalConsultationExcess": 0.0,
+      "totalAmount": 0.0
+    }
+  }
+}

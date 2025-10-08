@@ -1,0 +1,16 @@
+{
+  "type": "bill",
+  "prescriptionNames": [],
+  "testNames": [],
+  "billItems": [
+    {
+      "name": "MUCAINEGEL SYP 200 ML",
+      "amount": 243.07,
+      "isConsultation": false,
+      "isTest": false
+    }
+  ],
+  "isPDF": false,
+  "page": null,
+  "originalFilename": "Bill sample -3_page-0008.jpg"
+}

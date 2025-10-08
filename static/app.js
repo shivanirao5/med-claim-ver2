@@ -65,6 +65,150 @@
     }, 4000);
   }
 
+  function showConfirmDialog(message, onConfirm, onCancel) {
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.2s ease-out;
+    `;
+
+    // Create dialog
+    const dialog = document.createElement('div');
+    dialog.style.cssText = `
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 440px;
+      width: 90%;
+      overflow: hidden;
+      animation: slideUp 0.3s ease-out;
+    `;
+
+    dialog.innerHTML = `
+      <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 24px; color: white;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <svg style="width: 28px; height: 28px; flex-shrink: 0;" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+          </svg>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 600; flex: 1;">Confirm Action</h3>
+        </div>
+      </div>
+      <div style="padding: 24px;">
+        <p style="margin: 0 0 24px 0; color: #374151; font-size: 15px; line-height: 1.6;">
+          ${message}
+        </p>
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button id="cancelBtn" style="
+            padding: 10px 24px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+          ">Cancel</button>
+          <button id="confirmBtn" style="
+            padding: 10px 24px;
+            border: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transition: all 0.2s;
+          ">OK</button>
+        </div>
+      </div>
+    `;
+
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+
+    // Add hover effects
+    const confirmBtn = dialog.querySelector('#confirmBtn');
+    const cancelBtn = dialog.querySelector('#cancelBtn');
+
+    confirmBtn.addEventListener('mouseenter', () => {
+      confirmBtn.style.transform = 'translateY(-2px)';
+      confirmBtn.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.5)';
+    });
+    confirmBtn.addEventListener('mouseleave', () => {
+      confirmBtn.style.transform = 'translateY(0)';
+      confirmBtn.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.4)';
+    });
+
+    cancelBtn.addEventListener('mouseenter', () => {
+      cancelBtn.style.background = '#f3f4f6';
+      cancelBtn.style.borderColor = '#d1d5db';
+    });
+    cancelBtn.addEventListener('mouseleave', () => {
+      cancelBtn.style.background = 'white';
+      cancelBtn.style.borderColor = '#e5e7eb';
+    });
+
+    // Handle button clicks
+    const close = () => {
+      overlay.style.opacity = '0';
+      dialog.style.transform = 'scale(0.95)';
+      setTimeout(() => document.body.removeChild(overlay), 200);
+    };
+
+    confirmBtn.addEventListener('click', () => {
+      close();
+      if (onConfirm) onConfirm();
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      close();
+      if (onCancel) onCancel();
+    });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        close();
+        if (onCancel) onCancel();
+      }
+    });
+
+    // Add animation styles if not already present
+    if (!document.getElementById('confirmDialogStyles')) {
+      const style = document.createElement('style');
+      style.id = 'confirmDialogStyles';
+      style.textContent = `
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slideUp {
+          from { 
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+          }
+          to { 
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
   // File Upload Handling
   bulkInput.addEventListener('change', handleFileSelect);
   
@@ -124,7 +268,30 @@
         margin-bottom: 8px;
       `;
 
-      if (file.type.startsWith('image/')) {
+      // Check if it's a PDF or image
+      const isPDF = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+      
+      if (isPDF) {
+        // Show PDF icon
+        img.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="40">📑</text></svg>';
+        
+        // Add PDF badge
+        const pdfBadge = document.createElement('div');
+        pdfBadge.textContent = 'PDF';
+        pdfBadge.style.cssText = `
+          position: absolute;
+          top: 16px;
+          left: 16px;
+          background: #dc2626;
+          color: white;
+          padding: 2px 8px;
+          border-radius: 4px;
+          font-size: 10px;
+          font-weight: 700;
+          z-index: 1;
+        `;
+        thumb.appendChild(pdfBadge);
+      } else if (file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = (e) => {
           img.src = e.target.result;
@@ -261,6 +428,11 @@
     analysisData = data;
     analysisResults.style.display = 'block';
 
+    // Display claim form if present
+    if (data.claimForm) {
+      displayClaimForm(data.claimForm, data.verification);
+    }
+
     // Display file results
     displayFileResults(data.files || []);
 
@@ -274,11 +446,157 @@
     document.getElementById('exportPdfBtn').disabled = false;
   }
 
+  function displayClaimForm(claimForm, verification) {
+    const claimFormSection = document.createElement('div');
+    claimFormSection.id = 'claimFormSection';
+    claimFormSection.style.cssText = `
+      margin-bottom: 24px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    `;
+
+    const empDetails = claimForm.employeeDetails || {};
+    const declaredAmounts = claimForm.declaredAmounts || {};
+    const treatments = claimForm.treatments || [];
+
+    claimFormSection.innerHTML = `
+      <div style="background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%); padding: 20px; color: white;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 32px;">📋</span>
+          <h3 style="margin: 0; font-size: 22px; font-weight: 600;">Claim Form Detected</h3>
+        </div>
+      </div>
+
+      <div style="background: white; padding: 24px;">
+        <!-- Employee Details -->
+        <div style="margin-bottom: 24px;">
+          <h4 style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #374151;">Employee Information</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+            ${empDetails.name ? `
+              <div>
+                <div style="color: #6b7280; font-size: 13px; margin-bottom: 4px;">Name</div>
+                <div style="font-weight: 600;">${escapeHtml(empDetails.name)}</div>
+              </div>
+            ` : ''}
+            ${empDetails.employeeNo ? `
+              <div>
+                <div style="color: #6b7280; font-size: 13px; margin-bottom: 4px;">Employee No</div>
+                <div style="font-weight: 600;">${escapeHtml(empDetails.employeeNo)}</div>
+              </div>
+            ` : ''}
+            ${empDetails.designation ? `
+              <div>
+                <div style="color: #6b7280; font-size: 13px; margin-bottom: 4px;">Designation</div>
+                <div style="font-weight: 600;">${escapeHtml(empDetails.designation)}</div>
+              </div>
+            ` : ''}
+            ${empDetails.department ? `
+              <div>
+                <div style="color: #6b7280; font-size: 13px; margin-bottom: 4px;">Department</div>
+                <div style="font-weight: 600;">${escapeHtml(empDetails.department)}</div>
+              </div>
+            ` : ''}
+            ${empDetails.claimNo ? `
+              <div>
+                <div style="color: #6b7280; font-size: 13px; margin-bottom: 4px;">Claim No</div>
+                <div style="font-weight: 600;">${escapeHtml(empDetails.claimNo)}</div>
+              </div>
+            ` : ''}
+            ${empDetails.claimDate ? `
+              <div>
+                <div style="color: #6b7280; font-size: 13px; margin-bottom: 4px;">Claim Date</div>
+                <div style="font-weight: 600;">${escapeHtml(empDetails.claimDate)}</div>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+
+        <!-- Treatment Summary -->
+        ${treatments.length > 0 ? `
+          <div style="margin-bottom: 24px;">
+            <h4 style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #374151;">Claimed Treatments (${treatments.length})</h4>
+            <div style="overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <thead>
+                  <tr style="background: #f3f4f6;">
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e5e7eb;">Date</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e5e7eb;">Patient</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e5e7eb;">Hospital/Doctor</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e5e7eb;">Type</th>
+                    <th style="padding: 12px; text-align: right; border-bottom: 2px solid #e5e7eb;">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${treatments.map(t => `
+                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                      <td style="padding: 12px;">${escapeHtml(t.date || '-')}</td>
+                      <td style="padding: 12px;">
+                        ${escapeHtml(t.patientName || '-')}
+                        ${t.relation ? `<br><span style="font-size: 12px; color: #6b7280;">(${escapeHtml(t.relation)})</span>` : ''}
+                      </td>
+                      <td style="padding: 12px;">${escapeHtml(t.hospital || '-')}</td>
+                      <td style="padding: 12px;">
+                        <span style="background: #dbeafe; color: #1e40af; padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                          ${escapeHtml(t.treatmentType || '-')}
+                        </span>
+                      </td>
+                      <td style="padding: 12px; text-align: right; font-weight: 600;">${formatCurrency(t.amount)}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ` : ''}
+
+      </div>
+    `;
+
+    const resultsContainer = document.getElementById('analysisResults');
+    resultsContainer.insertBefore(claimFormSection, resultsContainer.firstChild);
+  }
+
   function displayFileResults(files) {
     const prescriptions = [];
     const bills = [];
+    const filesByType = { 
+      prescription: [], 
+      bill: [], 
+      consultation_receipt: [],
+      test_report: [], 
+      lab_report: [],
+      claim_form: [],
+      unknown: [] 
+    };
+    let hasPDFPages = false;
+    let hasPDFErrors = false;
+    const pdfErrors = [];
 
     files.forEach(file => {
+      // Skip claim form files from classification
+      if (file.isClaimForm || file.type === 'claim_form') {
+        return;
+      }
+      
+      // Check for PDF processing errors
+      if (file.error === 'PDF_EXTRACTION_FAILED') {
+        hasPDFErrors = true;
+        pdfErrors.push(file);
+      }
+      
+      if (file.isPDF && file.page) {
+        hasPDFPages = true;
+      }
+      
+      // Categorize files by type
+      const fileType = file.type || 'unknown';
+      if (filesByType[fileType]) {
+        filesByType[fileType].push(file);
+      } else {
+        filesByType.unknown.push(file);
+      }
+      
       if (file.prescriptionNames && file.prescriptionNames.length > 0) {
         prescriptions.push(...file.prescriptionNames);
       }
@@ -286,6 +604,121 @@
         bills.push(...file.billItems);
       }
     });
+
+    // Show document type summary
+    const docTypeSummary = document.createElement('div');
+    docTypeSummary.style.cssText = `
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      color: white;
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    `;
+    
+    const prescCount = filesByType.prescription.length;
+    const billCount = filesByType.bill.length + (filesByType.consultation_receipt?.length || 0);
+    const testCount = filesByType.test_report.length + (filesByType.lab_report?.length || 0);
+    
+    docTypeSummary.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <span style="font-size: 28px;">📋</span>
+        <h3 style="margin: 0; font-size: 20px; font-weight: 600;">Document Classification</h3>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+        <div style="background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; font-weight: 700;">${prescCount}</div>
+          <div style="font-size: 13px; opacity: 0.9;">📝 Prescription${prescCount !== 1 ? 's' : ''}</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; font-weight: 700;">${billCount}</div>
+          <div style="font-size: 13px; opacity: 0.9;">💰 Bill${billCount !== 1 ? 's' : ''}</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; font-weight: 700;">${testCount}</div>
+          <div style="font-size: 13px; opacity: 0.9;">🧪 Test Report${testCount !== 1 ? 's' : ''}</div>
+        </div>
+      </div>
+    `;
+    
+    const resultsContainer = document.getElementById('analysisResults');
+    
+    // Remove any existing classification sections first
+    const existingClassifications = resultsContainer.querySelectorAll('[data-section="classification"]');
+    existingClassifications.forEach(el => el.remove());
+    
+    // Mark this section so we can remove it later
+    docTypeSummary.setAttribute('data-section', 'classification');
+    
+    resultsContainer.insertBefore(docTypeSummary, resultsContainer.firstChild);
+
+    // Show error if PDF processing failed
+    if (hasPDFErrors) {
+      const pdfError = document.createElement('div');
+      pdfError.style.cssText = `
+        background: #fee2e2;
+        border: 2px solid #dc2626;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 16px;
+      `;
+      pdfError.innerHTML = `
+        <div style="display: flex; align-items: start; gap: 12px;">
+          <span style="font-size: 24px;">⚠️</span>
+          <div style="flex: 1;">
+            <h3 style="margin: 0 0 8px 0; color: #991b1b; font-size: 16px; font-weight: 600;">
+              PDF Processing Failed
+            </h3>
+            <p style="margin: 0 0 12px 0; color: #7f1d1d;">
+              <strong>Poppler is not installed.</strong> PDF files cannot be processed without it.
+            </p>
+            <div style="background: white; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
+              <p style="margin: 0 0 8px 0; font-weight: 600; color: #991b1b;">Quick Fix:</p>
+              <ol style="margin: 0; padding-left: 20px; color: #7f1d1d;">
+                <li>Download Poppler: <a href="https://github.com/oschwartz10612/poppler-windows/releases/latest" target="_blank" style="color: #2563eb;">Click here</a></li>
+                <li>Extract to <code style="background: #f3f4f6; padding: 2px 6px; border-radius: 3px;">C:\\poppler</code></li>
+                <li>Add <code style="background: #f3f4f6; padding: 2px 6px; border-radius: 3px;">C:\\poppler\\Library\\bin</code> to system PATH</li>
+                <li>Restart the server</li>
+              </ol>
+            </div>
+            <div style="background: #fef3c7; padding: 12px; border-radius: 6px; border-left: 4px solid #f59e0b;">
+              <p style="margin: 0; color: #92400e;">
+                <strong>Workaround:</strong> Convert your PDF pages to JPG or PNG images and upload those instead.
+              </p>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      const resultsContainer = document.getElementById('analysisResults');
+      resultsContainer.insertBefore(pdfError, resultsContainer.firstChild);
+      
+      showNotification('error', 'PDF processing failed - Poppler not installed');
+    }
+
+    // Show info if PDFs were processed successfully
+    if (hasPDFPages) {
+      const pdfInfo = document.createElement('div');
+      pdfInfo.style.cssText = `
+        background: #dbeafe;
+        border: 1px solid #3b82f6;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      `;
+      pdfInfo.innerHTML = `
+        <span style="font-size: 20px;">📑</span>
+        <span style="color: #1e40af; font-weight: 500;">
+          PDF documents were processed - all pages extracted and analyzed
+        </span>
+      `;
+      
+      const resultsContainer = document.getElementById('analysisResults');
+      resultsContainer.insertBefore(pdfInfo, resultsContainer.firstChild);
+    }
 
     // Display prescriptions
     if (prescriptions.length > 0) {
@@ -335,27 +768,31 @@
       </div>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 16px 0;">
         <div class="stat">
-          <div class="stat-label">Total Prescriptions</div>
+          <div class="stat-label">💊 Medicines</div>
           <div class="stat-value">${summary.totalPrescriptions || 0}</div>
         </div>
         <div class="stat">
-          <div class="stat-label">Total Bill Items</div>
+          <div class="stat-label">🧪 Tests</div>
+          <div class="stat-value">${summary.totalTests || 0}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">💰 Bill Items</div>
           <div class="stat-value">${summary.totalBillItems || 0}</div>
         </div>
         <div class="stat">
-          <div class="stat-label">Matched Items</div>
+          <div class="stat-label">✅ Matched</div>
           <div class="stat-value" style="color: #10b981;">${summary.matchedCount || 0}</div>
         </div>
         <div class="stat">
-          <div class="stat-label">Inadmissible Items</div>
+          <div class="stat-label">❌ Inadmissible</div>
           <div class="stat-value" style="color: #ef4444;">${summary.inadmissibleCount || 0}</div>
         </div>
         <div class="stat">
-          <div class="stat-label">Admissible Amount</div>
+          <div class="stat-label">💵 Admissible</div>
           <div class="stat-value" style="color: #10b981;">${formatCurrency(summary.totalAdmissibleAmount)}</div>
         </div>
         <div class="stat">
-          <div class="stat-label">Inadmissible Amount</div>
+          <div class="stat-label">🚫 Inadmissible</div>
           <div class="stat-value" style="color: #ef4444;">${formatCurrency(summary.totalInadmissibleAmount)}</div>
         </div>
       </div>
@@ -387,11 +824,25 @@
     // Add matched items
     (matching.matchedItems || []).forEach(item => {
       const statusClass = item.status === 'admissible' ? 'admissible' : 'inadmissible';
-      const statusText = item.isConsultation ? 'Admissible (Consultation)' : 'Admissible';
+      let statusText = 'Admissible';
+      let icon = '💊';
+      let remarkText = 'Matches prescription';
+      
+      if (item.isConsultation) {
+        statusText = 'Admissible (Consultation)';
+        icon = '🩺';
+        remarkText = 'Consultation fee within limit';
+      } else if (item.isTest) {
+        statusText = 'Admissible (Test)';
+        icon = '🧪';
+        remarkText = 'Medical test/investigation';
+      }
       
       tableHTML += `
         <div class="tr" style="grid-template-columns: 2fr 2fr 120px 100px 150px 2fr;">
-          <div style="font-weight: 500;">${escapeHtml(item.prescriptionName)}</div>
+          <div style="font-weight: 500;">
+            ${icon} ${escapeHtml(item.prescriptionName)}
+          </div>
           <div>${escapeHtml(item.billItemName)}</div>
           <div class="amount" style="text-align: right; font-weight: 600;">${formatCurrency(item.amount)}</div>
           <div style="text-align: center;">
@@ -404,7 +855,7 @@
             <span class="badge ${statusClass}">${statusText}</span>
           </div>
           <div style="font-size: 13px; color: #059669;">
-            ${item.isConsultation ? 'Consultation fee within limit' : 'Matches prescription'}
+            ${remarkText}
           </div>
         </div>
       `;
@@ -459,7 +910,27 @@
     (matching.unmatchedPrescriptions || []).forEach(item => {
       tableHTML += `
         <div class="tr" style="grid-template-columns: 2fr 2fr 120px 100px 150px 2fr; background: #f3f4f6;">
-          <div style="font-weight: 500;">${escapeHtml(item.prescriptionName)}</div>
+          <div style="font-weight: 500;">💊 ${escapeHtml(item.prescriptionName)}</div>
+          <div style="color: #9ca3af;">Not billed</div>
+          <div style="text-align: right; color: #9ca3af;">—</div>
+          <div style="text-align: center; color: #9ca3af;">—</div>
+          <div style="text-align: center;">
+            <span class="badge" style="background: #f3f4f6; color: #6b7280; border: 1px solid #d1d5db;">
+              Not Claimed
+            </span>
+          </div>
+          <div style="font-size: 13px; color: #6b7280;">
+            ${escapeHtml(item.reason)}
+          </div>
+        </div>
+      `;
+    });
+
+    // Add unmatched tests
+    (matching.unmatchedTests || []).forEach(item => {
+      tableHTML += `
+        <div class="tr" style="grid-template-columns: 2fr 2fr 120px 100px 150px 2fr; background: #f3f4f6;">
+          <div style="font-weight: 500;">🧪 ${escapeHtml(item.testName)}</div>
           <div style="color: #9ca3af;">Not billed</div>
           <div style="text-align: right; color: #9ca3af;">—</div>
           <div style="text-align: center; color: #9ca3af;">—</div>
@@ -895,9 +1366,10 @@
 
   // New Analysis Button
   newAnalysisBtn.addEventListener('click', () => {
-    if (confirm('Start a new analysis? This will clear all current data.')) {
-      resetAnalysis();
-    }
+    showConfirmDialog(
+      'Start a new analysis? This will clear all current data.',
+      () => resetAnalysis()
+    );
   });
 
   // Add More Files Button
@@ -915,17 +1387,20 @@
         return;
       }
       
-      if (confirm('Re-analyze all documents? This may take a few moments.')) {
-        showNotification('info', 'Starting re-analysis...');
-        // Hide current results
-        analysisResults.style.display = 'none';
-        compareResults.style.display = 'none';
-        mappingResults.style.display = 'none';
-        document.getElementById('step-compare').style.display = 'none';
-        
-        // Restart analysis
-        startAnalysis();
-      }
+      showConfirmDialog(
+        'Re-analyze all documents? This may take a few moments.',
+        () => {
+          showNotification('info', 'Starting re-analysis...');
+          // Hide current results
+          analysisResults.style.display = 'none';
+          compareResults.style.display = 'none';
+          mappingResults.style.display = 'none';
+          document.getElementById('step-compare').style.display = 'none';
+          
+          // Restart analysis
+          startAnalysis();
+        }
+      );
     }
   });
 

@@ -1,0 +1,177 @@
+{
+  "employee": "Grifith_005",
+  "createdAt": "2025-10-08T16:11:03.642195",
+  "files": [
+    {
+      "filename": "Bill sample -3_page-0012.jpg",
+      "originalFilename": "Bill sample -3_page-0012.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "HH linctus Junior",
+        "ITHA 200mg",
+        "Pro Atma B",
+        "Alnacev 25mg",
+        "Radvit 500"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0013.jpg",
+      "originalFilename": "Bill sample -3_page-0013.jpg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "HHLINCTUS JUNIOR SYP",
+          "amount": 105.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "ITHA 200MG 30ML",
+          "amount": 114.57,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "FROALNA B SUSP",
+          "amount": 288.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "ALNACER 250MG SYP",
+          "amount": 44.35,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "ROVIT SYP",
+          "amount": 148.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [
+      {
+        "names": [
+          "HH linctus Junior",
+          "ITHA 200mg",
+          "Pro Atma B",
+          "Alnacev 25mg",
+          "Radvit 500"
+        ]
+      }
+    ],
+    "tests": [],
+    "bills": [
+      {
+        "items": [
+          {
+            "name": "HHLINCTUS JUNIOR SYP",
+            "amount": 105.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "ITHA 200MG 30ML",
+            "amount": 114.57,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "FROALNA B SUSP",
+            "amount": 288.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "ALNACER 250MG SYP",
+            "amount": 44.35,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "ROVIT SYP",
+            "amount": 148.0,
+            "isConsultation": false,
+            "isTest": false
+          }
+        ]
+      }
+    ]
+  },
+  "matching": {
+    "matchedItems": [
+      {
+        "prescriptionName": "HH linctus Junior",
+        "billItemName": "HHLINCTUS JUNIOR SYP",
+        "amount": 105.0,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "ITHA 200mg",
+        "billItemName": "ITHA 200MG 30ML",
+        "amount": 114.57,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Pro Atma B",
+        "billItemName": "FROALNA B SUSP",
+        "amount": 288.0,
+        "matchScore": 63.16,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Alnacev 25mg",
+        "billItemName": "ALNACER 250MG SYP",
+        "amount": 44.35,
+        "matchScore": 98.57,
+        "status": "admissible"
+      }
+    ],
+    "unmatchedPrescriptions": [
+      {
+        "prescriptionName": "Radvit 500",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      }
+    ],
+    "unmatchedTests": [],
+    "inadmissibleItems": [
+      {
+        "billItemName": "ROVIT SYP",
+        "amount": 148.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      }
+    ],
+    "consultationAdjustments": [],
+    "summary": {
+      "totalPrescriptions": 5,
+      "totalTests": 0,
+      "totalBillItems": 5,
+      "matchedCount": 4,
+      "unmatchedPrescriptionCount": 1,
+      "unmatchedTestCount": 0,
+      "inadmissibleCount": 1,
+      "totalAdmissibleAmount": 551.92,
+      "totalInadmissibleAmount": 148.0,
+      "totalConsultationExcess": 0.0,
+      "totalAmount": 699.92
+    }
+  },
+  "claimForm": null,
+  "verification": null
+}

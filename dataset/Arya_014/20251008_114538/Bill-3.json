@@ -1,0 +1,46 @@
+{
+  "type": "bill",
+  "prescriptionNames": [
+    "HALINXTUS JUNIOR SYP",
+    "ITHA 200MG 30ML",
+    "PROALMA B SUSP",
+    "ALNACER 250MG SYP",
+    "ROVIT SYP"
+  ],
+  "testNames": [],
+  "billItems": [
+    {
+      "name": "HALINXTUS JUNIOR SYP",
+      "amount": 105.0,
+      "isConsultation": false,
+      "isTest": false
+    },
+    {
+      "name": "ITHA 200MG 30ML",
+      "amount": 114.57,
+      "isConsultation": false,
+      "isTest": false
+    },
+    {
+      "name": "PROALMA B SUSP",
+      "amount": 288.0,
+      "isConsultation": false,
+      "isTest": false
+    },
+    {
+      "name": "ALNACER 250MG SYP",
+      "amount": 44.35,
+      "isConsultation": false,
+      "isTest": false
+    },
+    {
+      "name": "ROVIT SYP",
+      "amount": 143.0,
+      "isConsultation": false,
+      "isTest": false
+    }
+  ],
+  "isPDF": true,
+  "page": 12,
+  "originalFilename": "Bill-3.pdf"
+}

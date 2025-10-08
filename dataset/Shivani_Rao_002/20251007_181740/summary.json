@@ -1,0 +1,346 @@
+{
+  "employee": "Shivani Rao_002",
+  "createdAt": "2025-10-07T18:20:00.286199",
+  "files": [
+    {
+      "filename": "Bill sample -3_page-0007.jpg",
+      "originalFilename": "Bill sample -3_page-0007.jpg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "vaccination (Influvac, varilrix)",
+          "amount": 4644.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0008.jpg",
+      "originalFilename": "Bill sample -3_page-0008.jpg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "MUCAINEGEL SYP 200 ML",
+          "amount": 243.07,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0009.jpg",
+      "originalFilename": "Bill sample -3_page-0009.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "SYP. MUCAINE GEL"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0010.jpg",
+      "originalFilename": "Bill sample -3_page-0010.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "SYP MUCAINE GEL"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0011.jpg",
+      "originalFilename": "Bill sample -3_page-0011.jpg",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation",
+          "amount": 400.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0012.jpg",
+      "originalFilename": "Bill sample -3_page-0012.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "HH linctus Junior",
+        "ITHA 200",
+        "Pro Atra B",
+        "Alnacew 250",
+        "Rdvit 5ml",
+        "Imcare"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0013.jpg",
+      "originalFilename": "Bill sample -3_page-0013.jpg",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "HHLINCTUS JUNIOR SYP",
+          "amount": 105.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "ITHA 200MG 30ML",
+          "amount": 114.57,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "FROALNA B SUSP",
+          "amount": 288.0,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "ALNACER 250MG SYP",
+          "amount": 44.35,
+          "isConsultation": false,
+          "isTest": false
+        },
+        {
+          "name": "RDVIT SYP",
+          "amount": 148.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0002.jpg",
+      "originalFilename": "Bill sample -3_page-0002.jpg",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "consultation",
+          "amount": 300.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": false,
+      "page": null
+    },
+    {
+      "filename": "Bill sample -3_page-0003.jpg",
+      "originalFilename": "Bill sample -3_page-0003.jpg",
+      "type": "prescription",
+      "prescriptionNames": [
+        "Influnac tco 600",
+        "Vomilgx"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": false,
+      "page": null
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [
+      {
+        "names": [
+          "SYP. MUCAINE GEL",
+          "HH linctus Junior",
+          "ITHA 200",
+          "Pro Atra B",
+          "Alnacew 250",
+          "Rdvit 5ml",
+          "Imcare",
+          "Influnac tco 600",
+          "Vomilgx"
+        ]
+      }
+    ],
+    "tests": [],
+    "bills": [
+      {
+        "items": [
+          {
+            "name": "vaccination (Influvac, varilrix)",
+            "amount": 4644.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "MUCAINEGEL SYP 200 ML",
+            "amount": 243.07,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Consultation",
+            "amount": 400.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "HHLINCTUS JUNIOR SYP",
+            "amount": 105.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "ITHA 200MG 30ML",
+            "amount": 114.57,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "FROALNA B SUSP",
+            "amount": 288.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "ALNACER 250MG SYP",
+            "amount": 44.35,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "RDVIT SYP",
+            "amount": 148.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "consultation",
+            "amount": 300.0,
+            "isConsultation": true,
+            "isTest": false
+          }
+        ]
+      }
+    ]
+  },
+  "matching": {
+    "matchedItems": [
+      {
+        "prescriptionName": "SYP. MUCAINE GEL",
+        "billItemName": "MUCAINEGEL SYP 200 ML",
+        "amount": 243.07,
+        "matchScore": 88.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "HH linctus Junior",
+        "billItemName": "HHLINCTUS JUNIOR SYP",
+        "amount": 105.0,
+        "matchScore": 96.97,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "ITHA 200",
+        "billItemName": "ITHA 200MG 30ML",
+        "amount": 114.57,
+        "matchScore": 88.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Pro Atra B",
+        "billItemName": "FROALNA B SUSP",
+        "amount": 288.0,
+        "matchScore": 63.16,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Alnacew 250",
+        "billItemName": "ALNACER 250MG SYP",
+        "amount": 44.35,
+        "matchScore": 85.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Rdvit 5ml",
+        "billItemName": "RDVIT SYP",
+        "amount": 148.0,
+        "matchScore": 100.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Influnac tco 600",
+        "billItemName": "vaccination (Influvac, varilrix)",
+        "amount": 4644.0,
+        "matchScore": 75.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Consultation Fee",
+        "billItemName": "consultation",
+        "amount": 300.0,
+        "matchScore": 100,
+        "status": "admissible",
+        "isConsultation": true
+      }
+    ],
+    "unmatchedPrescriptions": [
+      {
+        "prescriptionName": "Imcare",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Vomilgx",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      }
+    ],
+    "unmatchedTests": [],
+    "inadmissibleItems": [],
+    "consultationAdjustments": [
+      {
+        "itemName": "Consultation",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 400.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 100.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹100.00"
+      }
+    ],
+    "summary": {
+      "totalPrescriptions": 9,
+      "totalTests": 0,
+      "totalBillItems": 9,
+      "matchedCount": 8,
+      "unmatchedPrescriptionCount": 2,
+      "unmatchedTestCount": 0,
+      "inadmissibleCount": 0,
+      "totalAdmissibleAmount": 6186.99,
+      "totalInadmissibleAmount": 0.0,
+      "totalConsultationExcess": 100.0,
+      "totalAmount": 6286.99
+    }
+  }
+}

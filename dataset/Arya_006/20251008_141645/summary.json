@@ -1,0 +1,463 @@
+{
+  "employee": "Arya_006",
+  "createdAt": "2025-10-08T14:20:00.611931",
+  "files": [
+    {
+      "filename": "Bill sample -2.pdf_page_1",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "claim_form",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 1,
+      "isClaimForm": true
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_2",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "claim_form",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 2,
+      "isClaimForm": true
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_3",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation Charges",
+          "amount": 200.0,
+          "isConsultation": true,
+          "isTest": false
+        },
+        {
+          "name": "Injection & Medicines",
+          "amount": 200.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 3
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_4",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "LIV MOIST cream",
+        "PIMOVATE CREAM 1%"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 4
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_5",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation fees",
+          "amount": 400.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 5
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_6",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "unknown",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 6
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_7",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "Tab Mel Boost",
+        "Delevco Lotion",
+        "Nmfe Cr Balm Spf 40%",
+        "Calcipotriol Ointment"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 7
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_8",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "prescription",
+      "prescriptionNames": [
+        "NMFE LIP BALM YA",
+        "Tab MELBOOST",
+        "CALPSOR OINTMENT YA",
+        "DELECO LOTION 14A"
+      ],
+      "testNames": [],
+      "billItems": [],
+      "isPDF": true,
+      "page": 8
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_9",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "WELBOOST TAB",
+          "amount": 704.99,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 9
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_10",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "CAPSUR OINT 30GM",
+          "amount": 626.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 10
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_11",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "bill",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "NMF E LIPCREME",
+          "amount": 199.0,
+          "isConsultation": false,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 11
+    },
+    {
+      "filename": "Bill sample -2.pdf_page_12",
+      "originalFilename": "Bill sample -2.pdf",
+      "type": "consultation_receipt",
+      "prescriptionNames": [],
+      "testNames": [],
+      "billItems": [
+        {
+          "name": "Consultation O P - Specialist / week (Dr. Ramya Shruthi J)",
+          "amount": 550.0,
+          "isConsultation": true,
+          "isTest": false
+        }
+      ],
+      "isPDF": true,
+      "page": 12
+    }
+  ],
+  "aggregated": {
+    "prescriptions": [
+      {
+        "names": [
+          "LIV MOIST cream",
+          "PIMOVATE CREAM 1%",
+          "Tab Mel Boost",
+          "Delevco Lotion",
+          "Nmfe Cr Balm Spf 40%",
+          "Calcipotriol Ointment",
+          "NMFE LIP BALM YA",
+          "Tab MELBOOST",
+          "CALPSOR OINTMENT YA",
+          "DELECO LOTION 14A"
+        ]
+      }
+    ],
+    "tests": [],
+    "bills": [
+      {
+        "items": [
+          {
+            "name": "Consultation Charges",
+            "amount": 200.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "Injection & Medicines",
+            "amount": 200.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Consultation fees",
+            "amount": 400.0,
+            "isConsultation": true,
+            "isTest": false
+          },
+          {
+            "name": "WELBOOST TAB",
+            "amount": 704.99,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "CAPSUR OINT 30GM",
+            "amount": 626.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "NMF E LIPCREME",
+            "amount": 199.0,
+            "isConsultation": false,
+            "isTest": false
+          },
+          {
+            "name": "Consultation O P - Specialist / week (Dr. Ramya Shruthi J)",
+            "amount": 550.0,
+            "isConsultation": true,
+            "isTest": false
+          }
+        ]
+      }
+    ]
+  },
+  "matching": {
+    "matchedItems": [
+      {
+        "prescriptionName": "Tab Mel Boost",
+        "billItemName": "WELBOOST TAB",
+        "amount": 704.99,
+        "matchScore": 72.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Nmfe Cr Balm Spf 40%",
+        "billItemName": "NMF E LIPCREME",
+        "amount": 199.0,
+        "matchScore": 95.0,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "CALPSOR OINTMENT YA",
+        "billItemName": "CAPSUR OINT 30GM",
+        "amount": 626.0,
+        "matchScore": 62.5,
+        "status": "admissible"
+      },
+      {
+        "prescriptionName": "Consultation Fee",
+        "billItemName": "Consultation Charges",
+        "amount": 200.0,
+        "matchScore": 100,
+        "status": "admissible",
+        "isConsultation": true
+      }
+    ],
+    "unmatchedPrescriptions": [
+      {
+        "prescriptionName": "LIV MOIST cream",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "PIMOVATE CREAM 1%",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Delevco Lotion",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Calcipotriol Ointment",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "NMFE LIP BALM YA",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "Tab MELBOOST",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      },
+      {
+        "prescriptionName": "DELECO LOTION 14A",
+        "status": "not_billed",
+        "reason": "No matching item found in bills. Medicine prescribed but not purchased or bill not provided."
+      }
+    ],
+    "unmatchedTests": [],
+    "inadmissibleItems": [
+      {
+        "billItemName": "Injection & Medicines",
+        "amount": 200.0,
+        "status": "inadmissible",
+        "reason": "Item not found in prescription. May be over-the-counter purchase or non-prescribed item."
+      }
+    ],
+    "consultationAdjustments": [
+      {
+        "itemName": "Consultation fees",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 400.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 100.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹100.00"
+      },
+      {
+        "itemName": "Consultation O P - Specialist / week (Dr. Ramya Shruthi J)",
+        "prescriptionName": null,
+        "matchScore": 0,
+        "billedAmount": 550.0,
+        "admissibleAmount": 300.0,
+        "excessAmount": 250.0,
+        "reason": "Consultation fee capped at ₹300. Excess amount: ₹250.00"
+      }
+    ],
+    "summary": {
+      "totalPrescriptions": 10,
+      "totalTests": 0,
+      "totalBillItems": 7,
+      "matchedCount": 4,
+      "unmatchedPrescriptionCount": 7,
+      "unmatchedTestCount": 0,
+      "inadmissibleCount": 1,
+      "totalAdmissibleAmount": 2329.99,
+      "totalInadmissibleAmount": 200.0,
+      "totalConsultationExcess": 350.0,
+      "totalAmount": 2879.99
+    }
+  },
+  "claimForm": {
+    "isClaimForm": true,
+    "employeeDetails": {
+      "employeeNo": "00012906",
+      "name": "Name Of Patient",
+      "designation": "ASSISTANT MANAGER",
+      "department": "TECHNICAL SERVICE",
+      "grade": "B",
+      "claimNo": "202501132416",
+      "claimDate": "18.08.2025"
+    },
+    "claimDetails": {
+      "placeOfTreatment": "MRPL"
+    },
+    "treatmentDetails": [
+      {
+        "date": "18.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "18.08.2025"
+      },
+      {
+        "date": "18.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "Claim Submitted date : 18.08.2025"
+      },
+      {
+        "date": "13.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "13.08.2025"
+      },
+      {
+        "date": "12.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "12.08.2025"
+      },
+      {
+        "date": "12.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "12.08.2025"
+      },
+      {
+        "date": "12.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "12.08.2025"
+      },
+      {
+        "date": "15.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "15.08.2025"
+      },
+      {
+        "date": "17.08.2025",
+        "patientName": null,
+        "relation": null,
+        "hospitalName": null,
+        "treatmentType": null,
+        "amount": 25.0,
+        "rawText": "17.08.2025"
+      }
+    ],
+    "declaredAmounts": {
+      "totalClaimed": 200.0,
+      "totalClaimedOnForm": 2880.0
+    },
+    "formType": "medical_reimbursement_claim"
+  },
+  "verification": null
+}
